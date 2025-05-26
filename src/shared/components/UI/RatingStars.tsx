@@ -28,12 +28,27 @@ const RatingStars = ({
       {Array.from({ length: max }).map((_, i) => {
         const fillPercent = Math.max(0, Math.min(1, rating - i)) * 100;
         const isInteractive = !readOnly;
-        const showLabel = labels.length > i;
 
         return (
           <div
             key={i}
-            className="flex flex-col items-center gap-[6px]"
+            className="flex flex-col items-center gap-[6px] focus:outline-none focus:underline focus:text-fire transition-colors duration-300 ease-in-out"
+            role={isInteractive ? 'button' : undefined}
+            aria-label={
+              isInteractive ? `Rate ${i + 1} out of ${max} stars` : undefined
+            }
+            aria-pressed={isInteractive ? i < rating : undefined}
+            tabIndex={isInteractive ? 0 : undefined}
+            onKeyDown={
+              isInteractive
+                ? e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleClick(i);
+                    }
+                  }
+                : undefined
+            }
             onClick={() => isInteractive && handleClick(i)}
           >
             <span
@@ -62,11 +77,7 @@ const RatingStars = ({
             </span>
 
             {/* Label under each star*/}
-            {showLabel && (
-              <span className="transition-text duration-300 ease-in-out">
-                {labels[i]}
-              </span>
-            )}
+            {!readOnly && <span>{labels[i]}</span>}
           </div>
         );
       })}
