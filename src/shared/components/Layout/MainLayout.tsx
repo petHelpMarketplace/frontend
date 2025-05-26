@@ -4,6 +4,7 @@ import Header from '@/components/Header/Header';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/shared/components/ErrorFallback';
+import { Toaster } from 'react-hot-toast';
 
 const MainLayout = () => {
   return (
@@ -21,6 +22,9 @@ const MainLayout = () => {
           <Suspense fallback={<div>Loading...</div>}>
             <Outlet />
           </Suspense>
+          <Toaster
+            toastOptions={{ className: 'text-center', duration: 5000 }}
+          />
         </ErrorBoundary>
       </main>
       <Footer />

@@ -3,6 +3,7 @@ import RatingStars from '@/shared/components/UI/RatingStars';
 import ChooseService from '@/features/review/components/ChooseService';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ratingLabels } from '@/shared/constants/ratingLabels';
+import toast from 'react-hot-toast';
 
 const ReviewForm = () => {
   const {
@@ -12,8 +13,12 @@ const ReviewForm = () => {
     formState: { errors },
   } = useFormContext<ReviewSchemaType>();
 
+  // TODO Delete console.log when API is connected
   const onSubmit = (data: ReviewSchemaType) => {
     console.log('Form data:', data);
+    toast.success(`🐾 Дякуємо! 🐾
+      Ваш відгук уже в лапках 🐕‍🦺 або 🐈‍⬛.
+`);
   };
 
   return (
