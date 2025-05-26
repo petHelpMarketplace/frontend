@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 type RatingProps = {
   rating?: number;
   size?: string; // tailwind class, e.g. "w-4 h-4"
@@ -19,44 +17,37 @@ const RatingStars = ({
   onRate,
   labels = [],
 }: RatingProps) => {
-  const [hovered, setHovered] = useState<number | null>(null);
-
   const handleClick = (index: number) => {
-    if (!readOnly && onRate) onRate(index + 1);
+    if (!readOnly && onRate) {
+      onRate(index + 1);
+    }
   };
 
-  const displayRating = hovered !== null ? hovered + 1 : rating;
-
   return (
-    // <div className="flex flex-col gap-[6px]">
-    <div className={`flex gap-2 ${className} `}>
+    <div className={`flex gap-2 ${className}`}>
       {Array.from({ length: max }).map((_, i) => {
-        const fillPercent = Math.max(0, Math.min(1, displayRating - i)) * 100;
+        const fillPercent = Math.max(0, Math.min(1, rating - i)) * 100;
         const isInteractive = !readOnly;
         const showLabel = labels.length > i;
-        const isHovered = hovered === i;
 
         return (
           <div
             key={i}
             className="flex flex-col items-center gap-[6px]"
             onClick={() => isInteractive && handleClick(i)}
-            onMouseEnter={() => isInteractive && setHovered(i)}
-            onMouseLeave={() => isInteractive && setHovered(null)}
           >
             <span
-              className={`relative inline-block  ${
+              className={`relative inline-block ${
                 isInteractive ? 'cursor-pointer' : ''
               }`}
             >
-              <svg className={`${size} fill-none stroke-fire stroke-2 `}>
+              <svg className={`${size} fill-none stroke-fire stroke-2`}>
                 <use href="/icons.svg#icon-star" />
               </svg>
 
               <svg
-                className={`${size} fill-fire stroke-fire absolute top-0 left-0 pointer-events-none transition-all duration-500 ease-in-out`}
+                className={`${size} fill-fire stroke-fire absolute top-0 left-0 pointer-events-none transition-all duration-300 ease-in-out`}
                 style={{
-                  // width: `${fillPercent}%`,
                   fill: 'var(--color-fire)',
                   maskImage: `linear-gradient(to right, black ${fillPercent}%, transparent ${fillPercent}%)`,
                   WebkitMaskImage: `linear-gradient(to right, black ${fillPercent}%, transparent ${fillPercent}%)`,
@@ -70,11 +61,11 @@ const RatingStars = ({
               </svg>
             </span>
 
-            {/* Label under each star */}
+            {/* Label under each star*/}
             {showLabel && (
               <span
                 className={`transition-text duration-300 ease-in-out ${
-                  isHovered || rating === i + 1
+                  rating === i + 1
                 }`}
               >
                 {labels[i]}
@@ -84,8 +75,6 @@ const RatingStars = ({
         );
       })}
     </div>
-
-    // </div>
   );
 };
 
