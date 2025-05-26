@@ -7,8 +7,10 @@ const NotFoundPage = () => {
       <BackButton />
       <div className="relative w-fit m-auto mb-[34px]">
         <img
-          src="/public/error-404-1x.webp"
-          srcSet="/public/error-404-1x.webp 1x, /public/error-404-2x.webp 2x"
+          width={'602px'}
+          height={'409px'}
+          src="/error-404-1x.webp"
+          srcSet="/error-404-1x.webp 1x, /error-404-2x.webp 2x"
           alt="Error 404 image"
           className="m-auto"
         />
