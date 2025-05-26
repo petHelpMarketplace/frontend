@@ -109,10 +109,8 @@ const ReviewForm = () => {
           Відгук на послугу
         </h2>
         <textarea
-          // name=""
-          // id=""
           placeholder="Приклад: Ігор максимально відповідальний та приємний чоловік, замовлення виконано відповідно до наданих інструкцій..."
-          className="input-base min-w-[679px] min-h-[188px] resize-none xl:p-4 block overflow-y-auto"
+          className="input-base w-full h-[188px] resize-none p-4 block overflow-y-auto"
           {...register('review')}
         ></textarea>
         {errors.review?.message && (

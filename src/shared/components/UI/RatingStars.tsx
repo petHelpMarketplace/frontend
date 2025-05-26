@@ -63,11 +63,7 @@ const RatingStars = ({
 
             {/* Label under each star*/}
             {showLabel && (
-              <span
-                className={`transition-text duration-300 ease-in-out ${
-                  rating === i + 1
-                }`}
-              >
+              <span className="transition-text duration-300 ease-in-out">
                 {labels[i]}
               </span>
             )}

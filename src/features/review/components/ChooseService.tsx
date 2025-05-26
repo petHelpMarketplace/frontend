@@ -30,6 +30,8 @@ const ChooseService = () => {
         <button
           type="button"
           tabIndex={0}
+          aria-haspopup="listbox"
+          aria-label="Обрати послугу для тварини"
           onKeyDown={e => {
             if (e.key === 'ArrowDown') {
               e.preventDefault();
@@ -56,6 +58,8 @@ const ChooseService = () => {
         {dropdownOpen && (
           <div
             id="services-dropdown"
+            role="listbox"
+            aria-label="Список послуг"
             className="absolute z-10 mt-2 flex gap-8 justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full px-19 py-7"
           >
             {animals.map(animal => (
