@@ -17,7 +17,6 @@ const NotFoundPage = () => {
         </p>
       </div>
 
-      {/* <Button label="На головну сторінку" type="button" /> */}
       <Link to={'/'} className="btn btn-2lg inline-block p-5">
         На головну сторінку
       </Link>
