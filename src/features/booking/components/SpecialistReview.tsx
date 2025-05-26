@@ -26,6 +26,7 @@ const SpecialistReview = () => {
                 <div className="flex gap-4 items-center mb-2">
                   <p className=" font-semibold">{review.name}</p>
                   <RatingStars
+                    readOnly
                     rating={review.rating}
                     aria-label={`Рейтинг: ${review.rating}`}
                   />
