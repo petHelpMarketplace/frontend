@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Pagination from '@/features/searchSpecialists/components/Pagination';
 import SpecialistsList from '@/features/searchSpecialists/components/SpecialistsList';
 import { mockSpecialists } from '@/data/mockSpecialists';
@@ -7,12 +8,14 @@ import StateDisplay from '@/features/searchSpecialists/components/StateDisplay';
 import SpecialistCardSkeleton from '@/features/searchSpecialists/components/SpecialistCardSkeleton';
 const SearchSpecialistsPage = () => {
   const specialistsPerPage = 16;
-  const [page, setPage] = useState(1);
+  const [searchParams] = useSearchParams()
+
+  const page = Number(searchParams.get('page')) || 1;
+
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [skeletonCount, setSkeletonCount] = useState(16);
   const [isFirstRender, setIsFirstRender] = useState(true);
-
   const listRef = useRef<HTMLDivElement | null>(null);
 
   const totalPages = Math.ceil(mockSpecialists.length / specialistsPerPage);
@@ -45,9 +48,7 @@ const SearchSpecialistsPage = () => {
     return () => clearTimeout(timer);
   }, [page]);
 
-  const handleChangePage = (newPage: number) => {
-    setPage(newPage);
-  };
+  
   const renderSkeletons = () => (
     <div className="grid grid-cols-1 gap-[30px] mb-[30px] xl:grid-cols-2 xl:gap-x-[40px] xl:gap-y-[40px] xl:mb-[58px]">
       {Array.from({ length: skeletonCount }).map((_, i) => (
@@ -69,7 +70,7 @@ const SearchSpecialistsPage = () => {
   }
 
   return (
-    <div className="w-full max-w-[345px] xl:max-w-[1040px] mx-auto px-[15px] pt-[39px] pb-[30px] xl:px-0 xl:pt-[69px] xl:pb-[58px]">
+    <div className="w-full max-w-[375px] xl:max-w-[1280px] mx-auto px-[15px] pt-[39px] pb-[30px] xl:px-30 xl:pt-[69px] xl:pb-[58px]">
       <BackButton />
       {!loading && !hasError && specialistsToShow.length > 0 && (
         <h1 className="font-semibold text-sm xl:text-xl text-fire mb-[39px] xl:mb-5">
@@ -85,9 +86,7 @@ const SearchSpecialistsPage = () => {
       <div ref={listRef}>{content}</div>
       {!loading && !hasError && specialistsToShow.length > 0 && (
         <Pagination
-          currentPage={page}
           totalPages={totalPages}
-          onChange={handleChangePage}
         />
       )}
     </div>
