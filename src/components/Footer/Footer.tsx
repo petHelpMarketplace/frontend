@@ -1,80 +1,76 @@
+import { useBreakpoint } from '@/components/Footer/hook/useBreakpoint';
+import { footerSections } from '@/data/footerData';
 import { Link } from 'react-router-dom';
+import Accordion from '@/components/Footer/Accordion';
 
 const Footer = () => {
+  const breakpoint = useBreakpoint();
+  const isDesktop = breakpoint === 'desktop';
+
   return (
-    <footer className="bg-gradient-to-t from-red-beech to-fiery-tenn text-alabaster  rounded-t-[60px] w-full pt-[29px] px-[120px] pb-[25px]  flex flex-col items-center max-w-[1280px] mx-auto">
+    <footer
+      className={`w-full mx-auto text-alabaster 
+        ${isDesktop
+          ? 'bg-gradient-to-t from-red-beech to-fiery-tenn rounded-t-[60px] px-[120px] pt-[29px] pb-[25px] max-w-[1280px]'
+          : 'bg-gradient-to-t from-red-beech to-fiery-tenn rounded-t-[60px] px-[26px] pt-[44px] pb-[27px] max-w-[375px]'}`}
+    >
       {/* Логотип */}
-      <Link
-        to="/"
-        className="flex items-baseline justify-center gap-1 mb-[39px]"
-      >
-        <span className="text-lg  font-third">PETS</span>
-        <svg className="w-[61px] h-[39px] fill-alabaster">
-          <use href="/icons.svg#icon-logo" />
-        </svg>
-        <span className="text-lg font-third">HELP</span>
-      </Link>
-
-      {/* 4 колонки */}
-      <div className="flex gap-[138px] mb-[31px]">
-        <div>
-          <h3 className="font-semibold text-[20px] mb-[10px]">Про нас</h3>
-          <ul className="leading-[2.5]">
-            <li>
-              <Link to="#">Про проєкт</Link>
-            </li>
-            <li>
-              <Link to="#">Контакти</Link>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-[20px] mb-[10px]">Допомога</h3>
-          <ul className="leading-[2.5]">
-            <li>
-              <Link to="#">Питання та відповіді</Link>
-            </li>
-            <li>
-              <Link to="#">Правила конфіденційності</Link>
-            </li>
-            <li>
-              <Link to="#">Служба підтримки</Link>
-            </li>
-            <li>
-              <Link to="#">Публічна оферта</Link>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-[20px] mb-[10px]">Як це працює</h3>
-          <ul className="leading-[2.5]">
-            <li>
-              <Link to="#">Як замовити послугу?</Link>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="font-semibold text-[20px] mb-[10px]">Посилання</h3>
-          <ul className="leading-[2.5]">
-            <li>
-              <Link to="#">Вигул</Link>
-            </li>
-            <li>
-              <Link to="#">Перетримка</Link>
-            </li>
-            <li>
-              <Link to="#">Грумінг</Link>
-            </li>
-          </ul>
-        </div>
+      <div className={`flex justify-center ${isDesktop ? 'mb-[39px]' : 'mb-[73px]'}`}>
+        <Link to="/" className="flex items-baseline gap-1">
+          <span className="text-lg font-third">PETS</span>
+          <svg
+            className={`fill-alabaster ${isDesktop ? 'w-[61px] h-[39px]' : 'w-[48px] h-[32px]'}`}
+          >
+            <use href="/icons.svg#icon-logo" />
+          </svg>
+          <span className="text-lg font-third">HELP</span>
+        </Link>
       </div>
+
+      {/* Секції */}
+      {isDesktop ? (
+        <div className="flex gap-[138px] mb-[31px]">
+          {footerSections.map(({ title, links }) => (
+            <div key={title}>
+              <h3 className="font-semibold text-xl mb-[10px]">{title}</h3>
+              <ul className="leading-[2.5]">
+                {links.map(({ text, to }) => (
+                  <li key={text}>
+                    <Link to={to} className="text-alabaster">
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col text-lg gap-7 mb-15">
+          {footerSections.map(({ title, links }) => (
+            <div key={title}>
+              <Accordion title={title}>
+                <ul className="flex flex-col text-sm gap-4">
+                  {links.map(({ text, to }) => (
+                    <li key={text}>
+                      <Link
+                        to={to}
+                        className="text-alabaster text-sm font-normal leading-[1.2]"
+                      >
+                        {text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Accordion>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Копірайт */}
       <p className="text-xs text-center">
-        <span className="mr-[9px]">&copy;</span>
+        <span className="mr-1">&copy;</span>
         2025 PetsHelp marketplace
       </p>
     </footer>
