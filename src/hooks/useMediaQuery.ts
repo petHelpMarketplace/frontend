@@ -22,14 +22,3 @@ export function useMediaQuery(query: string): boolean {
 }
 
 
-/**
- * Хук повертає тип пристрою: 'mobile' | 'tablet' | 'desktop'.
-  */
-export function useBreakpoint(): 'mobile' | 'tablet' | 'desktop' {
-  const isMobile = useMediaQuery('(max-width: 767px)');
-  const isTablet = useMediaQuery('(min-width: 768px) and (max-width: 1279px)');
-
-  if (isMobile) return 'mobile';
-  if (isTablet) return 'tablet';
-  return 'desktop';
-}

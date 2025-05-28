@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 
 export function useBreakpoint(): 'mobile' | 'tablet' | 'desktop' {
-    const [value, setvalue] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
+    const [value, setValue] = useState<'mobile' | 'tablet' | 'desktop'>('mobile');
     useEffect(()=> {
         if (typeof window === 'undefined') return;
         const queries = {
@@ -16,7 +16,7 @@ export function useBreakpoint(): 'mobile' | 'tablet' | 'desktop' {
         return 'mobile';
     };
 
-    const update = () => setvalue(getBreakpoint());
+    const update = () => setValue(getBreakpoint());
 
     Object.values(queries).forEach(q => q.addEventListener('change', update));
 
