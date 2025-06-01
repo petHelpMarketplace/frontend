@@ -32,7 +32,7 @@ const RatingStars = ({
         return (
           <div
             key={i}
-            className="flex flex-col items-center gap-[6px] focus:outline-none focus:underline focus:text-fire transition-colors duration-300 ease-in-out"
+            className="flex flex-col items-center gap-[6px] focus:outline-none focus:text-fire transition-colors duration-300 ease-in-out"
             role={isInteractive ? 'button' : undefined}
             aria-label={
               isInteractive ? `Rate ${i + 1} out of ${max} stars` : undefined
