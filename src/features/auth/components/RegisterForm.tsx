@@ -39,7 +39,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[16px]">
+    <div className="flex flex-col gap-4 xl:gap-4.5">
       <h3 className="text-fire uppercase text-center">РЕЄСТРАЦІЯ</h3>
 
       <Button
@@ -48,7 +48,7 @@ const RegisterForm = () => {
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-[28px] h-[28px]">
+          <svg className="w-7 h-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }
@@ -59,7 +59,7 @@ const RegisterForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-[16px]"
+        className="flex flex-col gap-4 xl:gap-4.5"
         noValidate
       >
         {/* Full Name */}
@@ -191,12 +191,12 @@ const RegisterForm = () => {
           )}
         </div>
 
-        <Link
-          to={'#'}
-          className="text-[10px] text-fire font-semibold text-center"
-        >
-          Вже маєте обліковий запис? Увійти
-        </Link>
+        <p className="text-[10px] font-semibold text-center text-cod-gray">
+          Вже маєте обліковий запис?{' '}
+          <Link to={'#'} className="text-fire">
+            Увійти
+          </Link>
+        </p>
         <Button label="Зареєструватися" type="submit" />
       </form>
 
@@ -204,7 +204,7 @@ const RegisterForm = () => {
         Реєструючись, ви погоджуєтесь з{' '}
         <Link
           to={'#'}
-          className="font-semibold lowercase underline [text-decoration-skip-ink:none] text-fire"
+          className="font-semibold underline [text-decoration-skip-ink:none] text-fire"
         >
           правилами
         </Link>{' '}
