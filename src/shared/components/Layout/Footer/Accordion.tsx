@@ -28,7 +28,7 @@ const Accordion = ({ title, children }: Props) => {
     <div>
       <button
         type="button"
-        className="w-full flex justify-between items-center text-left text-alabaster pb-5"
+        className="w-full flex justify-between items-center text-left text-alabaster"
         onClick={() => setIsOpen(prev => !prev)}
         onKeyDown={handleKeyDown}
         aria-expanded={isOpen}
@@ -51,11 +51,13 @@ const Accordion = ({ title, children }: Props) => {
         ref={contentRef}
         aria-label={title}
         className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-          isOpen ? 'py-2' : 'max-h-0'
+          isOpen ? '' : 'max-h-0'
         }`}
         style={{ maxHeight: isOpen ? `${contentHeight}px` : '0' }}
       >
-        {children}
+     <div className={`${isOpen ? 'mb-[7px]' : ''}`}>
+    {children}
+  </div>
       </div>
     </div>
   );

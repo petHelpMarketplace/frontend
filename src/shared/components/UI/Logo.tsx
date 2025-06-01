@@ -15,7 +15,7 @@ interface LogoProps {
 }: LogoProps) => (
   <Link
     to="/"
-    className="flex items-baseline"
+    className="flex items-baseline gap-[2px]"
     aria-label="PetsHelp Home"
   >
     <span className={`${textSize} ${textColor}`}>PETS</span>
