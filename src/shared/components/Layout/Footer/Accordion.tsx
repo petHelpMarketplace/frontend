@@ -18,8 +18,10 @@ const Accordion = ({ title, children }: Props) => {
   }, [isOpen, children]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === 'Enter') {
       e.preventDefault();
+      setIsOpen(prev => !prev);
+    } else if (e.key === ' ') {
       setIsOpen(prev => !prev);
     }
   };
@@ -55,7 +57,7 @@ const Accordion = ({ title, children }: Props) => {
         }`}
         style={{ maxHeight: isOpen ? `${contentHeight}px` : '0' }}
       >
-     <div className={`${isOpen ? 'mb-[7px]' : ''}`}>
+     <div className={isOpen ? 'mb-[7px]' : ''}>
     {children}
   </div>
       </div>
