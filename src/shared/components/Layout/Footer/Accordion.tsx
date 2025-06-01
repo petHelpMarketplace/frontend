@@ -9,7 +9,7 @@ const Accordion = ({ title, children }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
-  const panelId = useId(); // унікальний id для accessibility
+  const panelId = useId(); // unique id for accessibility
 
   useEffect(() => {
     if (contentRef.current) {
@@ -30,6 +30,7 @@ const Accordion = ({ title, children }: Props) => {
     <div>
       <button
         type="button"
+        id={`${panelId}-button`}
         className="w-full flex justify-between items-center text-left text-alabaster"
         onClick={() => setIsOpen(prev => !prev)}
         onKeyDown={handleKeyDown}
@@ -51,7 +52,7 @@ const Accordion = ({ title, children }: Props) => {
       <div
         id={panelId}
         ref={contentRef}
-        aria-label={title}
+        aria-labelledby={`${panelId}-button`}
         className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
           isOpen ? '' : 'max-h-0'
         }`}
