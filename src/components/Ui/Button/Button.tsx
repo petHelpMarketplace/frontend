@@ -7,7 +7,8 @@ type ButtonProps = {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  className?: string; // Проп для передачі кастомних класів
+  className?: string;
+  form?: string;
 };
 
 const Button: FC<ButtonProps> = ({
@@ -17,9 +18,10 @@ const Button: FC<ButtonProps> = ({
   type = 'button',
   disabled = false,
   className,
+  form,
 }) => {
   const buttonClass = clsx(
-    'btn', // Загальні стилі для всіх кнопок
+    'btn', // General styles for all buttons
     {
       'btn-disabled': disabled,
     },
@@ -32,6 +34,7 @@ const Button: FC<ButtonProps> = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
+      form={form}
     >
       {icon && (
         <span className="absolute left-[16px] flex items-center">{icon}</span>
