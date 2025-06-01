@@ -11,7 +11,8 @@
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.woff2') format('woff2'),
+  src: url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.woff2')
+      format('woff2'),
     url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
@@ -71,6 +72,7 @@
   --shadow-box: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-shark: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-smoke: 0 1px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-fire: 0 0 4px 1px rgba(207, 86, 0, 0.8);
   --shadow-inset-shark: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
@@ -169,10 +171,10 @@ button:not(:disabled) {
   }
 }
 
-.book-checkbox-btn+span {
+.book-checkbox-btn + span {
   @apply fill-none;
 }
 
-.book-checkbox-btn:checked+span {
+.book-checkbox-btn:checked + span {
   @apply bg-tenn fill-alabaster border-tenn;
 }

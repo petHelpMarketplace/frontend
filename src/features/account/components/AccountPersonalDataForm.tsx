@@ -29,7 +29,7 @@ export default function AccountDataForm() {
     // <FormProvider {...methods}>
     //   <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 xl:grid-cols-3 gap-x-10 gap-y-8">
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-x-10 gap-y-8">
-      <div className="xl:col-span-1">
+      <div className="xl:col-span-1 max-w-[272px]">
         <PhotoBlock />
       </div>
       <div className="xl:col-span-2">
