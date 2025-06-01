@@ -1,7 +1,5 @@
-import { useAppSelector } from "@/hooks/index";
-import { selectAnimal } from "@/features/hero/heroSelectors";
-
-
+import { useAppSelector } from '@/hooks/index';
+import { selectAnimal } from '@/features/hero/heroSelectors';
 
 const dogservices = [
   { label: 'Вигул', icon: 'icon-dog-on-the-leash' },
@@ -16,17 +14,15 @@ const catservices = [
   { label: 'Грумінг', icon: 'icon-scissors' },
 ];
 
-
-
 const ServiceTypeSelector = () => {
   const selected = useAppSelector(selectAnimal);
-  const services = selected === "dog" ? dogservices : catservices;
+  const services = selected === 'dog' ? dogservices : catservices;
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-7">
       {services.map(service => (
         <button
           key={service.label}
-          className="flex flex-col items-center justify-center gap-2 py-3 px-13 border rounded-[16px] border-tenn border-[2px] hover:bg-tenn hover:text-alabaster hover:border-none hover:shadow-shark active:shadow-inset-shark group"
+          className="flex flex-col items-center justify-center gap-2 py-3 px-13 rounded-[16px] border-tenn border-[2px] hover:bg-tenn hover:text-alabaster hover:border-none hover:shadow-shark active:shadow-inset-shark group"
         >
           <svg
             className="h-[52px] w-[55px] shrink-0 fill-tenn group-hover:fill-alabaster"

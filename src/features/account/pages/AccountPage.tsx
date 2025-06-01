@@ -1,79 +1,65 @@
-// import { useState } from 'react';
-// import { useForm, FormProvider } from 'react-hook-form';
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { accountSchema, AccountFormValues } from '../utils/validationSchemas';
+import { JSX, useState } from 'react';
+import { tabs, TabKey } from '../tabs';
 
-// import PersonalDataForm from '../components/PersonalDataForm';
-// import ServicesForm from '../components/ServicesForm';
-// import PortfolioForm from '../components/PortfolioForm';
-// import SettingsForm from '../components/SettingsForm';
+import AccountDataForm from '../components/AccountPersonalDataForm';
+import ServicesForm from '../components/AccountServicesForm';
+import PortfolioForm from '../components/AccountPortfolioForm';
+import SettingsForm from '../components/AccountSettingsForm';
 
-// const tabs = [
-//   { label: 'Персональні дані', component: <PersonalDataForm /> },
-//   { label: 'Категорія послуг', component: <ServicesForm /> },
-//   { label: 'Портфоліо', component: <PortfolioForm /> },
-//   { label: 'Налаштування', component: <SettingsForm /> },
-// ];
+export default function AccountPage() {
+  const [activeTab, setActiveTab] = useState(0);
 
-// export default function AccountPage() {
-//   const [activeTab, setActiveTab] = useState(0);
+  const renderTabContent = (key: TabKey) => {
+    const componentsMap: Record<TabKey, JSX.Element> = {
+      personal: <AccountDataForm />,
+      services: <ServicesForm />,
+      portfolio: <PortfolioForm />,
+      settings: <SettingsForm />,
+    };
 
-//   const methods = useForm<AccountFormValues>({
-//     resolver: zodResolver(accountSchema),
-//     mode: 'onSubmit',
-//     defaultValues: {
-//       photo: '',
-//       about: '',
-//       firstName: '',
-//       lastName: '',
-//       phone: '',
-//       district: '',
-//     },
-//   });
+    return componentsMap[key] || null;
+  };
 
-//   const onSubmit = (data: AccountFormValues) => {
-//     console.log('Submitted:', data);
-//   };
+  return (
+    <div className="xl:max-w-[1280px] xl:mx-auto xl:mt-5 xl:pt-12 xl:pb-16 xl:px-30 flex flex-col">
+      <button
+        type="button"
+        className="btn-outline text-left font-semibold text-fire hover:text-tenn transition mb-4"
+      >
+        Зберегти
+      </button>
 
-//   return (
-//     <FormProvider {...methods}>
-//       <form
-//         onSubmit={methods.handleSubmit(onSubmit)}
-//         className="xl:max-w-[1200px] xl:mx-auto xl:py-12 px-4"
-//       >
-//         {/* Навігація вкладок */}
-//         <div className="flex justify-between items-center xl:mb-8">
-//           <div className="tabs tabs-boxed bg-[--color-alabaster] rounded-full overflow-hidden">
-//             {tabs.map((tab, i) => (
-//               <button
-//                 type="button"
-//                 key={i}
-//                 onClick={() => setActiveTab(i)}
-//                 className={`tab xl:px-6 xl:py-2 text-sm font-medium ${
-//                   i === activeTab
-//                     ? 'bg-[--color-fire] text-white'
-//                     : 'text-[--color-fire] hover:bg-[--color-fire]/10'
-//                 }`}
-//               >
-//                 {tab.label}
-//               </button>
-//             ))}
-//           </div>
+      {/* Навігація вкладок */}
+      <div className="flex flex-col justify-between items-center xl:mb-8">
+        <div className="w-full flex gap-13 items-start justify-between overflow-hidden px-4">
+          {tabs.map((tab, i) => (
+            <button
+              type="button"
+              key={tab.key}
+              onClick={() => setActiveTab(i)}
+              className={`relative text-xl font-semibold flex flex-wrap justify-center items-end gap-col-4 pb-4 ${
+                i === activeTab
+                  ? 'after:content-[""] after:absolute after:w-[calc(100%+32px)] after:h-[3px] after:bg-tenn after:bottom-[0] text-fire fill-fire'
+                  : 'text-shark/50 fill-shark/50'
+              }`}
+            >
+              <svg
+                className="h-[26px] w-[26px] mr-4"
+                role="img"
+                aria-label={tab.label}
+              >
+                <title>{tab.label}</title>
+                <use href={`/icons.svg#${tab.icon}`} />
+              </svg>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
-//           <button
-//             type="submit"
-//             className="btn btn-outline border-[--color-fire] text-[--color-fire] hover:bg-[--color-fire] hover:text-white transition"
-//           >
-//             Зберегти
-//           </button>
-//         </div>
+      {/* Контент активної вкладки */}
 
-//         {/* Контент вкладки */}
-//         <div className="xl:border xl:rounded-xl xl:p-8 xl:bg-white">
-//           {tabs[activeTab].component}
-//         </div>
-//       </form>
-//     </FormProvider>
-//   );
-// }
-
+      {renderTabContent(tabs[activeTab].key)}
+    </div>
+  );
+}

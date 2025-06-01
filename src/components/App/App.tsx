@@ -13,6 +13,8 @@ const SpecialistProfilePage = lazy(
 );
 const BookingPage = lazy(() => import('@/features/booking/pages/BookingPage'));
 
+const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
+
 function App() {
   return (
     <>
@@ -22,6 +24,7 @@ function App() {
           <Route path="/specialists" element={<SearchSpecialistsPage />} />
           <Route path="/specialists/:" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
+          <Route path="/account" element={<AccountPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
