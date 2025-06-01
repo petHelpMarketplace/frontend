@@ -168,12 +168,17 @@ button:not(:disabled) {
     display: none;
     /* Chrome, Safari, Opera */
   }
-}
 
-.book-checkbox-btn+span {
-  @apply fill-none;
-}
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--color-alabaster) inset !important;
+    -webkit-text-fill-color: inherit !important;
+  }
 
-.book-checkbox-btn:checked+span {
-  @apply bg-tenn fill-alabaster border-tenn;
+  .book-checkbox-btn+span {
+    @apply fill-none;
+  }
+
+  .book-checkbox-btn:checked+span {
+    @apply bg-tenn fill-alabaster border-tenn;
+  }
 }

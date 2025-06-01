@@ -8,6 +8,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
 import { useState } from 'react';
+import ErrorIcon from '@/features/auth/components/ErrorIcon';
+import SuccessIcon from '@/features/auth/components/SuccessIcon';
 
 const RegisterForm = () => {
   const [hasInput, setHasInput] = useState(false);
@@ -73,13 +75,10 @@ const RegisterForm = () => {
             )}
             {...register('name')}
           />
+          {errors.name && <ErrorIcon />}
+          {!errors.name && dirtyFields.name && <SuccessIcon />}
           {errors.name && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.name && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.name.message}
             </p>
           )}
@@ -110,13 +109,10 @@ const RegisterForm = () => {
               />
             )}
           />
+          {errors.phone && <ErrorIcon />}
+          {!errors.phone && dirtyFields.phone && <SuccessIcon />}
           {errors.phone && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.phone && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.phone.message}
             </p>
           )}
@@ -133,13 +129,10 @@ const RegisterForm = () => {
             )}
             {...register('email')}
           />
+          {errors.email && <ErrorIcon />}
+          {!errors.email && dirtyFields.email && <SuccessIcon />}
           {errors.email && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.email && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.email.message}
             </p>
           )}
@@ -156,13 +149,10 @@ const RegisterForm = () => {
             )}
             {...register('password')}
           />
+          {errors.password && <ErrorIcon />}
+          {!errors.password && dirtyFields.password && <SuccessIcon />}
           {errors.password && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.password && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.password.message}
             </p>
           )}
@@ -179,13 +169,13 @@ const RegisterForm = () => {
             )}
             {...register('confirmPassword')}
           />
-          {errors.confirmPassword && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
+          {errors.confirmPassword && <ErrorIcon />}
+          {!errors.confirmPassword && dirtyFields.confirmPassword && (
+            <SuccessIcon />
           )}
+
           {errors.confirmPassword && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.confirmPassword.message}
             </p>
           )}
