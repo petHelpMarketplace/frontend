@@ -1,8 +1,8 @@
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import {
   registerSchema,
   RegisterSchemaType,
-} from '@/validations/registerSchema';
+} from '@/features/auth/validations/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -27,7 +27,7 @@ const RegisterForm = () => {
       ...data,
       phone: '38' + data.phone, // Add the prefix +38
       email: data.email.toLowerCase(),
-      fullName: data.fullName.replace(/\s+/g, ' ').trim(),
+      fullName: data.name.replace(/\s+/g, ' ').trim(),
     };
     console.log('Sending data:', finalData);
   };
@@ -66,21 +66,21 @@ const RegisterForm = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Прізвище та ім'я"
+            placeholder="Ім'я"
             className={getInputClass(
-              !!errors.fullName,
-              !!(!errors.fullName && dirtyFields.fullName)
+              !!errors.name,
+              !!(!errors.name && dirtyFields.name)
             )}
-            {...register('fullName')}
+            {...register('name')}
           />
-          {errors.fullName && (
+          {errors.name && (
             <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
               <use href="/icons.svg#icon-input-warning" />
             </svg>
           )}
-          {errors.fullName && (
+          {errors.name && (
             <p className="absolute text-red-tenn text-[10px] pl-1">
-              {errors.fullName.message}
+              {errors.name.message}
             </p>
           )}
         </div>

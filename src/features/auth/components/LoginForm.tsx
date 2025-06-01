@@ -1,5 +1,8 @@
-import Button from '@/components/Ui/Button/Button';
-import { loginSchema, LoginSchemaType } from '@/validations/loginSchema';
+import Button from '@/shared/components/UI/Button';
+import {
+  loginSchema,
+  LoginSchemaType,
+} from '@/features/auth/validations/loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';

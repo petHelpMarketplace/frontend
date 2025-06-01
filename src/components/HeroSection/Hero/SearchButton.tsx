@@ -1,6 +1,6 @@
 import RegisterForm from '@/features/auth/components/RegisterForm';
-import Modal from '@/components/Ui/Modal/Modal';
-import Button from '@/components/Ui/Button/Button';
+import Modal from '@/shared/components/UI/Modal';
+import Button from '@/shared/components/UI/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 

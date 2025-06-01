@@ -1,4 +1,4 @@
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import { useFormContext } from 'react-hook-form';
 
 const BookingPrice = () => {
