@@ -24,7 +24,7 @@ const Footer = () => {
           <Accordion key={title} title={title}>
             <ul className="flex flex-col mt-[20px] text-sm gap-4">
               {links.map(({ text, to }) => (
-                <li key={to}>
+                <li key={`${to}-${text}`}> 
                   <Link
                     to={to}
                     className="text-alabaster text-sm font-normal leading-[1.2]"
@@ -45,7 +45,7 @@ const Footer = () => {
             <h3 className="font-semibold text-xl mb-[10px]">{title}</h3>
             <ul className="leading-[2.5]">
               {links.map(({ text, to }) => (
-                <li key={to}>
+                <li key={`${to}-${text}`}> 
                   <Link to={to} className="text-alabaster">
                     {text}
                   </Link>
