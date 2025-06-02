@@ -22,7 +22,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/specialists" element={<SearchSpecialistsPage />} />
-          <Route path="/specialists/:" element={<SpecialistProfilePage />} />
+          <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="*" element={<NotFoundPage />} />

@@ -6,6 +6,7 @@
 
 import PhotoBlock from './PhotoBlock';
 import DetailsBlock from './DetailsBlock';
+import PersonalInfoBlock from './PersonalInfoBlock';
 
 export default function AccountDataForm() {
   // const methods = useForm<AccountFormValues>({
@@ -28,12 +29,13 @@ export default function AccountDataForm() {
   return (
     // <FormProvider {...methods}>
     //   <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 xl:grid-cols-3 gap-x-10 gap-y-8">
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-x-10 gap-y-8">
-      <div className="xl:col-span-1 max-w-[272px]">
+    <div className="">
+      <div className="flex gap-13 mb-12">
         <PhotoBlock />
-      </div>
-      <div className="xl:col-span-2">
         <DetailsBlock />
+      </div>
+      <div className="xl:col-span-3">
+        <PersonalInfoBlock />
       </div>
     </div>
     //   </form>
