@@ -8,32 +8,32 @@ const Footer = () => {
     <footer
       role="contentinfo"
       className="w-full mx-auto text-alabaster bg-gradient-to-t from-red-beech to-fiery-tenn rounded-t-[60px]
-        px-10 py-10 max-w-[375px]
+        p-10 max-w-[375px]
         xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px]"
     >
       {/* Логотип */}
       <div className="flex justify-center mb-[73px] xl:mb-[39px]">
-      <Logo
-      textColor="text-alabaster"
-      iconFill="fill-alabaster"/>
+        <Logo className="text-alabaster" iconFill="fill-alabaster" />
       </div>
-      
+
       {/* Mobile: Accordion */}
-      <div className="flex flex-col text-lg gap-5 mb-[61px] xl:hidden">
+      <div className="flex flex-col text-lg gap-[27px] mb-[61px] xl:hidden">
         {footerSections.map(({ title, links }) => (
           <Accordion key={title} title={title}>
-            <ul className="flex flex-col mt-[20px] text-sm gap-4">
-              {links.map(({ text, to }) => (
-                <li key={`${to}-${text}`}> 
-                  <Link
-                    to={to}
-                    className="text-alabaster text-sm font-normal leading-[1.2]"
-                  >
-                    {text}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-5">
+              <ul className="flex flex-col text-sm gap-[15px]">
+                {links.map(({ text, to }) => (
+                  <li key={`${to}-${text}`}>
+                    <Link
+                      to={to}
+                      className="text-alabaster text-sm font-normal leading-[1.2]"
+                    >
+                      {text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Accordion>
         ))}
       </div>
@@ -45,7 +45,7 @@ const Footer = () => {
             <h3 className="font-semibold text-xl mb-[10px]">{title}</h3>
             <ul className="leading-[2.5]">
               {links.map(({ text, to }) => (
-                <li key={`${to}-${text}`}> 
+                <li key={`${to}-${text}`}>
                   <Link to={to} className="text-alabaster">
                     {text}
                   </Link>

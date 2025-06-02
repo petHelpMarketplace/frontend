@@ -20,9 +20,7 @@ const Header: React.FC = () => {
 
         {/* Center block: Logo */}
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <Logo 
-          textColor="text-fire"
-          iconFill="fill-fire"/>
+          <Logo className="text-fire" iconFill="fill-fire" />
         </div>
 
         {/* Right block: User actions */}

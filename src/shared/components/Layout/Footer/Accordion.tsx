@@ -58,9 +58,7 @@ const Accordion = ({ title, children }: Props) => {
         }`}
         style={{ maxHeight: isOpen ? `${contentHeight}px` : '0' }}
       >
-     <div className={isOpen ? 'mb-[7px]' : ''}>
     {children}
-  </div>
       </div>
     </div>
   );
