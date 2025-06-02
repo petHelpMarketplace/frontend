@@ -36,11 +36,13 @@ export default function PhotoBlock() {
   const iconHref = hasPhoto
     ? '/icons.svg#icon-pencil'
     : '/icons.svg#icon-acc-photo-add';
-  const iconColorClass = hasPhoto ? 'fill-alabaster/80' : 'fill-fire/50';
+  const iconColorClass = hasPhoto
+    ? 'fill-alabaster/80 w-10 h-10 rounded-full flex justify-center bg-storm-dust/70 hover:fill-shark/80 '
+    : 'fill-fire/50 hover:scale-115 hover:fill-fire transition';
 
   return (
-    <div className="flex flex-col">
-      <div className="relative w-[272px] h-[364px] overflow-hidden border-2 border-fire rounded-[16px] flex flex-col items-center justify-center mb-3">
+    <div className="relative flex flex-col items-center">
+      <div className="relative w-[272px] h-[364px] overflow-hidden border-2 border-fire rounded-[16px] flex flex-col items-center justify-center">
         {hasPhoto ? (
           <img
             src={preview!}
@@ -60,7 +62,7 @@ export default function PhotoBlock() {
           title={ariaLabel}
           className={`absolute top-3.5 right-3.5 cursor-pointer flex items-center gap-2 ${iconColorClass} font-medium transition`}
         >
-          <svg className="w-5 h-5 hover:scale-115 hover:fill-fire">
+          <svg className="w-5 h-5">
             <use href={iconHref} />
           </svg>
         </label>
@@ -79,7 +81,7 @@ export default function PhotoBlock() {
         <button
           type="button"
           onClick={handleRemovePhoto}
-          className="flex items-center gap-3 mx-auto hover:scale-115 transition"
+          className="absolute -bottom-8 flex gap-3 mx-auto hover:scale-105 transition"
           aria-label="Видалити фото"
         >
           <svg className="w-6 h-6 fill-fire hover:fill-fire transition mr-2">

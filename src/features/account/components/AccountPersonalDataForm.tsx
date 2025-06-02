@@ -29,7 +29,7 @@ export default function AccountDataForm() {
   return (
     // <FormProvider {...methods}>
     //   <form onSubmit={methods.handleSubmit(onSubmit)} className="grid grid-cols-1 xl:grid-cols-3 gap-x-10 gap-y-8">
-    <div className="">
+    <>
       <div className="flex gap-13 mb-12">
         <PhotoBlock />
         <DetailsBlock />
@@ -37,7 +37,7 @@ export default function AccountDataForm() {
       <div className="xl:col-span-3">
         <PersonalInfoBlock />
       </div>
-    </div>
+    </>
     //   </form>
     // </FormProvider>
   );
