@@ -12,7 +12,7 @@ type ServicesGroupProps = {
 
 export function ServicesGroup({ categories, control }: ServicesGroupProps) {
   return (
-    <div className="flex flex-col gap-8 border-2 border-fire rounded-2xl p-6">
+    <div className="flex gap-19 border-2 border-fire rounded-2xl px-13 py-12">
       {categories.map(({ type, icon, services }) => (
         <AnimalCategory
           key={type}

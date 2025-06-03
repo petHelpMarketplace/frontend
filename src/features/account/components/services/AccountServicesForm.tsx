@@ -22,7 +22,7 @@ function AccountServicesForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-10">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <ServicesGroup categories={categoriesFromAnimals} control={control} />
     </form>
   );

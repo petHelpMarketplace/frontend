@@ -21,10 +21,11 @@ export const SpecialistProfileHeader = ({ profile }: Props) => {
     services,
     iconDog,
     iconCat,
+    id,
   } = profile;
 
   const [openSpecialistServices, setOpenSpecialistServices] = useState(false);
-  
+
   // Типізовані фільтри — тільки AnimalService
   const filterServicesByType = (type: 'dog' | 'cat') =>
     services.filter((s): s is AnimalService => s.type === type);
@@ -143,7 +144,9 @@ export const SpecialistProfileHeader = ({ profile }: Props) => {
         <Button
           label="Запропонувати роботу"
           type="button"
-          onClick={() => navigate('/specialists/${id}/booking')}
+          onClick={() => {
+            navigate(`/specialists/${id}/booking`);
+          }}
           className="text-xl py-4 rounded-[16px] h-[68px]"
         />
       </div>
