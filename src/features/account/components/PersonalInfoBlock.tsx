@@ -11,7 +11,7 @@ export default function PersonalInfoBlock() {
           <input
             id="firstName"
             type="text"
-            className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+            className="w-full input-base h-12"
             placeholder="Ім'я"
           />
           <svg
@@ -37,7 +37,7 @@ export default function PersonalInfoBlock() {
         ></label>
         <select
           id="district"
-          className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark focus:outline-fire"
+          className="w-full input-base h-12"
           defaultValue=""
         >
           <option value="" disabled>
@@ -60,7 +60,7 @@ export default function PersonalInfoBlock() {
           <input
             id="lastName"
             type="text"
-            className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+            className="w-full input-base h-12"
             placeholder="Прізвище"
           />
           <svg
@@ -83,7 +83,7 @@ export default function PersonalInfoBlock() {
           type="number"
           min="0"
           max="99"
-          className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+          className="w-full input-base h-12"
           placeholder="Досвід (років)"
         />
       </div>
@@ -98,7 +98,7 @@ export default function PersonalInfoBlock() {
           <input
             id="phone"
             type="tel"
-            className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+            className="w-full input-base h-12"
             placeholder="+38 (0__) ___ __ __"
           />
           <svg

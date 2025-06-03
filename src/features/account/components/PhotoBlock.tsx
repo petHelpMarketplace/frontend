@@ -38,7 +38,7 @@ export default function PhotoBlock() {
     : '/icons.svg#icon-acc-photo-add';
   const iconColorClass = hasPhoto
     ? 'fill-alabaster/80 w-10 h-10 rounded-full flex justify-center bg-storm-dust/70 hover:fill-shark/80 '
-    : 'fill-fire/50 hover:scale-115 hover:fill-fire transition';
+    : 'fill-fire/50 hover:scale-115 hover:shadow-fire transition';
 
   return (
     <div className="relative flex flex-col items-center">

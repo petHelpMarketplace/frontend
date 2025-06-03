@@ -11,7 +11,7 @@ export default function DetailsBlock() {
         id="about"
         name="about"
         rows={6}
-        className="flex flex-1 w-full border-2 border-fire rounded-2xl p-6 text-shark placeholder:text-storm-dust resize-none focus:outline-fire"
+        className="w-full flex flex-1 input-base h-12 p-6"
         placeholder="Приклад: Привіт! Я Ігор, з дитинства обжнюю тварин, особливо собак. Маю досвід у вигулі та догляді ..."
       />
     </div>
