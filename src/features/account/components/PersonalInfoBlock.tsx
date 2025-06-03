@@ -1,20 +1,32 @@
 export default function PersonalInfoBlock() {
   return (
-    <div className="col-span-1 xl:col-span-2 grid grid-cols-1 xl:grid-cols-2 gap-x-23 gap-y-3">
+    <div className="col-span-1 xl:col-span-2 grid grid-cols-1 xl:grid-cols-2 gap-x-23 gap-y-5">
       {/* Ім’я */}
       <div>
         <label
           htmlFor="firstName"
           className="block text-sm font-semibold text-tenn pl-4 mb-1"
-        >
-          Ім’я
-        </label>
-        <input
-          id="firstName"
-          type="text"
-          className="w-full border-2 border-fire rounded-2xl px-9 py-[11px] text-shark placeholder:text-storm-dust focus:outline-fire"
-          placeholder="Введіть ім’я"
-        />
+        ></label>
+        <div className="relative flex items-center">
+          <input
+            id="firstName"
+            type="text"
+            className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+            placeholder="Ім'я"
+          />
+          <svg
+            className="absolute w-6 h-6 fill-mist-gray right-6"
+            aria-label="Редагувати"
+          >
+            <use href="/icons.svg#icon-pencil" />
+          </svg>
+          <svg
+            className="absolute w-3 h-3 fill-fire -right-4"
+            aria-label="Обов'язкове поле"
+          >
+            <use href="/icons.svg#icon-required-field" />
+          </svg>
+        </div>
       </div>
 
       {/* Район */}
@@ -22,12 +34,10 @@ export default function PersonalInfoBlock() {
         <label
           htmlFor="district"
           className="block text-sm font-semibold text-tenn pl-4 mb-1"
-        >
-          Район
-        </label>
+        ></label>
         <select
           id="district"
-          className="w-full border-2 border-fire rounded-2xl px-9 py-[11px] text-shark focus:outline-fire"
+          className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark focus:outline-fire"
           defaultValue=""
         >
           <option value="" disabled>
@@ -45,15 +55,21 @@ export default function PersonalInfoBlock() {
         <label
           htmlFor="lastName"
           className="block text-sm font-semibold text-tenn pl-4 mb-1"
-        >
-          Прізвище
-        </label>
-        <input
-          id="lastName"
-          type="text"
-          className="w-full border-2 border-fire rounded-2xl px-9 py-[11px] text-shark placeholder:text-storm-dust focus:outline-fire"
-          placeholder="Введіть прізвище"
-        />
+        ></label>
+        <div className="relative flex items-center">
+          <input
+            id="lastName"
+            type="text"
+            className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+            placeholder="Прізвище"
+          />
+          <svg
+            className="absolute w-6 h-6 fill-mist-gray right-6"
+            aria-label="Редагувати"
+          >
+            <use href="/icons.svg#icon-pencil" />
+          </svg>
+        </div>
       </div>
 
       {/* Досвід */}
@@ -61,16 +77,14 @@ export default function PersonalInfoBlock() {
         <label
           htmlFor="experience"
           className="block text-sm font-semibold text-tenn pl-4 mb-1"
-        >
-          Досвід роботи (роки)
-        </label>
+        ></label>
         <input
           id="experience"
           type="number"
           min="0"
           max="99"
-          className="w-full border-2 border-fire rounded-2xl px-9 py-[11px] text-shark placeholder:text-storm-dust focus:outline-fire"
-          placeholder="Наприклад: 2"
+          className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+          placeholder="Досвід (років)"
         />
       </div>
 
@@ -79,15 +93,27 @@ export default function PersonalInfoBlock() {
         <label
           htmlFor="phone"
           className="block text-sm font-semibold text-tenn pl-4 mb-1"
-        >
-          Номер телефону
-        </label>
-        <input
-          id="phone"
-          type="tel"
-          className="w-full border-2 border-fire rounded-2xl px-9 py-[11px] text-shark placeholder:text-storm-dust focus:outline-fire"
-          placeholder="+38 (0__) ___ __ __"
-        />
+        ></label>
+        <div className="relative flex items-center">
+          <input
+            id="phone"
+            type="tel"
+            className="w-full border-2 border-fire rounded-2xl px-6 py-[11px] text-shark placeholder:text-mist-gray focus:outline-fire"
+            placeholder="+38 (0__) ___ __ __"
+          />
+          <svg
+            className="absolute w-6 h-6 fill-mist-gray right-6"
+            aria-label="Редагувати"
+          >
+            <use href="/icons.svg#icon-pencil" />
+          </svg>
+          <svg
+            className="absolute w-3 h-3 fill-fire -right-4"
+            aria-label="Обов'язкове поле"
+          >
+            <use href="/icons.svg#icon-required-field" />
+          </svg>
+        </div>
       </div>
 
       <button
