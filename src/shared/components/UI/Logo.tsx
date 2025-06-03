@@ -18,11 +18,15 @@ export const Logo = ({
       className={clsx('flex items-baseline gap-[2px]')}
       aria-label="PetsHelp Home"
     >
-      <span className={clsx('text-lg font-second', className)}>PETS</span>
+      <span className={clsx('text-lg font-second leading-[130%]', className)}>
+        PETS
+      </span>
       <svg className={clsx(iconSize, iconFill, 'relative top-[1px]')}>
         <use href="/icons.svg#icon-logo" />
       </svg>
-      <span className={clsx('text-lg font-second', className)}>HELP</span>
+      <span className={clsx('text-lg font-second leading-[130%]', className)}>
+        HELP
+      </span>
     </Link>
   );
 };

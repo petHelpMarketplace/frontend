@@ -2,11 +2,12 @@ import { useState, useRef, useEffect, KeyboardEvent, useId } from 'react';
 
 type Props = {
   title: string;
+  isOpen: boolean;
+  onToggle: () => void;
   children: React.ReactNode;
 };
 
-const Accordion = ({ title, children }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Accordion = ({ title, isOpen, onToggle, children }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
   const panelId = useId(); // unique id for accessibility
@@ -20,9 +21,10 @@ const Accordion = ({ title, children }: Props) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      setIsOpen(prev => !prev);
+      onToggle();
     } else if (e.key === ' ') {
-      setIsOpen(prev => !prev);
+      e.preventDefault();
+      onToggle();
     }
   };
 
@@ -32,12 +34,12 @@ const Accordion = ({ title, children }: Props) => {
         type="button"
         id={`${panelId}-button`}
         className="w-full flex justify-between items-center text-left text-alabaster"
-        onClick={() => setIsOpen(prev => !prev)}
+        onClick={onToggle}
         onKeyDown={handleKeyDown}
         aria-expanded={isOpen}
         aria-controls={panelId}
       >
-        <span className="font-semibold text-lg">{title}</span>
+        <span className="font-semibold text-lg leading-[130%]">{title}</span>
         <svg
           className={`w-4 h-4 transform transition-transform duration-300 ${
             isOpen ? 'rotate-180' : ''
@@ -56,9 +58,11 @@ const Accordion = ({ title, children }: Props) => {
         className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
           isOpen ? '' : 'max-h-0'
         }`}
-        style={{ maxHeight: isOpen ? `${contentHeight}px` : '0' }}
+        style={{
+          maxHeight: isOpen ? `${contentHeight}px` : '0',
+        }}
       >
-    {children}
+        {children}
       </div>
     </div>
   );

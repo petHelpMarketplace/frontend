@@ -1,9 +1,11 @@
 import { footerSections } from '@/shared/components/Layout/Footer/footerData';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Accordion from '@/shared/components/Layout/Footer/Accordion';
 import Logo from '@/shared/components/UI/Logo';
 
 const Footer = () => {
+  const [openAcordion, setOpenAccordion] = useState<string | null>(null);
   return (
     <footer
       role="contentinfo"
@@ -12,21 +14,28 @@ const Footer = () => {
         xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px]"
     >
       {/* Логотип */}
-      <div className="flex justify-center mb-[73px] xl:mb-[39px]">
+      <div className="flex justify-center mb-[77px] xl:mb-[39px]">
         <Logo className="text-alabaster" iconFill="fill-alabaster" />
       </div>
 
       {/* Mobile: Accordion */}
-      <div className="flex flex-col text-lg gap-[27px] mb-[61px] xl:hidden">
+      <div className="flex flex-col text-lg gap-[26px] mb-[56px] xl:hidden">
         {footerSections.map(({ title, links }) => (
-          <Accordion key={title} title={title}>
+          <Accordion
+            key={title}
+            title={title}
+            isOpen={openAcordion === title}
+            onToggle={() =>
+              setOpenAccordion(prev => (prev === title ? null : title))
+            }
+          >
             <div className="mt-5">
-              <ul className="flex flex-col text-sm gap-[15px]">
+              <ul className="flex flex-col text-sm leading-[120%] gap-[14px]">
                 {links.map(({ text, to }) => (
                   <li key={`${to}-${text}`}>
                     <Link
                       to={to}
-                      className="text-alabaster text-sm font-normal leading-[1.2]"
+                      className="text-alabaster text-sm font-normal"
                     >
                       {text}
                     </Link>
@@ -39,7 +48,7 @@ const Footer = () => {
       </div>
 
       {/* Desktop: Columns */}
-      <div className="hidden xl:flex gap-[138px] mb-[31px]">
+      <div className="hidden xl:flex xl:gap-[138px] xl:mb-[31px]">
         {footerSections.map(({ title, links }) => (
           <div key={title}>
             <h3 className="font-semibold text-xl mb-[10px]">{title}</h3>
@@ -57,7 +66,7 @@ const Footer = () => {
       </div>
 
       {/* Копірайт */}
-      <p className="text-xs text-center">
+      <p className="text-xs text-center leading-[120%]">
         <span className="mr-2 xl:mr-[9px]">©</span>
         {new Date().getFullYear()} PetsHelp marketplace
       </p>
