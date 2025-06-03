@@ -16,7 +16,7 @@ const Accordion = ({ title, isOpen, onToggle, children }: Props) => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
     }
-  }, [isOpen, children]);
+  }, [isOpen]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'Enter') {
