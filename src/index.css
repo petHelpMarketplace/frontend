@@ -135,7 +135,7 @@ button:not(:disabled) {
   }
 
   .input-base {
-    @apply relative w-full border-2 border-tenn/40 rounded-2xl h-[40px] px-5 focus:outline-none caret-fire placeholder-gray-400 focus:border-tenn;
+    @apply relative w-full border-2 border-tenn/40 rounded-2xl h-[40px] px-5 focus:outline-none caret-fire placeholder-mist-gray focus:border-tenn;
   }
 
   .book-radio-btn {
