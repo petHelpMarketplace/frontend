@@ -1,10 +1,10 @@
 import { JSX, useState } from 'react';
 import { tabs, TabKey } from '../tabs';
 
-import AccountDataForm from '../components/AccountPersonalDataForm';
-import ServicesForm from '../components/AccountServicesForm';
-import PortfolioForm from '../components/AccountPortfolioForm';
-import SettingsForm from '../components/AccountSettingsForm';
+import AccountDataForm from '../components/personalData/AccountPersonalDataForm';
+import PortfolioForm from '../components/portfolio/AccountPortfolioForm';
+import SettingsForm from '../components/settings/AccountSettingsForm';
+import AccountServicesForm from '../components/services/AccountServicesForm';
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -12,7 +12,7 @@ export default function AccountPage() {
   const renderTabContent = (key: TabKey) => {
     const componentsMap: Record<TabKey, JSX.Element> = {
       personal: <AccountDataForm />,
-      services: <ServicesForm />,
+      services: <AccountServicesForm />,
       portfolio: <PortfolioForm />,
       settings: <SettingsForm />,
     };
