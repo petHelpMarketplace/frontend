@@ -2,7 +2,7 @@ import AnimalSelector from './AnimalSelector';
 import DistrictSelector from './DistrictSelector';
 import ServiceTypeSelector from './ServiceTypeSelector';
 import WeightSelector from './WeightSelector';
-import SearchButton from "./SearchButton";
+import SearchButton from './SearchButton';
 import { useAppSelector } from '@/hooks';
 import { selectAnimal } from '@/features/hero/heroSelectors';
 
@@ -16,7 +16,7 @@ const HeroFilters = () => {
       </div>
       <ServiceTypeSelector />
       <div className="flex justify-end gap-[40px] min-h-[68px]">
-        {selectedAnimal === "dog" && <WeightSelector />}
+        {selectedAnimal === 'dog' && <WeightSelector />}
         <SearchButton />
       </div>
     </div>

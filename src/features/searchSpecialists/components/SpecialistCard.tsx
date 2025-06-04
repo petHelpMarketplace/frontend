@@ -25,8 +25,8 @@ const SpecialistCard = ({ specialist }: Props) => {
   const imageSrc = avatar?.trim()
     ? avatar
     : hasImageBase
-    ? `/imagesSpecialists/${imageBase}-1x.webp`
-    : '/placeholder.webp';
+      ? `/imagesSpecialists/${imageBase}-1x.webp`
+      : '/placeholder.webp';
 
   const renderExperience = () => {
     if (experience === 0) return 'Менше року';

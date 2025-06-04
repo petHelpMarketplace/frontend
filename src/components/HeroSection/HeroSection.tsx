@@ -1,4 +1,3 @@
-
 import HeroImage from './Hero/HeroImage';
 import HeroFilters from './Hero/HeroFilters';
 import DogWithBlob from './Hero/HeroBlob';
@@ -11,8 +10,8 @@ const HeroSection = () => {
         <HeroTitle />
         <HeroImage />
       </div>
-        <DogWithBlob />
-        <HeroFilters />
+      <DogWithBlob />
+      <HeroFilters />
     </section>
   );
 };

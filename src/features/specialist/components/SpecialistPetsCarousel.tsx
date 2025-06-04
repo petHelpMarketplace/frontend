@@ -1,5 +1,5 @@
 import { SpecialistMock } from '../types';
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from 'react';
 
 interface Props {
   images: SpecialistMock;
@@ -19,12 +19,12 @@ export const SpecialistPetsCarousel = ({ images }: Props) => {
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1); // -1 для точності
   };
 
-  const scroll = (direction: "left" | "right") => {
+  const scroll = (direction: 'left' | 'right') => {
     const el = scrollRef.current;
     if (!el) return;
     el.scrollBy({
-      left: direction === "left" ? -300 : 300,
-      behavior: "smooth",
+      left: direction === 'left' ? -300 : 300,
+      behavior: 'smooth',
     });
   };
 
@@ -34,15 +34,15 @@ export const SpecialistPetsCarousel = ({ images }: Props) => {
 
     // Слухаємо скрол
     const handleScroll = () => checkScroll();
-    el.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", checkScroll);
+    el.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', checkScroll);
 
     // Перевірка при монтуванні
     checkScroll();
 
     return () => {
-      el.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", checkScroll);
+      el.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkScroll);
     };
   }, []);
 
@@ -59,10 +59,10 @@ export const SpecialistPetsCarousel = ({ images }: Props) => {
       });
     };
 
-    scrollContainer.addEventListener("wheel", handleWheel, { passive: false });
+    scrollContainer.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
-      scrollContainer.removeEventListener("wheel", handleWheel);
+      scrollContainer.removeEventListener('wheel', handleWheel);
     };
   }, []);
 
@@ -79,10 +79,13 @@ export const SpecialistPetsCarousel = ({ images }: Props) => {
           {/* Кнопка вліво */}
           <button
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
-            onClick={() => scroll("left")}
+            onClick={() => scroll('left')}
             disabled={!canScrollLeft}
             aria-label="Прокрутити вліво"
-            style={{ opacity: canScrollLeft ? 1 : 0.3, pointerEvents: canScrollLeft ? "auto" : "none" }}
+            style={{
+              opacity: canScrollLeft ? 1 : 0.3,
+              pointerEvents: canScrollLeft ? 'auto' : 'none',
+            }}
           >
             <svg width="24" height="26">
               <use href={`/icons.svg#${iconLeft}`} />
@@ -109,10 +112,13 @@ export const SpecialistPetsCarousel = ({ images }: Props) => {
           {/* Кнопка вправо */}
           <button
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10"
-            onClick={() => scroll("right")}
+            onClick={() => scroll('right')}
             disabled={!canScrollRight}
             aria-label="Прокрутити вправо"
-            style={{ opacity: canScrollRight ? 1 : 0.3, pointerEvents: canScrollRight ? "auto" : "none" }}
+            style={{
+              opacity: canScrollRight ? 1 : 0.3,
+              pointerEvents: canScrollRight ? 'auto' : 'none',
+            }}
           >
             <svg width="24" height="26">
               <use href={`/icons.svg#${iconRight}`} />

@@ -7,13 +7,19 @@ import type { AccountServicesFormValues } from '@/features/account/types';
 function AccountServicesForm() {
   const { control, handleSubmit } = useForm<AccountServicesFormValues>({
     defaultValues: {
-      services: categoriesFromAnimals.reduce((acc, { type, services }) => {
-        acc[type] = services.reduce((sAcc, { name }) => {
-          sAcc[name] = false;
-          return sAcc;
-        }, {} as Record<string, boolean>);
-        return acc;
-      }, {} as AccountServicesFormValues['services']),
+      services: categoriesFromAnimals.reduce(
+        (acc, { type, services }) => {
+          acc[type] = services.reduce(
+            (sAcc, { name }) => {
+              sAcc[name] = false;
+              return sAcc;
+            },
+            {} as Record<string, boolean>
+          );
+          return acc;
+        },
+        {} as AccountServicesFormValues['services']
+      ),
     },
   });
 
