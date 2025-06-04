@@ -10,10 +10,21 @@ export interface AnimalCategoryData {
   services: Service[];
 }
 
-export interface AccountServicesFormValues {
+export type AccountServicesFormValues = {
   services: {
-    [animalType: string]: {
+    Собаки?: {
+      [serviceName: string]: boolean;
+    };
+    Коти?: {
       [serviceName: string]: boolean;
     };
   };
-}
+  prices?: {
+    Собаки?: {
+      [serviceName: string]: string;
+    };
+    Коти?: {
+      [serviceName: string]: string;
+    };
+  };
+};

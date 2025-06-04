@@ -38,6 +38,7 @@ export function AnimalCategory({
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     checked={field.value}
+                    aria-label={`Оберіть послугу ${name}`}
                     className="book-checkbox-btn sr-only"
                   />
                   <span className="flex items-center justify-center w-5 h-5 rounded-[4px] border-2 border-fire">
@@ -50,12 +51,18 @@ export function AnimalCategory({
                 </label>
               )}
             />
-            <input
-              id="lastName"
-              type="text"
-              className="input-base h-8 w-1/2 text-center"
-              placeholder="грн/год"
-              autoComplete="off"
+            <Controller
+              control={control}
+              name={`prices.${type}.${name}`} // або інша логічна структура
+              render={({ field }) => (
+                <input
+                  type="text"
+                  className="input-base h-8 w-1/2 text-center"
+                  placeholder="грн/год"
+                  autoComplete="off"
+                  {...field}
+                />
+              )}
             />
           </li>
         ))}
