@@ -9,9 +9,7 @@ const Footer = () => {
   return (
     <footer
       role="contentinfo"
-      className="w-full mx-auto text-alabaster bg-gradient-to-t from-red-beech to-fiery-tenn rounded-t-[60px]
-        p-10 max-w-[375px]
-        xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px]"
+      className="w-full mx-auto text-alabaster bg-gradient-to-t from-red-beech to-fiery-tenn rounded-t-[60px] p-10 max-w-[375px] xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px]"
     >
       {/* Логотип */}
       <div className="flex justify-center mb-[77px] xl:mb-[39px]">
@@ -29,20 +27,19 @@ const Footer = () => {
               setOpenAccordion(prev => (prev === title ? null : title))
             }
           >
-            <div className="mt-5">
-              <ul className="flex flex-col text-sm leading-[120%] gap-[14px]">
-                {links.map(({ text, to }) => (
-                  <li key={`${to}-${text}`}>
-                    <Link
-                      to={to}
-                      className="text-alabaster text-sm font-normal"
-                    >
-                      {text}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="flex flex-col text-sm gap-[14px] mt-5">
+              {links.map(({ text, to }) => (
+                <li key={`${to}-${text}`}>
+                  <Link
+                    to={to}
+                    className="text-alabaster text-sm font-normal block leading-[120%]"
+                    tabIndex={openAcordion === title ? 0 : -1}
+                  >
+                    {text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Accordion>
         ))}
       </div>

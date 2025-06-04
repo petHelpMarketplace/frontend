@@ -44,7 +44,7 @@ const Accordion = ({ title, isOpen, onToggle, children }: Props) => {
           className={`w-4 h-4 transform transition-transform duration-300 ${
             isOpen ? 'rotate-180' : ''
           }`}
-          viewBox="0 0 20 20"
+          viewBox="0 0 59 32"
           fill="currentColor"
         >
           <use href="/icons.svg#icon-arrow-bottom" />
@@ -55,8 +55,9 @@ const Accordion = ({ title, isOpen, onToggle, children }: Props) => {
         id={panelId}
         ref={contentRef}
         aria-labelledby={`${panelId}-button`}
+        aria-hidden={!isOpen}
         className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${
-          isOpen ? '' : 'max-h-0'
+          isOpen ? '' : 'max-h-0 pointer-events-none'
         }`}
         style={{
           maxHeight: isOpen ? `${contentHeight}px` : '0',
