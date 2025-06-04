@@ -2,7 +2,7 @@ import { JSX, useState } from 'react';
 import { tabs, TabKey } from '../tabs';
 
 import AccountDataForm from '../components/personalData/AccountPersonalDataForm';
-import PortfolioForm from '../components/portfolio/AccountPortfolioForm';
+import PortfolioGallery from '../components/portfolio/PortfolioGallery';
 import SettingsForm from '../components/settings/AccountSettingsForm';
 import AccountServicesForm from '../components/services/AccountServicesForm';
 
@@ -13,7 +13,7 @@ export default function AccountPage() {
     const componentsMap: Record<TabKey, JSX.Element> = {
       personal: <AccountDataForm />,
       services: <AccountServicesForm />,
-      portfolio: <PortfolioForm />,
+      portfolio: <PortfolioGallery />,
       settings: <SettingsForm />,
     };
 
