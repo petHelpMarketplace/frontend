@@ -14,7 +14,7 @@ export const ReviewCard = ({ review }: Props) => {
       <div className="flex flex-col min-w-[136px]">
         <h3 className="font-semibold text-xl text-fire mb-[21px]">{name}</h3>
         <div className="flex gap-1 mb-4 text-fire">
-          <RatingStars rating={rating} />
+          <RatingStars rating={rating} readOnly />
         </div>
         <span className="text-shark">{formatDate(date)}</span>
       </div>
