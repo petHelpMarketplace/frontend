@@ -100,7 +100,7 @@ const RegisterForm = () => {
                   getInputClass(
                     !!errors.phone,
                     !!(!errors.phone && dirtyFields.phone)
-                  ) + (hasInput ? ' text-mineShaft' : ' text-gray-400')
+                  ) + (hasInput ? ' text-mineShaft' : ' text-dust-gray')
                 }
                 onAccept={value => {
                   setHasInput(!!value);

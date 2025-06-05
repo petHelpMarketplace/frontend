@@ -30,7 +30,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[16px]">
+    <div className="flex flex-col gap-4">
       <h3 className="text-fire uppercase text-center">УВІЙТИ</h3>
 
       <Button
@@ -39,7 +39,7 @@ const LoginForm = () => {
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-[28px] h-[28px]">
+          <svg className="w-7 h-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }

@@ -56,18 +56,16 @@
   --color-mineShaft: #2f2f2f;
   --color-alabaster: #f9f9f9;
   --color-cod-gray: #0f0f0f;
-  --color-gray-400: #808080;
+  --color-dust-gray: #808080;
+  --color-mist-gray: #989898;
+  --color-storm-gray: #656565;
+  --color-chicago-gray: #5b5959;
   --color-red-beech: #6d2e01;
   --color-fiery-tenn: #ce5601;
   --color-red-tenn: #bf0000;
   --color-hot-cinnamon-500: #d9732b;
-  --color-chicago-600: #5b5959;
   --color-disabled: rgba(217, 115, 43, 0.46);
-  /* --color-wildSand: #f5f5f5; */
-  /* --color-woodsmoke: #191919; */
   --color-shark: #272727;
-  --color-storm-dust: #656565;
-  --color-mountain-400: #989898;
 
   --shadow-box: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-shark: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -126,7 +124,7 @@ button:not(:disabled) {
   }
 
   .btn-google-disabled {
-    @apply text-gray-400 bg-alabaster border-2 border-gray-400;
+    @apply text-dust-gray bg-alabaster border-2 border-dust-gray;
   }
 
   .btn-icon {
@@ -134,7 +132,7 @@ button:not(:disabled) {
   }
 
   .input-base {
-    @apply relative w-full border-2 border-tenn/40 rounded-2xl min-h-10 px-5 focus:outline-none caret-fire placeholder-gray-400 focus:border-tenn placeholder:text-sm xl:placeholder:text-base;
+    @apply relative w-full border-2 border-tenn/40 rounded-2xl min-h-10 px-5 focus:outline-none caret-fire placeholder-storm-gray-400 focus:border-tenn placeholder:text-sm xl:placeholder:text-base;
   }
 
   .book-radio-btn {
