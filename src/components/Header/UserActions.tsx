@@ -1,6 +1,6 @@
 import LoginForm from '@/features/auth/components/LoginForm';
 import RegisterForm from '@/features/auth/components/RegisterForm';
-import Modal from '@/components/Ui/Modal/Modal';
+import Modal from '@/shared/components/UI/Modal';
 import { useState } from 'react';
 
 export const UserActions = () => {

@@ -41,7 +41,7 @@ const SpecialistReview = () => {
           })}
         </ul>
       ) : (
-        <p className="text-center text-sm text-storm-dust">
+        <p className="text-center text-sm text-storm-gray">
           У фахівця ще немає відгуків
         </p>
       )}

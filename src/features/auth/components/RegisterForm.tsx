@@ -1,13 +1,15 @@
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import {
   registerSchema,
   RegisterSchemaType,
-} from '@/validations/registerSchema';
+} from '@/features/auth/validations/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
 import { useState } from 'react';
+import ErrorIcon from '@/features/auth/components/ErrorIcon';
+import SuccessIcon from '@/features/auth/components/SuccessIcon';
 
 const RegisterForm = () => {
   const [hasInput, setHasInput] = useState(false);
@@ -27,7 +29,7 @@ const RegisterForm = () => {
       ...data,
       phone: '38' + data.phone, // Add the prefix +38
       email: data.email.toLowerCase(),
-      fullName: data.fullName.replace(/\s+/g, ' ').trim(),
+      fullName: data.name.replace(/\s+/g, ' ').trim(),
     };
     console.log('Sending data:', finalData);
   };
@@ -39,7 +41,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[16px]">
+    <div className="flex flex-col gap-4 xl:gap-4.5">
       <h3 className="text-fire uppercase text-center">РЕЄСТРАЦІЯ</h3>
 
       <Button
@@ -48,7 +50,7 @@ const RegisterForm = () => {
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-[28px] h-[28px]">
+          <svg className="w-7 h-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }
@@ -59,28 +61,25 @@ const RegisterForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-[16px]"
+        className="flex flex-col gap-4 xl:gap-4.5"
         noValidate
       >
         {/* Full Name */}
         <div className="relative">
           <input
             type="text"
-            placeholder="Прізвище та ім'я"
+            placeholder="Ім'я"
             className={getInputClass(
-              !!errors.fullName,
-              !!(!errors.fullName && dirtyFields.fullName)
+              !!errors.name,
+              !!(!errors.name && dirtyFields.name)
             )}
-            {...register('fullName')}
+            {...register('name')}
           />
-          {errors.fullName && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.fullName && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
-              {errors.fullName.message}
+          {errors.name && <ErrorIcon />}
+          {!errors.name && dirtyFields.name && <SuccessIcon />}
+          {errors.name && (
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+              {errors.name.message}
             </p>
           )}
         </div>
@@ -101,7 +100,7 @@ const RegisterForm = () => {
                   getInputClass(
                     !!errors.phone,
                     !!(!errors.phone && dirtyFields.phone)
-                  ) + (hasInput ? ' text-mineShaft' : ' text-gray-400')
+                  ) + (hasInput ? ' text-mineShaft' : ' text-dust-gray')
                 }
                 onAccept={value => {
                   setHasInput(!!value);
@@ -110,13 +109,10 @@ const RegisterForm = () => {
               />
             )}
           />
+          {errors.phone && <ErrorIcon />}
+          {!errors.phone && dirtyFields.phone && <SuccessIcon />}
           {errors.phone && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.phone && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.phone.message}
             </p>
           )}
@@ -133,13 +129,10 @@ const RegisterForm = () => {
             )}
             {...register('email')}
           />
+          {errors.email && <ErrorIcon />}
+          {!errors.email && dirtyFields.email && <SuccessIcon />}
           {errors.email && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.email && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.email.message}
             </p>
           )}
@@ -156,13 +149,10 @@ const RegisterForm = () => {
             )}
             {...register('password')}
           />
+          {errors.password && <ErrorIcon />}
+          {!errors.password && dirtyFields.password && <SuccessIcon />}
           {errors.password && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.password && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.password.message}
             </p>
           )}
@@ -179,24 +169,24 @@ const RegisterForm = () => {
             )}
             {...register('confirmPassword')}
           />
-          {errors.confirmPassword && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
+          {errors.confirmPassword && <ErrorIcon />}
+          {!errors.confirmPassword && dirtyFields.confirmPassword && (
+            <SuccessIcon />
           )}
+
           {errors.confirmPassword && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.confirmPassword.message}
             </p>
           )}
         </div>
 
-        <Link
-          to={'#'}
-          className="text-[10px] text-fire font-semibold text-center"
-        >
-          Вже маєте обліковий запис? Увійти
-        </Link>
+        <p className="text-[10px] font-semibold text-center text-cod-gray">
+          Вже маєте обліковий запис?{' '}
+          <Link to={'#'} className="text-fire">
+            Увійти
+          </Link>
+        </p>
         <Button label="Зареєструватися" type="submit" />
       </form>
 
@@ -204,7 +194,7 @@ const RegisterForm = () => {
         Реєструючись, ви погоджуєтесь з{' '}
         <Link
           to={'#'}
-          className="font-semibold lowercase underline [text-decoration-skip-ink:none] text-fire"
+          className="font-semibold underline [text-decoration-skip-ink:none] text-fire"
         >
           правилами
         </Link>{' '}
