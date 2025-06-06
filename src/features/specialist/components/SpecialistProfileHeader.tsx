@@ -1,8 +1,8 @@
 import { SpecialistMock, AnimalService } from '../types';
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '@/components/Ui/Modal/Modal';
+import Modal from '@/shared/components/UI/Modal';
 import SpecialistServices from './SpecialistServices';
 
 interface Props {

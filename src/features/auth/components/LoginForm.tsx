@@ -1,8 +1,13 @@
-import Button from '@/components/Ui/Button/Button';
-import { loginSchema, LoginSchemaType } from '@/validations/loginSchema';
+import Button from '@/shared/components/UI/Button';
+import {
+  loginSchema,
+  LoginSchemaType,
+} from '@/features/auth/validations/loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import SuccessIcon from '@/features/auth/components/SuccessIcon';
+import ErrorIcon from '@/features/auth/components/ErrorIcon';
 
 const LoginForm = () => {
   const {
@@ -25,7 +30,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[16px]">
+    <div className="flex flex-col gap-4">
       <h3 className="text-fire uppercase text-center">УВІЙТИ</h3>
 
       <Button
@@ -34,7 +39,7 @@ const LoginForm = () => {
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-[28px] h-[28px]">
+          <svg className="w-7 h-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }
@@ -46,7 +51,7 @@ const LoginForm = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-[16px]"
+        className="flex flex-col gap-4.5"
         noValidate
       >
         <div className="relative">
@@ -59,13 +64,10 @@ const LoginForm = () => {
             )}
             {...register('email')}
           />
+          {errors.email && <ErrorIcon />}
+          {!errors.email && dirtyFields.email && <SuccessIcon />}
           {errors.email && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.email && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.email.message}
             </p>
           )}
@@ -81,13 +83,10 @@ const LoginForm = () => {
             )}
             {...register('password')}
           />
+          {errors.password && <ErrorIcon />}
+          {!errors.password && dirtyFields.password && <SuccessIcon />}
           {errors.password && (
-            <svg className="absolute right-[16px] top-1/2 transform -translate-y-1/2 w-[27px] h-[27px] fill-red-tenn">
-              <use href="/icons.svg#icon-input-warning" />
-            </svg>
-          )}
-          {errors.password && (
-            <p className="absolute text-red-tenn text-[10px] pl-1">
+            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
               {errors.password.message}
             </p>
           )}

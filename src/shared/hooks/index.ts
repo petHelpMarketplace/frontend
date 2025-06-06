@@ -10,7 +10,7 @@
 // > Дотримуйтесь іменування: useНазва (CamelCase)
 // src/hooks/reduxHooks.ts
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from '@/store/store';
+import type { RootState, AppDispatch } from '@/app/store';
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

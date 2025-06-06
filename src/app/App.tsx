@@ -1,9 +1,10 @@
 import '@/components/App/App.css';
 import { lazy, useEffect } from 'react';
+import '@/app/App.css';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
-import { useAppDispatch } from '@/hooks/index';
+import { useAppDispatch } from '@/shared/hooks/index';
 import { login } from '@/features/auth/model/authSlice';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));

@@ -1,4 +1,4 @@
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import ReviewForm from '@/features/review/components/ReviewForm';
 import SpecialistInfo from '@/features/review/components/SpecialistInfo';
 import {

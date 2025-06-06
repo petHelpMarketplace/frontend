@@ -1,6 +1,6 @@
 import { Specialist } from '@/features/searchSpecialists/types/specialist';
 import { useNavigate } from 'react-router-dom';
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import { useState } from 'react';
 
 type Props = {

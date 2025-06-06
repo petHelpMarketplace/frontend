@@ -3,7 +3,7 @@ import DistrictSelector from './DistrictSelector';
 import ServiceTypeSelector from './ServiceTypeSelector';
 import WeightSelector from './WeightSelector';
 import SearchButton from './SearchButton';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector } from '@/shared/hooks';
 import { selectAnimal } from '@/features/hero/heroSelectors';
 
 const HeroFilters = () => {

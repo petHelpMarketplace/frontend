@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/hooks/index';
+import { useAppSelector } from '@/shared/hooks/index';
 import { selectAnimal } from '@/features/hero/heroSelectors';
 
 const dogservices = [
