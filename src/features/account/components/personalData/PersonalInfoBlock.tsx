@@ -24,7 +24,7 @@ export default function PersonalInfoBlock() {
             className="absolute w-3 h-3 fill-fire -right-4"
             aria-label="Обов'язкове поле"
           >
-            <use href="/icons.svg#icon-required-field" />
+            <use href="/icons.svg#icon-required" />
           </svg>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function PersonalInfoBlock() {
             className="absolute w-3 h-3 fill-fire -right-4"
             aria-label="Обов'язкове поле"
           >
-            <use href="/icons.svg#icon-required-field" />
+            <use href="/icons.svg#icon-required" />
           </svg>
         </div>
       </div>

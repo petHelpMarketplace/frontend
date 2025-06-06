@@ -27,6 +27,7 @@ function App() {
           <Route path="/specialists" element={<SearchSpecialistsPage />} />
           <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
+          <Route path="/account" element={<AccountPage />} />
           <Route
             path="/review/specialists/:id"
             element={<ReviewServicePage />}

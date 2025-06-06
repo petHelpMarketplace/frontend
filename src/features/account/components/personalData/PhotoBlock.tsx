@@ -85,7 +85,7 @@ export default function PhotoBlock() {
           aria-label="Видалити фото"
         >
           <svg className="w-6 h-6 fill-fire hover:fill-fire transition mr-2">
-            <use href="/icons.svg#icon-acc-photo-delete" />
+            <use href="/icons.svg#icon-delete" />
           </svg>
           Видалити фото
         </button>

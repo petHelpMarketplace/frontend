@@ -1,10 +1,12 @@
 // src/store/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import heroReducer from '@/features/hero/heroSlice';
+import accountReducer from '@/features/account/model/settingsSlice';
 
 export const store = configureStore({
   reducer: {
     hero: heroReducer,
+    account: accountReducer,
   },
 });
 
