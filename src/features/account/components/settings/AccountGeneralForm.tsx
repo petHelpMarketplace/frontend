@@ -1,8 +1,5 @@
 import { useForm } from 'react-hook-form';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '@/features/account/model/settingsHooks'; // твої хелпери
+import { useAppDispatch, useAppSelector } from '@/hooks/index'; // твої хелпери
 import {
   setEmail,
   toggleActiveStatus,

@@ -53,7 +53,7 @@ const ChangePasswordForm = () => {
 
       <button
         type="submit"
-        className="btn bg-tenn text-alabaster rounded-2xl h-12 mt-2 w-2/3"
+        className="btn bg-tenn text-alabaster rounded-2xl h-12 w-2/3"
         disabled={!isDirty}
       >
         Зберегти пароль

@@ -1,18 +1,18 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const DeleteProfileButton = () => {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setIsDeleteModalOpen(true);
-    console.log('Модалка має відкритися');
-  };
+  // const handleOpenModal = () => {
+  //   setIsDeleteModalOpen(true);
+  //   console.log('Модалка має відкритися');
+  // };
 
   return (
     <button
       type="button"
       className="xl:w-2/3 xl:h-12 flex gap-4 items-center justify-center btn bg-tenn text-alabaster rounded-2xl"
-      onClick={handleOpenModal}
+      // onClick={handleOpenModal}
     >
       <svg
         role="image"
