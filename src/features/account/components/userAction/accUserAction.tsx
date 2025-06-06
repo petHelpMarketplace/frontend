@@ -12,7 +12,7 @@ export const AccUserActions = () => {
   };
 
   return (
-    <div className="flex items-center gap-4 text-fire">
+    <div className="flex items-center gap-10 text-fire">
       <button
         onClick={handleLogout}
         className="px-2 py-1 border-[2px] border-transparent rounded-full hover:border-fire transition-colors"
@@ -20,7 +20,9 @@ export const AccUserActions = () => {
       >
         Вийти
       </button>
-      {/* <UserIcon className="w-6 h-6 fill-fire" /> */}
+      <svg className="w-5 h-5 fill-fire" aria-label="Мій профіль">
+        <use href="/icons.svg#icon-acc-log" />
+      </svg>
     </div>
   );
 };

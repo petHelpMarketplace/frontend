@@ -1,8 +1,10 @@
 import '@/components/App/App.css';
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
+import { useAppDispatch } from '@/hooks/index';
+import { login } from '@/features/auth/model/authSlice';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -19,6 +21,12 @@ const ReviewServicePage = lazy(
 const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Тимчасова авторизація при завантаженні сторінки
+    dispatch(login('demo'));
+  }, []);
   return (
     <>
       <Routes>
