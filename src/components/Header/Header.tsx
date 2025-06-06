@@ -4,7 +4,7 @@ import { Navigation } from './Navigation';
 import GradientHeaderWrapper from '../Shared/ui/GradientHeaderWrapper/GradientHeaderWrapper';
 import { UserActions } from './UserActions';
 import { AccUserActions } from '@/features/account/components/userAction/accUserAction';
-import { useAppSelector } from '@/hooks/index';
+import { useAppSelector } from '@/shared/hooks/index';
 import { useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {

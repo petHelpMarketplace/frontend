@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/hooks/index';
+import { useAppDispatch } from '@/shared/hooks/index';
 import { logout } from '@/features/auth/model/authSlice';
 import { useNavigate } from 'react-router-dom';
 
