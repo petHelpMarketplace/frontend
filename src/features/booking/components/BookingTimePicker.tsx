@@ -1,4 +1,4 @@
-import { timeSlots } from '@/shared/constants/bookingTime';
+import { timeSlots } from '@/features/booking/constants/bookingTime';
 import { useFormContext } from 'react-hook-form';
 
 const BookingTimePicker = () => {

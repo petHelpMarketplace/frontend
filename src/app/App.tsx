@@ -1,4 +1,4 @@
-import '@/components/App/App.css';
+import '@/app/App.css';
 import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
@@ -12,6 +12,9 @@ const SpecialistProfilePage = lazy(
   () => import('@/features/specialist/pages/SpecialistProfilePage')
 );
 const BookingPage = lazy(() => import('@/features/booking/pages/BookingPage'));
+const ReviewServicePage = lazy(
+  () => import('@/features/review/pages/ReviewServicePage')
+);
 
 function App() {
   return (
@@ -22,6 +25,10 @@ function App() {
           <Route path="/specialists" element={<SearchSpecialistsPage />} />
           <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
+          <Route
+            path="/review/specialists/:id"
+            element={<ReviewServicePage />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

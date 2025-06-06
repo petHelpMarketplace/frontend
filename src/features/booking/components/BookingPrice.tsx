@@ -1,4 +1,4 @@
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import { useFormContext } from 'react-hook-form';
 
 const BookingPrice = () => {
@@ -41,7 +41,7 @@ const BookingPrice = () => {
             )}
           </div>
 
-          <p className="text-sm text-chicago-600 leading-[19px] text-justify">
+          <p className="text-sm text-chicago-gray leading-[19px] text-justify">
             Вартість вказана лише для попередньої оцінки бюджету вашого
             замовлення. В неї не включені матеріали та додаткові роботи. Точну
             вартість зможе сказати фахівець після обговорення деталей.

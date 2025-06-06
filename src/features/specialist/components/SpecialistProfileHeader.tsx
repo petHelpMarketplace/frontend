@@ -1,8 +1,8 @@
 import { SpecialistMock, AnimalService } from '../types';
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '@/components/Ui/Modal/Modal';
+import Modal from '@/shared/components/UI/Modal';
 import SpecialistServices from './SpecialistServices';
 
 interface Props {
@@ -24,7 +24,7 @@ export const SpecialistProfileHeader = ({ profile }: Props) => {
   } = profile;
 
   const [openSpecialistServices, setOpenSpecialistServices] = useState(false);
-  
+
   // Типізовані фільтри — тільки AnimalService
   const filterServicesByType = (type: 'dog' | 'cat') =>
     services.filter((s): s is AnimalService => s.type === type);
