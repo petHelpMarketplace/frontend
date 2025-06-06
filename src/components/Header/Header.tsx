@@ -1,4 +1,4 @@
-import { Logo } from './Logo';
+import Logo from '@/shared/components/UI/Logo';
 import { LangSwitch } from './LangSwitch';
 import { Navigation } from './Navigation';
 import GradientHeaderWrapper from '../Shared/ui/GradientHeaderWrapper/GradientHeaderWrapper';
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
 
         {/* Center block: Logo */}
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <Logo />
+          <Logo className="text-fire" iconFill="fill-fire" />
         </div>
 
         {/* Right block: User actions */}

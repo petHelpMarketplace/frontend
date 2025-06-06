@@ -1,0 +1,42 @@
+export interface FooterLink {
+  text: string;
+  to: string;
+}
+
+export interface FooterSection {
+  title: string;
+  links: FooterLink[];
+}
+
+export const footerSections: FooterSection[] = [
+  {
+    title: 'Про нас',
+    links: [
+      { text: 'Про проєкт', to: '#' },
+      { text: 'Контакти', to: '#' },
+    ],
+  },
+  {
+    title: 'Як це працює',
+    links: [
+      { text: 'Як замовити послугу?', to: '#' },
+    ],
+  },
+  {
+    title: 'Допомога',
+    links: [
+      { text: 'Питання та відповіді', to: '#' },
+      { text: 'Правила конфіденційності', to: '#' },
+      { text: 'Служба підтримки', to: '#' },
+      { text: 'Публічна оферта', to: '#' },
+    ],
+  },
+  {
+    title: 'Посилання',
+    links: [
+      { text: 'Вигул', to: '#' },
+      { text: 'Перетримка', to: '#' },
+      { text: 'Грумінг', to: '#' },
+    ],
+  },
+];
