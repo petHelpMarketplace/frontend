@@ -1,34 +1,89 @@
-import { Logo } from './Logo';
+import { useState } from 'react';
+import Logo from '@/shared/components/UI/Logo';
 import { LangSwitch } from './LangSwitch';
 import { Navigation } from './Navigation';
 import GradientHeaderWrapper from '../Shared/ui/GradientHeaderWrapper/GradientHeaderWrapper';
 import { UserActions } from './UserActions';
 import { useLocation } from 'react-router-dom';
+import BurgerButton from '@/components/Header/BurgerButton';
+import LoginForm from '@/features/auth/components/LoginForm';
+import RegisterForm from '@/features/auth/components/RegisterForm';
+import Modal from '@/components/Ui/Modal/Modal';
+import MobileMenu from '@/components/Header/MobileMenu'; // Correctly imported
 
-const Header: React.FC = () => {
+const Header = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openRegisterModal, setOpenRegisterModal] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const onMenuToggle = () => setMenuOpen(open => !open);
+
+  // --- Передаємо колбек для закриття меню ---
+  // These functions are now universal and flexible!
+  const openLogin = (closeMenu?: () => void) => {
+    closeMenu?.(); // If closeMenu is provided (from mobile menu), call it. Otherwise, do nothing.
+    setOpenLoginModal(true); // Always open the login modal.
+  };
+
+  const openRegister = (closeMenu?: () => void) => {
+    closeMenu?.(); // If closeMenu is provided, call it.
+    setOpenRegisterModal(true); // Always open the register modal.
+  };
+
   return (
-    <header className="relative z-20 h-[68px] font-base max-w-[1232px] shadow-box mx-auto mt-2 flex">
-      {!isHomePage && <GradientHeaderWrapper />}
-      <div className="relative z-30 bg-alabaster container mx-auto px-24 flex items-center justify-between  rounded-[16px]">
-        {/* Left block: Language, Nav*/}
-        <div className="flex items-center gap-10">
-          <LangSwitch />
-          <Navigation />
-        </div>
+    <>
+      <header className="relative z-20 flex shadow-box mx-auto h-[46px] max-w-[345px] mt-[10px] xl:max-w-[1232px] xl:h-[68px] xl:font-base xl:mt-2">
+        {!isHomePage && <GradientHeaderWrapper />}
+        <div className="relative z-30 bg-alabaster flex mx-auto px-4 items-center justify-between rounded-[20px] container xl:rounded-[16px] xl:px-24">
+          {/* Left block: Language, Nav*/}
+          <div className="hidden xl:flex items-center gap-10">
+            <LangSwitch />
+            <Navigation />
+          </div>
 
-        {/* Center block: Logo */}
-        <div className="absolute left-1/2 transform -translate-x-1/2">
-          <Logo />
-        </div>
+          {/* Center block: Logo */}
+          <div className="flex xl:items-center xl:absolute xl:left-1/2 xl:transform xl:-translate-x-1/2">
+            <Logo
+              iconSize="w-[26px] h-[18px] xl:w-[60px] xl:h-[40px]" // Мобільний та десктопний розмір іконки
+              iconFill="fill-fire" // Колір іконки для хедера
+              textColor="text-fire" // Колір тексту для хедера
+              textSize="text-[7px] xl:text-lg" // Мобільний та десктопний розмір тексту
+              textShadow="text-shadow-xs xl:text-shadow-none" // Мобільна тінь, без тіні на десктопі
+            />
+          </div>
 
-        {/* Right block: User actions */}
-        <div className="hidden md:flex items-center gap-6">
-          <UserActions />
+          {/* Right block: Burger for mobile, UserActions -desktop */}
+          <div className="flex items-end xl:hidden">
+            <BurgerButton isOpen={isMenuOpen} onClick={onMenuToggle} />
+          </div>
+          <div className="hidden xl:flex xl:items-center">
+            {/* Desktop: We don't pass a closeMenu callback here, as there's no mobile menu to close */}
+            <UserActions
+              onLogin={() => openLogin()} // Calls openLogin without closeMenu
+              onRegister={() => openRegister()} // Calls openRegister without closeMenu
+              className="flex gap-2"
+            />
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      <MobileMenu
+        isOpen={isMenuOpen}
+        onClose={() => setMenuOpen(false)} // This is the close function for the MobileMenu itself
+        onLogin={() => openLogin(() => setMenuOpen(false))} // Mobile: Passes a callback to close the menu
+        onRegister={() => openRegister(() => setMenuOpen(false))} // Mobile: Passes a callback to close the menu
+      />
+      <Modal isOpen={openLoginModal} onClose={() => setOpenLoginModal(false)}>
+        <LoginForm />
+      </Modal>
+      <Modal
+        isOpen={openRegisterModal}
+        onClose={() => setOpenRegisterModal(false)}
+      >
+        <RegisterForm />
+      </Modal>
+    </>
   );
 };
 

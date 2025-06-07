@@ -113,5 +113,11 @@
     <symbol id="icon-pencil" viewBox="0 0 32 32">
       <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" d="M16 26.667h12M21.333 5.333c0.53-0.53 1.25-0.828 2-0.828s1.47 0.298 2 0.828c0.53 0.53 0.828 1.25 0.828 2s-0.298 1.47-0.828 2l-16 16-5.333 1.333 1.333-5.333 16-16z"></path>
     </symbol>
+    <symbol id="icon-burger-menu" viewBox="0 0 51 32">
+      <path d="M5.113.639h43.525a2.56 2.56 0 1 1 0 5.12H5.113a2.56 2.56 0 1 1 0-5.12zM5.113 13.441h43.525a2.56 2.56 0 1 1 0 5.12H5.113a2.56 2.56 0 1 1 0-5.12zM5.113 26.241h43.525a2.56 2.56 0 1 1 0 5.12H5.113a2.56 2.56 0 1 1 0-5.12z"/>
+    </symbol>
+    <symbol id="icon-arrow-right-dashed-dashed" viewBox="0 0 47 32">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.818" d="M2.909 16h1.455m8.727 0h4.364m8.727 0h17.455m-.001 0L32 27.636M43.636 16 32 4.364"/>
+    </symbol>
   </defs>
 </svg>

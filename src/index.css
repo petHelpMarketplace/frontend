@@ -11,7 +11,8 @@
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.woff2') format('woff2'),
+  src: url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.woff2')
+      format('woff2'),
     url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
@@ -47,8 +48,8 @@
 
 @theme {
   --font-primary: 'Open Sans', 'sans-serif';
-  --font-second: 'Inter', 'sans-serif';
-  --font-third: 'Aclonica', 'sans-serif';
+  --font-second: 'Aclonica', 'sans-serif';
+  --font-third: 'Inter', 'sans-serif';
 
   --color-fire: #aa4700;
   --color-tenn: #cf5600;
@@ -73,6 +74,7 @@
   --shadow-shark: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-smoke: 0 1px 4px 4px rgba(0, 0, 0, 0.25);
   --shadow-inset-shark: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-inset-thin: inset 0 0px 1px 0 rgba(0, 0, 0, 0.25);
 }
 
 @layer base {
@@ -170,10 +172,10 @@ button:not(:disabled) {
   }
 }
 
-.book-checkbox-btn+span {
+.book-checkbox-btn + span {
   @apply fill-none;
 }
 
-.book-checkbox-btn:checked+span {
+.book-checkbox-btn:checked + span {
   @apply bg-tenn fill-alabaster border-tenn;
 }
