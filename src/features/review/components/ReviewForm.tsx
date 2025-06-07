@@ -67,7 +67,7 @@ const ReviewForm = () => {
               className="input-base xl:w-[472px] xl:h-[48px] xl:px-11 xl:py-[11px]"
               {...register('name')}
             />
-            <svg className="w-6 h-6 absolute fill-none stroke-mountain-400 right-[32px] top-1/2 transform -translate-y-1/2">
+            <svg className="w-6 h-6 absolute fill-none stroke-mist-gray right-[32px] top-1/2 transform -translate-y-1/2">
               <use href="/icons.svg#icon-pencil" />
             </svg>
             {errors.name?.message && (
@@ -90,7 +90,7 @@ const ReviewForm = () => {
               className="input-base w-[472px] h-[48px] px-[44px] py-[11px]"
               {...register('lastName')}
             />
-            <svg className="w-6 h-6 absolute fill-none stroke-mountain-400 right-[32px] top-1/2 transform -translate-y-1/2">
+            <svg className="w-6 h-6 absolute fill-none stroke-mist-gray right-[32px] top-1/2 transform -translate-y-1/2">
               <use href="/icons.svg#icon-pencil" />
             </svg>
             {errors.lastName?.message && (

@@ -1,4 +1,4 @@
-import '@/components/App/App.css';
+import '@/app/App.css';
 import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
