@@ -1,9 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const areas = [
-  { label: 'Центр', value: 'center' },
-  { label: 'Лівий берег', value: 'left-bank' },
-  { label: 'Правий берег', value: 'right-bank' },
+  { label: 'Голосіївський', value: 'Голосіївський' },
+  { label: 'Дарницький', value: 'Дарницький' },
+  { label: 'Деснянський', value: 'Деснянський' },
+  { label: 'Дніпровський', value: 'Дніпровський' },
+  { label: 'Оболонський', value: 'Оболонський' },
+  { label: 'Печерський', value: 'Печерський' },
+  { label: 'Подільський', value: 'Подільський' },
+  { label: 'Святошинський', value: 'Святошинський' },
+  { label: "Солом'янський", value: "Солом'янський" },
+  { label: 'Шевченківський', value: 'Шевченківський' },
 ];
 
 export default function CustomSelect() {
@@ -35,12 +43,14 @@ export default function CustomSelect() {
 
   return (
     <div
-      className="relative w-1/2 border-[2px] border-tenn rounded-[12px] hover:shadow-shark"
+      className="relative w-full xl:w-1/2 border-[2px] border-tenn rounded-[15px] xl:rounded-2xl hover:shadow-shark"
       ref={dropdownRef}
     >
       <button
         type="button"
-        className="w-full flex items-center justify-between py-[12px] pr-8 pl-12"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        className="w-full flex items-center justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 shadow-filter xl:shadow-none"
         onClick={() => setIsOpen(prev => !prev)}
       >
         {selectedLabel}
@@ -62,17 +72,30 @@ export default function CustomSelect() {
       </button>
 
       {isOpen && (
-        <ul className="absolute z-100 mt-[16px] w-full border-tenn border-[2px] py-5 px-15 text-shark bg-alabaster rounded-[12px]">
+        <ul
+          className="absolute z-100 left-0 mt-[9px] w-full flex flex-col gap-2 shadow-filter border-tenn border-[2px] py-[13px] xl:py-5 xl:pl-12 text-shark bg-alabaster rounded-[15px]"
+          role="listbox"
+          aria-label="Оберіть район"
+        >
           {areas.map(area => (
             <li key={area.value}>
-              <a
-                onClick={() => handleSelect(area.value)}
-                className={`${
-                  selected === area.value ? 'bg-primary text-white' : ''
+              <Link
+                to={`/specialists?district=${encodeURIComponent(area.value)}`}
+                className={`w-full h-[34px] pl-[22px] flex items-center  transition ${
+                  selected === area.value
+                    ? 'bg-tenn pl-0 text-white pointer-events-none'
+                    : 'hover:bg-tenn hover:text-alabaster'
                 } cursor-pointer`}
+                onClick={() => {
+                  setSelected(area.value);
+                  setIsOpen(false);
+                }}
+                tabIndex={0}
+                role="option"
+                aria-selected={selected === area.value}
               >
                 {area.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

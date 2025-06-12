@@ -52,7 +52,7 @@ const Modal: FC<ModalProps> = ({
           : 'opacity-0 pointer-events-none'
       )}
       // TODO - decide if we need close modal on backdrop click
-      // onClick={onClose}
+      onClick={onClose}
     >
       <div
         className={clsx(

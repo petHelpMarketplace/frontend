@@ -8,8 +8,8 @@ import { useLocation } from 'react-router-dom';
 import BurgerButton from '@/components/Header/BurgerButton';
 import LoginForm from '@/features/auth/components/LoginForm';
 import RegisterForm from '@/features/auth/components/RegisterForm';
-import Modal from '@/components/Ui/Modal/Modal';
-import MobileMenu from '@/components/Header/MobileMenu'; // Correctly imported
+import MobileMenu from '@/components/Header/MobileMenu';
+import Modal from '@/shared/components/UI/Modal';
 
 const Header = () => {
   const location = useLocation();
@@ -20,8 +20,6 @@ const Header = () => {
 
   const onMenuToggle = () => setMenuOpen(open => !open);
 
-  // --- Передаємо колбек для закриття меню ---
-  // These functions are now universal and flexible!
   const openLogin = (closeMenu?: () => void) => {
     closeMenu?.(); // If closeMenu is provided (from mobile menu), call it. Otherwise, do nothing.
     setOpenLoginModal(true); // Always open the login modal.
@@ -36,7 +34,7 @@ const Header = () => {
     <>
       <header className="relative z-20 flex shadow-box mx-auto h-[46px] max-w-[345px] mt-[10px] xl:max-w-[1232px] xl:h-[68px] xl:font-base xl:mt-2">
         {!isHomePage && <GradientHeaderWrapper />}
-        <div className="relative z-30 bg-alabaster flex mx-auto px-4 items-center justify-between rounded-[20px] container xl:rounded-[16px] xl:px-24">
+        <div className="relative z-30 bg-alabaster flex px-4 items-center justify-between rounded-[20px] container xl:rounded-2xl xl:px-24">
           {/* Left block: Language, Nav*/}
           <div className="hidden xl:flex items-center gap-10">
             <LangSwitch />
@@ -46,11 +44,11 @@ const Header = () => {
           {/* Center block: Logo */}
           <div className="flex xl:items-center xl:absolute xl:left-1/2 xl:transform xl:-translate-x-1/2">
             <Logo
-              iconSize="w-[26px] h-[18px] xl:w-[60px] xl:h-[40px]" // Мобільний та десктопний розмір іконки
-              iconFill="fill-fire" // Колір іконки для хедера
-              textColor="text-fire" // Колір тексту для хедера
-              textSize="text-[7px] xl:text-lg" // Мобільний та десктопний розмір тексту
-              textShadow="text-shadow-xs xl:text-shadow-none" // Мобільна тінь, без тіні на десктопі
+              iconSize="w-[26px] h-[18px] xl:w-[60px] xl:h-[40px]"
+              iconFill="fill-fire"
+              textColor="text-fire"
+              textSize="text-[7px] xl:text-lg"
+              textShadow="text-shadow-xs xl:text-shadow-none"
             />
           </div>
 

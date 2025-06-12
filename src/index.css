@@ -67,12 +67,40 @@
   --color-hot-cinnamon-500: #d9732b;
   --color-disabled: rgba(217, 115, 43, 0.46);
   --color-shark: #272727;
+  --color-peru-tan: #803500;
+  --color-ecstasy: #ff7b1c;
+  --color-peru-tan-tan: #893900;
 
   --shadow-box: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-shark: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-smoke: 0 1px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-filter: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-shark: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-thin: inset 0 0px 1px 0 rgba(0, 0, 0, 0.25);
+}
+@layer utilities {
+  .bg-hero-gradient {
+    background: linear-gradient(
+      191deg,
+      #803500 18.51%,
+      #ff7b1c 53.85%,
+      #893900 89.9%
+    );
+  }
+  @media (min-width: 1280px) {
+    .bg-hero-gradient {
+      background: linear-gradient(
+        226deg,
+        #803500 18.51%,
+        #ff7b1c 53.85%,
+        #893900 89.9%
+      );
+    }
+  }
+
+  .bg-footer-gradient {
+    background: linear-gradient(360deg, #6d2e01 0%, #ce5601 100%);
+  }
 }
 
 @layer base {
@@ -93,7 +121,7 @@ button:not(:disabled) {
 
 @layer components {
   .btn {
-    @apply bg-tenn text-alabaster rounded-2xl px-5 min-w-[200px] h-[40px] transition-shadow duration-300 ease-in-out;
+    @apply bg-tenn text-alabaster rounded-2xl xl:px-5 xl:min-w-[200px] xl:h-[40px] transition-shadow duration-300 ease-in-out;
   }
 
   .btn:hover,
@@ -106,11 +134,11 @@ button:not(:disabled) {
   }
 
   .btn-lg {
-    @apply min-w-[304px];
+    @apply xl:min-w-[304px];
   }
 
   .btn-2lg {
-    @apply min-w-[304px] min-h-[68px] text-xl;
+    @apply max-w-[303px] max-h-[66px] py-5 xl:min-w-[304px] xl:min-h-[68px] xl:text-xl;
   }
 
   .btn-disabled {
@@ -169,11 +197,11 @@ button:not(:disabled) {
     /* Chrome, Safari, Opera */
   }
 
+  .book-checkbox-btn + span {
+    @apply fill-none;
+  }
 
-.book-checkbox-btn + span {
-  @apply fill-none;
-}
-
-.book-checkbox-btn:checked + span {
-  @apply bg-tenn fill-alabaster border-tenn;
+  .book-checkbox-btn:checked + span {
+    @apply bg-tenn fill-alabaster border-tenn;
+  }
 }

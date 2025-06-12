@@ -13,7 +13,7 @@ const SearchButton = () => {
         label="Пошук"
         type="button"
         onClick={() => navigate('/specialists')}
-        className="flex flex-1 items-center justify-center text-[20px] max-w-[304px] h-auto px-6 py-4 rounded-[16px] hover:shadow-shark active:shadow-inset-shark"
+        className="flex xl:flex-1 items-center justify-center text-[22px] bg-tenn btn-2lg xl:px-6 xl:py-4 rounded-[15px] xl:rounded-2xl shadow-filter xl:shadow-none hover:shadow-shark active:shadow-inset-shark"
       />
       <Modal
         isOpen={openRegisterModal}

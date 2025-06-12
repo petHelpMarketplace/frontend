@@ -10,11 +10,11 @@ const BurgerButton = ({ isOpen, onClick }: BurgerButtonProps) => (
     className="w-10 h-10 flex items-center justify-center rounded-full bg-alabaster"
   >
     {!isOpen ? (
-      <svg className="w-[15px] h-[10px] fill-fire">
+      <svg className="w-4 h-2.5 fill-fire">
         <use href="/icons.svg#icon-burger-menu" />
       </svg>
     ) : (
-      <svg className="w-[14px] h-[14px] fill-fire shadow-inset-thin [stroke-width:1.5]">
+      <svg className="w-3.5 h-3.5 fill-fire shadow-inset-thin [stroke-width:1.5]">
         <use href="/icons.svg#icon-close-btn" />
       </svg>
     )}

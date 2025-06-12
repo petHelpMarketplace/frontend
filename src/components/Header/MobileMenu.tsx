@@ -1,7 +1,7 @@
 // src/components/Header/MobileMenu.tsx
 
 import React, { useEffect, useRef, useCallback } from 'react';
-import Modal from '@/components/Ui/Modal/Modal';
+import Modal from '@/shared/components/UI/Modal';
 import { LangSwitch } from '@/components/Header/LangSwitch';
 import { Navigation } from '@/components/Header/Navigation';
 import { UserActions } from '@/components/Header/UserActions';
@@ -14,19 +14,24 @@ type MobileMenuProps = {
   onRegister: () => void;
 };
 
-const MobileMenu: React.FC<MobileMenuProps> = ({
+const MobileMenu = ({
   isOpen,
   onClose,
   onLogin,
   onRegister,
-}) => {
+}: MobileMenuProps) => {
+  // Reference to the menu container (for focus management)
   const menuRef = useRef<HTMLDivElement>(null);
+  // Reference to the element that was focused before menu opened (for focus restoration)
   const prevActiveElement = useRef<HTMLElement | null>(null);
 
+  // Effect: When menu opens, trap focus in the menu and restore previous focus on close
   useEffect(() => {
     if (isOpen) {
+      // Save currently focused element so we can restore it later
       prevActiveElement.current = document.activeElement as HTMLElement;
 
+      // Wait until menu is rendered, then focus the first interactive element inside
       setTimeout(() => {
         if (menuRef.current) {
           const focusableElements =
@@ -36,21 +41,25 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           if (focusableElements.length > 0) {
             focusableElements[0].focus();
           } else {
+            // If no interactive elements, focus menu container itself
             menuRef.current.focus();
           }
         }
       }, 0);
     } else {
+      // On close: restore focus to the previously focused element
       if (prevActiveElement.current) {
         prevActiveElement.current.focus();
       }
     }
   }, [isOpen]);
 
+  // Callback: Trap Tab/Shift+Tab navigation within the menu while open
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!isOpen) return;
 
+      // Handle tab focus loop inside menu
       if (event.key === 'Tab' && menuRef.current) {
         const focusableElements = menuRef.current.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -59,6 +68,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         const lastFocusable = focusableElements[focusableElements.length - 1];
 
         if (event.shiftKey) {
+          // If Shift+Tab on first element, move focus to last
           if (
             document.activeElement === firstFocusable ||
             document.activeElement === menuRef.current
@@ -67,6 +77,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             event.preventDefault();
           }
         } else {
+          // If Tab on last element, move focus to first
           if (document.activeElement === lastFocusable) {
             firstFocusable?.focus();
             event.preventDefault();
@@ -77,6 +88,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     [isOpen]
   );
 
+  // Effect: Attach/detach keydown event for focus trap while menu is open
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -84,6 +96,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     };
   }, [handleKeyDown]);
 
+  // If menu is not open, render nothing
   if (!isOpen) return null;
 
   return (
@@ -91,13 +104,12 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       isOpen={isOpen}
       onClose={onClose}
       className={clsx(
-        'rounded-3xl px-[35px] py-[24px] w-[345px] max-w-[90vw] flex flex-col overflow-y-auto'
+        'px-9 pt-[93px] pb-[26px] max-w-[90vw] flex flex-col overflow-y-auto'
       )}
     >
       <div
         ref={menuRef}
         className="relative"
-        onClick={e => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-labelledby="mobile-menu-title"
@@ -106,26 +118,13 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         <h2 id="mobile-menu-title" className="sr-only">
           Mobile Menu
         </h2>
-        {/* Кнопка закриття від Modal.tsx вже рендериться, тому її не потрібно дублювати тут. */}
-        {/*
-        <button
-          onClick={onClose}
-          aria-label="Close menu"
-          className="absolute top-6 right-4"
-        >
-          <svg className="w-[14px] h-[14px] fill-fire shadow-inset-thin [stroke-width:1.5]">
-            <use href="/icons.svg#icon-close-btn" />
-          </svg>
-        </button>
-        */}
 
-        <div className="mb-12 pt-[59px]">
-          <UserActions
-            onLogin={onLogin}
-            onRegister={onRegister}
-            className="flex flex-col items-start gap-6"
-          />
-        </div>
+        <UserActions
+          onLogin={onLogin}
+          onRegister={onRegister}
+          className="flex flex-col items-start gap-6 mb-12"
+        />
+
         <div className="flex flex-row items-center justify-center mx-auto gap-9">
           <LangSwitch />
           <Navigation />
