@@ -5,7 +5,10 @@ type BurgerButtonProps = {
 
 const BurgerButton = ({ isOpen, onClick }: BurgerButtonProps) => (
   <button
+    type="button"
     aria-label={isOpen ? 'Закрити меню' : 'Відкрити меню'}
+    aria-expanded={isOpen ? 'true' : 'false'}
+    aria-haspopup="menu"
     onClick={onClick}
     className="w-10 h-10 flex items-center justify-center rounded-full bg-alabaster"
   >

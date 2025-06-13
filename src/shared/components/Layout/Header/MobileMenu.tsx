@@ -64,6 +64,9 @@ const MobileMenu = ({
         const focusableElements = menuRef.current.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
+        if (focusableElements.length === 0) {
+          return;
+        }
         const firstFocusable = focusableElements[0];
         const lastFocusable = focusableElements[focusableElements.length - 1];
 
@@ -90,11 +93,12 @@ const MobileMenu = ({
 
   // Effect: Attach/detach keydown event for focus trap while menu is open
   useEffect(() => {
+    if (!isOpen) return;
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleKeyDown]);
+  }, [isOpen, handleKeyDown]);
 
   // If menu is not open, render nothing
   if (!isOpen) return null;

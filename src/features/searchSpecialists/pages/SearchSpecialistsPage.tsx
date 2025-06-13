@@ -12,7 +12,7 @@ const SearchSpecialistsPage = () => {
   const params = new URLSearchParams(location.search);
   const selectedDistrict = params.get('district') || '';
   const specialistsPerPage = 16;
-  const [page, setPage] = useState(1);
+
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [skeletonCount, setSkeletonCount] = useState(16);
@@ -23,8 +23,13 @@ const SearchSpecialistsPage = () => {
     ? mockSpecialists.filter(s => s.district === selectedDistrict)
     : mockSpecialists;
   const totalPages = Math.ceil(filteredSpecialists.length / specialistsPerPage);
+  const [page, setPage] = useState(1);
 
-  const specialistsToShow = mockSpecialists.slice(
+  useEffect(() => {
+    if (page !== 1) setPage(1);
+  }, [selectedDistrict]);
+
+  const specialistsToShow = filteredSpecialists.slice(
     (page - 1) * specialistsPerPage,
     page * specialistsPerPage
   );
