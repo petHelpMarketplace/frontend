@@ -2,13 +2,13 @@ import { useState } from 'react';
 import Logo from '@/shared/components/UI/Logo';
 import { LangSwitch } from './LangSwitch';
 import { Navigation } from './Navigation';
-import GradientHeaderWrapper from '../Shared/ui/GradientHeaderWrapper/GradientHeaderWrapper';
+import GradientHeaderWrapper from '@/features/heroSection/components/Hero/GradientHeaderWrapper';
 import { UserActions } from './UserActions';
 import { useLocation } from 'react-router-dom';
-import BurgerButton from '@/components/Header/BurgerButton';
+import BurgerButton from '@/shared/components/Layout/Header/BurgerButton';
 import LoginForm from '@/features/auth/components/LoginForm';
 import RegisterForm from '@/features/auth/components/RegisterForm';
-import MobileMenu from '@/components/Header/MobileMenu';
+import MobileMenu from '@/shared/components/Layout/Header/MobileMenu';
 import Modal from '@/shared/components/UI/Modal';
 
 const Header = () => {

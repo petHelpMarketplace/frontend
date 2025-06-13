@@ -1,7 +1,7 @@
-import HeroImage from './Hero/HeroImage';
-import HeroFilters from './Hero/HeroFilters';
-import DogWithBlob from './Hero/HeroBlob';
-import HeroTitle from './Hero/HeroTitle';
+import HeroImage from '@/features/heroSection/components/Hero/HeroImage';
+import HeroFilters from '@/features/heroSection/components/Hero/HeroFilters';
+import DogWithBlob from '@/features/heroSection/components/Hero/HeroBlob';
+import HeroTitle from '@/features/heroSection/components/Hero/HeroTitle';
 
 const HeroSection = () => {
   return (

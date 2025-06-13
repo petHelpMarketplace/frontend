@@ -1,10 +1,10 @@
-import AnimalSelector from './AnimalSelector';
-import DistrictSelector from './DistrictSelector';
-import ServiceTypeSelector from './ServiceTypeSelector';
-import WeightSelector from './WeightSelector';
-import SearchButton from './SearchButton';
+import AnimalSelector from '@/features/heroSection/components/Hero/AnimalSelector';
+import DistrictSelector from '@/features/heroSection/components/Hero/DistrictSelector';
+import ServiceTypeSelector from '@/features/heroSection/components/Hero/ServiceTypeSelector';
+import WeightSelector from '@/features/heroSection/components/Hero/WeightSelector';
+import SearchButton from '@/features/heroSection/components/Hero/SearchButton';
 import { useAppSelector } from '@/shared/hooks';
-import { selectAnimal } from '@/features/hero/heroSelectors';
+import { selectAnimal } from '@/features/heroSection/hooks/heroSelectors';
 
 const HeroFilters = () => {
   const selectedAnimal = useAppSelector(selectAnimal);

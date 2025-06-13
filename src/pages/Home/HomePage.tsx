@@ -1,7 +1,7 @@
-import HeroSection from "@/components/HeroSection/HeroSection";
+import HeroSection from '@/features/heroSection/pages/HeroSection';
 
 const HomePage = () => {
-  return <><HeroSection /></>;
+  return <HeroSection />;
 };
 
 export default HomePage;

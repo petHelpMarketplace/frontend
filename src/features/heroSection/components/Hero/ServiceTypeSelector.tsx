@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/shared/hooks/index';
-import { selectAnimal } from '@/features/hero/heroSelectors';
+import { selectAnimal } from '@/features/heroSection/hooks/heroSelectors';
 
 const dogservices = [
   { label: 'Вигул', icon: 'icon-dog-on-the-leash' },

@@ -1,7 +1,7 @@
 // src/components/Hero/AnimalSelector.tsx
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/index';
-import { setAnimal } from '@/features/hero/heroSlice';
-import { selectAnimal } from '@/features/hero/heroSelectors';
+import { setAnimal } from '@/features/heroSection/hooks/heroSlice';
+import { selectAnimal } from '@/features/heroSection/hooks/heroSelectors';
 
 const AnimalSelector = () => {
   const dispatch = useAppDispatch();

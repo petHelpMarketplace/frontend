@@ -1,10 +1,10 @@
 // src/components/Header/MobileMenu.tsx
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import Modal from '@/shared/components/UI/Modal';
-import { LangSwitch } from '@/components/Header/LangSwitch';
-import { Navigation } from '@/components/Header/Navigation';
-import { UserActions } from '@/components/Header/UserActions';
+import { LangSwitch } from '@/shared/components/Layout/Header/LangSwitch';
+import { Navigation } from '@/shared/components/Layout/Header/Navigation';
+import { UserActions } from '@/shared/components/Layout/Header/UserActions';
 import clsx from 'clsx';
 
 type MobileMenuProps = {
