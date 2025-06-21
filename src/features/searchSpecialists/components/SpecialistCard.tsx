@@ -14,6 +14,8 @@ const SpecialistCard = ({ specialist }: Props) => {
     id,
     name,
     family_name,
+    rating,
+    reviews_count,
     experience,
     is_verified,
     image_id,
@@ -29,7 +31,7 @@ const SpecialistCard = ({ specialist }: Props) => {
     : hasImageBase
     ? `/imagesSpecialists/${imageBase}-1x.webp`
     : '/placeholder.webp';
-
+  const shortFamilyName = family_name ? `${family_name[0]}.` : '';
   const renderExperience = () => {
     if (experience === 0) return 'Менше року';
     if (experience === 1) return '1 рік';
@@ -37,107 +39,135 @@ const SpecialistCard = ({ specialist }: Props) => {
     return `${experience} років`;
   };
 
-  const shortFamilyName = family_name ? `${family_name[0]}.` : '';
-
   return (
     <div
       className="h-full w-full max-w-full grid 
-    bg-alabaster rounded-2xl shadow-[0_1px_4px_4px_rgba(0,0,0,0.25)]
-    p-4 sm:p-5 gap-x-[9px] gap-y-[23px] xl:gap-6
-    [grid-template-areas:'photo_text'_'bio_bio']
-    xl:[grid-template-areas:'photo_text'_'photo_text']
-    [grid-template-columns:minmax(80px,138px)_minmax(0,1fr)]
+    bg-alabaster rounded-2xl shadow-smoke
+    px-5 py-[12px] xl:p-5 gap-x-[10px] gap-y-[12px] xl:gap-6
+    [grid-template-areas:'photo_text'_'btn_btn']
+    [grid-template-rows:96px_auto] xl:[grid-template-rows:auto]
+    xl:[grid-template-areas:'photo text']
+    [grid-template-columns:96px_minmax(0,1fr)]
     xl:[grid-template-columns:236px_minmax(0,1fr)]
-    xl:max-w-[500px]"
+    xl:max-w-[500px] max-h-[400px] "
     >
       {/* Фото */}
-      <div className="[grid-area:photo] max-w-[138px] h-[174px] xl:max-w-[236px] xl:h-[360px] rounded-2xl overflow-hidden">
-        <picture>
-          {!hasImageError && hasImageBase && (
+      <div className="[grid-area:photo] max-w-[96px] h-[96px] xl:max-w-[236px] xl:h-[360px] rounded-2xl overflow-hidden flex items-center justify-center bg-alabaster">
+        {/* На мобілці — SVG-іконка зі спрайта */}
+        {hasImageError || !hasImageBase ? (
+          <>
+            {/* Мобілка: png */}
+            <img
+              src="/placeholder-mobile.webp"
+              alt="Плейсхолдер"
+              className="block xl:hidden w-full h-full object-contain"
+              loading="lazy"
+            />
+            {/* На десктопі — fallback картинка */}
+            <img
+              src="/placeholder.webp"
+              alt="Плейсхолдер"
+              className="hidden xl:block w-full h-full object-cover"
+            />
+          </>
+        ) : (
+          <picture className="w-full h-full">
             <source
               srcSet={`/imagesSpecialists/${imageBase}-2x.webp 2x, /imagesSpecialists/${imageBase}-1x.webp 1x`}
               type="image/webp"
             />
-          )}
-          <img
-            src={imageSrc}
-            alt={`${name} ${family_name}`}
-            className={`w-full h-full object-cover ${
-              hasImageError
-                ? `border-2 border-fire rounded-2xl bg-alabaster`
-                : ''
-            }`}
-            onError={e => {
-              setHasImageError(true);
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = '/placeholder.webp';
-            }}
-            loading="lazy"
-          />
-        </picture>
+            <img
+              src={imageSrc}
+              alt={`${name} ${family_name}`}
+              className="w-full h-full object-cover object-top"
+              onError={e => {
+                setHasImageError(true);
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/placeholder.webp';
+              }}
+              loading="lazy"
+            />
+          </picture>
+        )}
       </div>
 
-      {/* Контент + десктопний опис */}
-      <div className="[grid-area:text] flex flex-col gap-[18px] h-full xl:justify-between">
-        {/* Ім’я + іконка */}
-        <div className="flex items-center gap-2">
-        <span className="inline-flex items-center gap-2 whitespace-nowrap flex-wrap">
-          <h2 className="text-xl font-semibold text-fire">
-            {name} {shortFamilyName}
-          </h2>
-          {is_verified && (
-            <svg
-              className="w-[17px] h-[17px] fill-fire shrink-0 xl:hidden"
-              aria-label="Перевірений фахівець"
-              role="img"
-            >
-              <use href="/icons.svg#icon-verified" />
-            </svg>
-          )}
-          </span>
-        </div>
-
-        {/* Десктопний бейдж */}
-        {is_verified && (
-          <div className="hidden xl:flex items-center gap-[7px]">
-            <svg
-              className="w-[17px] h-[17px] fill-fire"
-              aria-label="Перевірений фахівець"
-              role="img"
-            >
-              <use href="/icons.svg#icon-verified" />
-            </svg>
-            <span className="text-sm font-normal text-cod-gray">
-              Перевірений фахівець
+      {/* Контент */}
+      <div className="[grid-area:text] flex flex-col h-full">
+        <div className="flex flex-col gap-[13px] only:gap-0 xl:gap-[18px] mb-[12px] xl:mb-[30px] flex-grow">
+          {/* Ім’я + іконка */}
+          <div className="flex items-center">
+            <span className="inline-flex items-center gap-2 whitespace-nowrap">
+              <h2 className="text-lg font-semibold text-fire leading-[122%] xl:leading-[150%]">
+                {name} {shortFamilyName}
+              </h2>
+              {is_verified && (
+                <svg
+                  className="w-[17px] h-[17px] fill-fire shrink-0"
+                  aria-label="Перевірений фахівець"
+                  role="img"
+                >
+                  <use href="/icons.svg#icon-verified" />
+                </svg>
+              )}
             </span>
           </div>
-        )}
 
-        {/* Досвід */}
-        <p className="text-sm text-cod-gray mb-8px">
-          <span className="font-semibold">Досвід:</span>{' '}
-          <span className="font-normal">{renderExperience()}</span>
-        </p>
+          {/* Рейтинг і відгуки */}
+          <div className="flex items-center min-h-[27px]">
+            {reviews_count &&
+            reviews_count > 0 &&
+            typeof rating === 'number' ? (
+              <>
+                <span className="text-lg text-fire font-semibold mr-[5px]">
+                  {rating.toFixed(1)}
+                </span>
+                <svg
+                  className="w-4 h-4 fill-fire mr-[12px]"
+                  aria-label="Зірка рейтингу"
+                  role="img"
+                >
+                  <use href="/icons.svg#icon-star" />
+                </svg>
+                <span className="text-sm text-cod-gray">
+                  ({reviews_count} відгуків)
+                </span>
+              </>
+            ) : (
+              <span className="text-base text-gray-400 italic">
+                Ще не оцінено
+              </span>
+            )}
+          </div>
 
-        {/* Bio (всередині тексту на десктопі) */}
-        <div className="hidden xl:block">
-          <Bio text={bio ?? null} />
+          {/* Досвід */}
+          <p className="text-sm text-cod-gray">
+            <span className="font-semibold">Досвід:</span>{' '}
+            <span className="font-normal">{renderExperience()}</span>
+          </p>
+
+          {/* Bio */}
+          <div className="hidden xl:block">
+            <Bio text={bio ?? null} />
+          </div>
         </div>
 
-        {/* Кнопка */}
+        {/* Кнопка для десктопу*/}
         <Button
           label="Відкрити профіль"
           type="button"
           onClick={() => navigate(`/specialists/${id}`)}
-          className="w-full min-h-[35px] mt-auto xl:min-w-[200px] xl:h-[40px] whitespace-nowrap text-sm xl:text-base font-normal text-alabaster text-center rounded-lg xl:rounded-xl bg-tenn hover:shadow-shark active:shadow-inset-shark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-tenn overflow-hidden text-ellipsis"
+          className="hidden xl:block max-w-[304px] max-h-[40px] w-full mt-auto  xl:min-w-[200px] xl:h-[40px] whitespace-nowrap text-sm xl:text-base font-normal text-alabaster text-center rounded-2xl bg-tenn hover:shadow-shark active:shadow-inset-shark focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-tenn overflow-hidden text-ellipsis"
           aria-label={`Відкрити профіль ${name} ${family_name}`}
         />
       </div>
-
-      {/* Мобільний опис — окремим рядком */}
-      <div className="[grid-area:bio] xl:hidden">
-        <Bio text={bio ?? null} />
-      </div>
+      {/* Кнопка для мобілки*/}
+      <Button
+        label="Відкрити профіль"
+        type="button"
+        onClick={() => navigate(`/specialists/${id}`)}
+        className="xl:hidden [grid-area:btn] max-w-[304px] w-full min-h-[35px] mt-auto xl:min-w-[200px] h-[40px] whitespace-nowrap text-sm xl:text-base font-normal text-alabaster text-center rounded-2xl bg-tenn hover:shadow-shark active:shadow-inset-shark focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-tenn  overflow-hidden text-ellipsis"
+        aria-label={`Відкрити профіль ${name} ${family_name}`}
+      />
     </div>
   );
 };

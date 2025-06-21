@@ -106,7 +106,7 @@ button:not(:disabled) {
   }
 
   .btn-lg {
-    @apply min-w-[304px];
+    @apply min-w-[304px] h-[40px];
   }
 
   .btn-2lg {
