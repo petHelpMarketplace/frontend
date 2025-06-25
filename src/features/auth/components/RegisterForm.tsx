@@ -5,35 +5,77 @@ import {
 } from '@/features/auth/validations/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
 import { useState } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [hasInput, setHasInput] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors, dirtyFields },
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
   });
 
-  const onSubmit = (data: RegisterSchemaType) => {
-    const finalData = {
-      ...data,
-      phone: '38' + data.phone, // Add the prefix +38
+  const onSubmit = async (data: RegisterSchemaType) => {
+    const requestBody = {
       email: data.email.toLowerCase(),
-      fullName: data.name.replace(/\s+/g, ' ').trim(),
+      // family_name: data.family_name?.trim() ?? '',
+      name: data.name.replace(/\s+/g, ' ').trim(),
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+      phone: '38' + data.phone,
     };
-    console.log('Sending data:', finalData);
-  };
+    console.log('Sending data:', requestBody);
 
+    setLoading(true);
+    setMessage(null);
+    setSuccess(false);
+    try {
+      const res = await fetch(
+        'https://petbackend-a2vg.onrender.com/api/v1/specialist/register',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody),
+        }
+      );
+      const result = await res.json();
+      if (res.ok) {
+        setSuccess(true);
+        setMessage(result.message || 'Успішно зареєстровано!');
+        setTimeout(() => {
+          navigate('/login');
+          reset();
+        }, 2000);
+      } else {
+        setSuccess(false);
+        setMessage(result.message || 'Помилка реєстрації');
+      }
+    } catch (err: unknown) {
+      console.error('Registration API call failed:', err);
+      setSuccess(false);
+      if (err instanceof Error) {
+        setMessage(`Мережева помилка: ${err.message}`);
+      } else {
+        setMessage('Мережева помилка');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
   const getInputClass = (error: boolean, success: boolean) => {
     if (error) return 'input-base border-red-tenn focus:border-red-tenn';
     if (success) return 'input-base border-tenn focus:border-tenn';
@@ -58,7 +100,11 @@ const RegisterForm = () => {
       <p className="text-[11px] text-mineShaft text-center">
         або заповніть форму
       </p>
-
+      {message && (
+        <p className={`text-center ${success ? 'text-tenn' : 'text-red-tenn'}`}>
+          {message}
+        </p>
+      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 xl:gap-4.5"
@@ -164,36 +210,38 @@ const RegisterForm = () => {
             type="password"
             placeholder="Повторити пароль"
             className={getInputClass(
-              !!errors.confirmPassword,
-              !!(!errors.confirmPassword && dirtyFields.confirmPassword)
+              !!errors.password_confirmation,
+              !!(
+                !errors.password_confirmation &&
+                dirtyFields.password_confirmation
+              )
             )}
-            {...register('confirmPassword')}
+            {...register('password_confirmation')}
           />
-          {errors.confirmPassword && <ErrorIcon />}
-          {!errors.confirmPassword && dirtyFields.confirmPassword && (
-            <SuccessIcon />
-          )}
+          {errors.password_confirmation && <ErrorIcon />}
+          {!errors.password_confirmation &&
+            dirtyFields.password_confirmation && <SuccessIcon />}
 
-          {errors.confirmPassword && (
+          {errors.password_confirmation && (
             <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
-              {errors.confirmPassword.message}
+              {errors.password_confirmation.message}
             </p>
           )}
         </div>
 
         <p className="text-[10px] font-semibold text-center text-cod-gray">
           Вже маєте обліковий запис?{' '}
-          <Link to={'#'} className="text-fire">
+          <Link to={'/login'} className="text-fire">
             Увійти
           </Link>
         </p>
-        <Button label="Зареєструватися" type="submit" />
+        <Button label="Зареєструватися" type="submit" disabled={loading} />
       </form>
 
       <p className="text-[10px] text-mineShaft text-center">
         Реєструючись, ви погоджуєтесь з{' '}
         <Link
-          to={'#'}
+          to={'/terms-and-conditions'}
           className="font-semibold underline [text-decoration-skip-ink:none] text-fire"
         >
           правилами
