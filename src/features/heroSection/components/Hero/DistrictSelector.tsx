@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx'; // Utility for conditional classNames
+import clsx from 'clsx';
 
+// TODO: Заміни константу AREAS на дані з бекенду, коли буде готовий API
 const areas = [
   { label: 'Голосіївський', value: 'Голосіївський' },
   { label: 'Дарницький', value: 'Дарницький' },

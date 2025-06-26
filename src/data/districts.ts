@@ -1,4 +1,4 @@
-// this code will be deleted when API is ready
+// TODO: Заміни константу AREAS на дані з бекенду, коли буде готовий API
 export const districts = [
   'Голосіївський',
   'Дарницький',

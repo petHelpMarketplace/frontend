@@ -32,9 +32,9 @@ const Header = () => {
 
   return (
     <>
-      <header className="relative z-20 flex shadow-box mx-auto h-[46px] max-w-[345px] mt-[10px] xl:max-w-[1232px] xl:h-[68px] xl:font-base xl:mt-2">
+      <header className="relative z-20 flex  mx-auto h-[46px] max-w-[345px] mt-[10px] xl:max-w-[1232px] xl:h-[68px] xl:font-base xl:mt-2">
         {!isHomePage && <GradientHeaderWrapper />}
-        <div className="relative z-30 bg-alabaster flex px-4 items-center justify-between rounded-[20px] container xl:rounded-2xl xl:px-24">
+        <div className="relative z-30 bg-alabaster flex px-4 items-center justify-between rounded-[20px] shadow-box container xl:rounded-2xl xl:px-24">
           {/* Left block: Language, Nav*/}
           <div className="hidden xl:flex items-center gap-10">
             <LangSwitch />
@@ -48,7 +48,7 @@ const Header = () => {
               iconFill="fill-fire"
               textColor="text-fire"
               textSize="text-[7px] xl:text-lg"
-              textShadow="text-shadow-xs xl:text-shadow-none"
+              textShadow="text-shadow-box xl:text-shadow-inset-mobile-logo"
             />
           </div>
 
@@ -61,7 +61,7 @@ const Header = () => {
             <UserActions
               onLogin={() => openLogin()} // Calls openLogin without closeMenu
               onRegister={() => openRegister()} // Calls openRegister without closeMenu
-              className="flex gap-2"
+              className="flex xl:gap-2"
             />
           </div>
         </div>

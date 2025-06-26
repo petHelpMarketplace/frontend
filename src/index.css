@@ -77,6 +77,8 @@
   --shadow-filter: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-shark: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-thin: inset 0 0px 1px 0 rgba(0, 0, 0, 0.25);
+  --shadow-inset-language: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-inset-mobile-logo: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
 }
 @layer utilities {
   .bg-hero-gradient {
@@ -121,7 +123,7 @@ button:not(:disabled) {
 
 @layer components {
   .btn {
-    @apply bg-tenn text-alabaster rounded-2xl xl:px-5 xl:min-w-[200px] xl:h-[40px] transition-shadow duration-300 ease-in-out;
+    @apply bg-tenn text-alabaster rounded-2xl  transition-shadow duration-300 ease-in-out;
   }
 
   .btn:hover,
@@ -134,7 +136,7 @@ button:not(:disabled) {
   }
 
   .btn-lg {
-    @apply xl:min-w-[304px];
+    @apply xl:px-5 max-w-[304px] xl:min-w-[200px] h-[40px];
   }
 
   .btn-2lg {

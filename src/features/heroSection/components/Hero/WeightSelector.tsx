@@ -1,14 +1,8 @@
-const weights = [
-  { label: 'Маленький', range: '0 - 7 кг' },
-  { label: 'Середній', range: '7 - 18 кг' },
-  { label: 'Великий', range: '18 - 45 кг' },
-  { label: 'Гігантський', range: '45+ кг' },
-];
-
+import { dogsWeight } from '@/shared/constants/dogsWeight';
 const WeightSelector = () => {
   return (
     <div className="grid grid-cols-2 gap-x-[37px] gap-y-5 mb-[53px] xl:flex xl:gap-[29px] xl:justify-between">
-      {weights.map(w => (
+      {dogsWeight.map(w => (
         <button
           type="button"
           key={w.label}
