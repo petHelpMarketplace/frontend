@@ -140,7 +140,7 @@ button:not(:disabled) {
   }
 
   .btn-2lg {
-    @apply max-w-[303px] max-h-[66px] py-5 xl:min-w-[304px] xl:min-h-[68px] xl:text-xl;
+    @apply min-w-[303px] max-h-[66px] py-5 xl:min-w-[304px] xl:max-h-[68px] xl:text-xl;
   }
 
   .btn-disabled {

@@ -150,7 +150,7 @@ export default function CustomSelect() {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="district-list"
-        className="w-full flex items-center justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 shadow-filter xl:shadow-none"
+        className="w-full flex items-center justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12"
         onClick={() => setIsOpen(prev => !prev)}
       >
         {selectedLabel}
@@ -177,7 +177,7 @@ export default function CustomSelect() {
         <ul
           id="district-list"
           ref={listRef}
-          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 shadow-filter border-tenn border-[2px] py-[13px] xl:py-5 xl:pl-12 text-shark bg-alabaster rounded-[15px]"
+          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 xl:pl-12 text-shark bg-alabaster rounded-[15px]"
           role="listbox"
           aria-label="Оберіть район"
           tabIndex={-1}

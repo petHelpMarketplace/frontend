@@ -107,9 +107,7 @@ const MobileMenu = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      className={clsx(
-        'px-9 pt-[93px] pb-[26px] max-w-[90vw] flex flex-col overflow-y-auto'
-      )}
+      className={clsx('px-9 pt-[93px] pb-[26px] flex flex-col overflow-y-auto')}
     >
       <div
         ref={menuRef}

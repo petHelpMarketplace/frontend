@@ -61,7 +61,7 @@ const Header = () => {
             <UserActions
               onLogin={() => openLogin()} // Calls openLogin without closeMenu
               onRegister={() => openRegister()} // Calls openRegister without closeMenu
-              className="flex xl:gap-2"
+              className="hidden xl:flex xl:gap-2"
             />
           </div>
         </div>
