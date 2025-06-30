@@ -10,7 +10,7 @@ const BurgerButton = ({ isOpen, onClick }: BurgerButtonProps) => (
     aria-expanded={isOpen ? 'true' : 'false'}
     aria-haspopup="menu"
     onClick={onClick}
-    className="w-10 h-10 flex items-center justify-center rounded-full bg-alabaster"
+    className="flex items-center justify-center rounded-full bg-alabaster"
   >
     {!isOpen ? (
       <svg className="w-4 h-2.5 fill-fire">

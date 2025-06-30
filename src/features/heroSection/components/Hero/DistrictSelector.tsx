@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 // TODO: Заміни константу AREAS на дані з бекенду, коли буде готовий API
@@ -16,9 +15,14 @@ const areas = [
   { label: 'Шевченківський', value: 'Шевченківський' },
 ];
 
-export default function CustomSelect() {
-  // State for current value and dropdown state
-  const [selected, setSelected] = useState<string>('');
+type DistrictSelectorProps = {
+  selected: string;
+  setSelected: (val: string) => void;
+};
+export default function DistrictSelector({
+  selected,
+  setSelected,
+}: DistrictSelectorProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // Refs for accessibility and focus management
@@ -26,18 +30,15 @@ export default function CustomSelect() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  const navigate = useNavigate();
-
   // Option select handler (mouse or keyboard)
   const handleSelect = useCallback(
     (value: string) => {
       setSelected(value);
       setIsOpen(false);
-      navigate(`/specialists?district=${encodeURIComponent(value)}`);
       // Return focus to the button for accessibility
       buttonRef.current?.focus();
     },
-    [navigate]
+    [setSelected]
   );
 
   // Close dropdown if clicking outside
@@ -140,7 +141,7 @@ export default function CustomSelect() {
 
   return (
     <div
-      className="relative w-full xl:w-1/2 border-[2px] border-tenn rounded-[15px] xl:rounded-2xl hover:shadow-shark"
+      className="relative w-full xl:w-1/2 border-[2px] border-tenn rounded-[15px] xl:rounded-2xl"
       ref={dropdownRef}
     >
       {/* Toggle button */}
@@ -150,7 +151,7 @@ export default function CustomSelect() {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="district-list"
-        className="w-full flex items-center justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12"
+        className="w-full flex items-center justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark rounded-[15px] xl:rounded-2xl"
         onClick={() => setIsOpen(prev => !prev)}
       >
         {selectedLabel}
@@ -177,10 +178,10 @@ export default function CustomSelect() {
         <ul
           id="district-list"
           ref={listRef}
-          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 xl:pl-12 text-shark bg-alabaster rounded-[15px]"
+          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 xl:pl-12 text-shark bg-alabaster rounded-[15px] hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark"
           role="listbox"
           aria-label="Оберіть район"
-          tabIndex={-1}
+          tabIndex={0}
           onKeyDown={handleListKeyDown}
         >
           {areas.map(area => (
@@ -189,12 +190,12 @@ export default function CustomSelect() {
               id={`area-${area.value}`}
               role="option"
               aria-selected={selected === area.value}
-              tabIndex={-1}
+              tabIndex={0}
               className={clsx(
-                'w-full h-[34px] flex items-center transition cursor-pointer',
+                'w-full h-[34px] flex items-center transition cursor-pointer focus:outline-none',
                 selected === area.value
                   ? 'bg-tenn text-white pointer-events-none'
-                  : 'hover:bg-tenn hover:text-alabaster'
+                  : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn  focus:text-alabaster'
               )}
               onClick={() => handleSelect(area.value)}
               data-value={area.value}

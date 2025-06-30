@@ -123,7 +123,7 @@ button:not(:disabled) {
 
 @layer components {
   .btn {
-    @apply bg-tenn text-alabaster rounded-2xl  transition-shadow duration-300 ease-in-out;
+    @apply bg-tenn text-alabaster rounded-2xl  transition-shadow duration-300 ease-in-out px-5 xl:min-w-[200px] h-[40px];
   }
 
   .btn:hover,
@@ -136,11 +136,11 @@ button:not(:disabled) {
   }
 
   .btn-lg {
-    @apply xl:px-5 max-w-[304px] xl:min-w-[200px] h-[40px];
+    @apply min-w-[304px];
   }
 
   .btn-2lg {
-    @apply min-w-[303px] max-h-[66px] py-5 xl:min-w-[304px] xl:max-h-[68px] xl:text-xl;
+    @apply min-w-[303px]  xl:min-w-[304px] min-h-[66px] xl:min-h-[68px] text-[22px] xl:text-xl;
   }
 
   .btn-disabled {
