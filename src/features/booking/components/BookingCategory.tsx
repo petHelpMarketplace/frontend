@@ -40,13 +40,13 @@ const BookingCategory = () => {
 
   return (
     <div>
-      <h1 className="xl:text-xl xl:font-semibold text-fire xl:mb-5">
+      <h1 className="text-lg xl:text-xl font-semibold text-fire mb-4 xl:mb-5">
         Оберіть категорію послуг
       </h1>
 
-      <div className="xl:flex xl:relative">
+      <div className="flex flex-col gap-6 xl:relative">
         {/* Dropdown */}
-        <div className="relative xl:w-[472px]" ref={dropdownRef}>
+        <div className="relative w-full xl:w-[472px]" ref={dropdownRef}>
           <h2 className="sr-only">Обрати тварину/послугу</h2>
           <button
             type="button"
@@ -62,7 +62,7 @@ const BookingCategory = () => {
             aria-expanded={dropdownOpen}
             aria-controls="services-dropdown"
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="input-base h-12 pl-12 pr-8 w-full text-left flex items-center justify-between"
+            className="input-base h-12 p-6 xl:pl-12 xl:pr-8 w-full text-left flex items-center justify-between"
           >
             {selectedService || 'Обрати послугу'}
             <svg
@@ -77,14 +77,14 @@ const BookingCategory = () => {
           {dropdownOpen && (
             <div
               id="services-dropdown"
-              className="absolute z-10 mt-2 flex gap-8 justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full px-19 py-7"
+              className="xl:absolute xl:z-10 mt-6 xl:mt-2 flex gap-8 justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full px-10 xl:px-19 py-5.5 xl:py-7"
             >
               {animals.map(animal => (
                 <div key={animal.name}>
-                  <h3 className="mb-1 text-fire text-center capitalize">
+                  <h3 className="text-fire text-center capitalize">
                     {animal.name}
                   </h3>
-                  <ul className="space-y-1">
+                  <ul className="leading-[187%]">
                     {animal.services.map(service => (
                       <li
                         key={service}
@@ -111,9 +111,9 @@ const BookingCategory = () => {
         </div>
 
         {/* Location radio buttons */}
-        <fieldset className="xl:flex xl:flex-col xl:text-sm gap-5 xl:absolute xl:left-[520px]">
+        <fieldset className="flex justify-center xl:flex-col text-xs xl:text-sm gap-10 xl:gap-5 xl:absolute xl:left-[520px]">
           <legend className="sr-only">Місце виконання замовлення</legend>
-          <label className="xl:flex xl:items-center xl:gap-[10px] leading-none">
+          <label className="flex items-center gap-[10px] leading-none">
             <input
               type="radio"
               value="customer"
@@ -125,7 +125,7 @@ const BookingCategory = () => {
             На виїзді
           </label>
 
-          <label className="xl:flex xl:items-center xl:gap-[10px] leading-none">
+          <label className="flex items-center gap-[10px] leading-none">
             <input
               type="radio"
               value="specialist"
@@ -140,12 +140,12 @@ const BookingCategory = () => {
 
         {/* Dog weight radio buttons */}
         {selectedAnimal === 'собаки' && (
-          <fieldset className="xl:flex xl:flex-col xl:text-sm gap-5 xl:absolute xl:left-[520px] xl:top-[126px]">
+          <fieldset className="grid grid-cols-2 xl:grid-cols-1 gap-x-6 gap-y-3 text-sm xl:absolute xl:left-[520px] xl:top-[126px] px-4 py-3 xl:p-0 border-[2px] rounded-xl border-fire xl:border-none">
             <legend className="sr-only">Вага собаки</legend>
             {dogsWeight.map(weight => (
               <label
                 key={weight.range}
-                className="xl:flex xl:items-center xl:gap-[10px]"
+                className="flex items-center gap-[10px]"
                 aria-selected={selectedWeight === weight.range}
                 aria-hidden={selectedAnimal !== 'собаки'}
               >
