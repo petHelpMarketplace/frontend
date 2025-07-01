@@ -1,5 +1,5 @@
 // #TODO Style component as per App design and adapt well to smaller/bigger screens screens.
-import Button from '@/components/Ui/Button/Button';
+import Button from '@/shared/components/UI/Button';
 import { useNavigate } from 'react-router-dom';
 
 interface ErrorFallbackProps {

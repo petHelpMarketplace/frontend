@@ -1,7 +1,5 @@
-import { useAppSelector } from "@/hooks/index";
-import { selectAnimal } from "@/features/hero/heroSelectors";
-
-
+import { useAppSelector } from '@/shared/hooks/index';
+import { selectAnimal } from '@/features/hero/heroSelectors';
 
 const dogservices = [
   { label: 'Вигул', icon: 'icon-dog-on-the-leash' },
@@ -16,11 +14,9 @@ const catservices = [
   { label: 'Грумінг', icon: 'icon-scissors' },
 ];
 
-
-
 const ServiceTypeSelector = () => {
   const selected = useAppSelector(selectAnimal);
-  const services = selected === "dog" ? dogservices : catservices;
+  const services = selected === 'dog' ? dogservices : catservices;
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-7">
       {services.map(service => (
