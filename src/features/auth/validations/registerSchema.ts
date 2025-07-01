@@ -24,7 +24,7 @@ export const registerSchema = z
   })
   .refine(data => data.password === data.password_confirmation, {
     message: 'Паролі не збігаються',
-    path: ['confirmPassword'],
+    path: ['password_confirmation'],
   });
 
 export type RegisterSchemaType = z.infer<typeof registerSchema>;
