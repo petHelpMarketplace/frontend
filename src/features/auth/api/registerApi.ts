@@ -1,17 +1,13 @@
-import type { RegisterResponse } from '@/features/auth/model/types';
-export interface RegisterRequest {
-  email: string;
-  name: string;
-  password: string;
-  password_confirmation: string;
-  phone: string;
-}
+import type {
+  RegisterRequest,
+  RegisterResponse,
+} from '@/features/auth/model/types';
 
 export async function registerUserApi(
   data: RegisterRequest
 ): Promise<RegisterResponse> {
   const res = await fetch(
-    `https://petbackend-a2vg.onrender.com/api/v1/specialist/register`,
+    `${import.meta.env.VITE_API_URL}/api/v1/specialist/register`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

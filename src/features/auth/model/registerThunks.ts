@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  registerUserApi,
-  type RegisterRequest,
-} from '@/features/auth/api/registerApi';
-import type { RegisterResponse } from '@/features/auth/model/types';
+import { registerUserApi } from '@/features/auth/api/registerApi';
+import type {
+  RegisterResponse,
+  RegisterRequest,
+} from '@/features/auth/model/types';
 
 export const registerUser = createAsyncThunk<
   RegisterResponse,
