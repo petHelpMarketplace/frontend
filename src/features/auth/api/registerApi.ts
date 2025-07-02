@@ -15,7 +15,7 @@ export async function registerUserApi(
   data: RegisterRequest
 ): Promise<RegisterResponse> {
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/specialist/register`,
+    `https://petbackend-a2vg.onrender.com/api/v1/specialist/register`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

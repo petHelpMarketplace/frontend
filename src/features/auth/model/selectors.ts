@@ -8,7 +8,3 @@ export const selectRegisterLoading = (state: RootState) =>
   state.registration.loading;
 export const selectRegisterSuccess = (state: RootState) =>
   state.registration.success;
-export const selectRegisterMessage = (state: RootState) =>
-  state.registration.message;
-export const selectRegisterError = (state: RootState) =>
-  state.registration.errors;

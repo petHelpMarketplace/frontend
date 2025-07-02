@@ -5,7 +5,7 @@ import {
 } from '@/features/auth/validations/registerSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -13,86 +13,61 @@ import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import { registerUser } from '@/features/auth/model/registerThunks';
 import { resetRegisterState } from '@/features/auth/model/registerSlice';
-import {
-  selectRegisterError,
-  selectRegisterLoading,
-  selectRegisterMessage,
-  selectRegisterSuccess,
-} from '@/features/auth/model/selectors';
+import { selectRegisterLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
+import { toast } from 'react-hot-toast';
 
-const RegisterForm = () => {
-  const navigate = useNavigate();
+const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
-
-  // Get states from Redux store
   const loading = useSelector(selectRegisterLoading);
-  const success = useSelector(selectRegisterSuccess);
-  const message = useSelector(selectRegisterMessage);
-  const backendErrors = useSelector(selectRegisterError);
-
-  const [hasInput, setHasInput] = useState(false); // This local state is fine for IMaskInput styling
+  const [hasInput, setHasInput] = useState(false);
 
   const {
     register,
     handleSubmit,
     control,
     reset,
-    setError,
-    clearErrors, // Add clearErrors for better error handling
     formState: { errors, dirtyFields },
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
   });
 
-  // Effect to reset Redux state when the component mounts (initial load of the form)
+  // Скидання стану форми при відкритті компонента
   useEffect(() => {
     dispatch(resetRegisterState());
   }, [dispatch]);
 
-  // Effect to apply backend errors to form fields
-  useEffect(() => {
-    // Clear existing form errors before applying new ones from the backend
-    // This helps avoid stale errors if the user fixes one field but another remains invalid
-    if (backendErrors) {
-      // It's good practice to clear existing errors from react-hook-form
-      // before setting new ones from the backend. This prevents accumulation.
-      Object.keys(errors).forEach(key =>
-        clearErrors(key as keyof RegisterSchemaType)
-      );
-
-      Object.entries(backendErrors).forEach(([field, msg]) => {
-        // Ensure the field name matches your Zod schema (e.g., 'phone' vs 'Phone')
-        setError(field as keyof RegisterSchemaType, { message: msg });
-      });
-    }
-  }, [backendErrors, setError, clearErrors, errors]); // Added clearErrors and errors to dependencies
-
-  // Effect for redirection and Redux state reset after successful registration
-  useEffect(() => {
-    if (success) {
-      const timer = setTimeout(() => {
-        navigate('/login');
-        dispatch(resetRegisterState()); // Reset Redux state after successful registration
-        reset(); // Reset React Hook Form fields
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [success, navigate, reset, dispatch]);
-
-  // Submit handler: Dispatches the Redux Thunk
   const onSubmit = async (data: RegisterSchemaType) => {
     const requestBody = {
       email: data.email.toLowerCase(),
       name: data.name.replace(/\s+/g, ' ').trim(),
       password: data.password,
       password_confirmation: data.password_confirmation,
-      phone: data.phone, // This will be the unmasked phone number due to unmask={true} in IMaskInput
+      phone: '+38' + data.phone,
     };
-    dispatch(registerUser(requestBody));
-  };
 
+    try {
+      await dispatch(registerUser(requestBody)).unwrap();
+      toast.success('Registration successful!');
+      setTimeout(() => {
+        onOpenLogin();
+        dispatch(resetRegisterState());
+        reset();
+      }, 1500);
+    } catch (error) {
+      let msg = 'Registration failed';
+      if (
+        error &&
+        typeof error === 'object' &&
+        'message' in error &&
+        typeof (error as { message?: unknown }).message === 'string'
+      ) {
+        msg = (error as { message: string }).message;
+      }
+      toast.error(msg);
+    }
+  };
   const getInputClass = (error: boolean, success: boolean) => {
     if (error) return 'input-base border-red-tenn focus:border-red-tenn';
     if (success) return 'input-base border-tenn focus:border-tenn';
@@ -116,14 +91,7 @@ const RegisterForm = () => {
       <p className="text-[11px] text-mineShaft text-center">
         або заповніть форму
       </p>
-      {message && (
-        <p
-          className={`text-center ${success ? 'text-tenn' : 'text-red-tenn'}`}
-          aria-live="polite"
-        >
-          {message}
-        </p>
-      )}
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 xl:gap-4.5"

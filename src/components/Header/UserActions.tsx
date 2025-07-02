@@ -31,7 +31,12 @@ export const UserActions = () => {
         isOpen={openRegisterModal}
         onClose={() => setOpenRegisterModal(false)}
       >
-        <RegisterForm />
+        <RegisterForm
+          onOpenLogin={() => {
+            setOpenRegisterModal(false);
+            setTimeout(() => setOpenLoginModal(true), 350);
+          }}
+        />
       </Modal>
     </div>
   );
