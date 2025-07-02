@@ -107,7 +107,7 @@ const BookingLocation = () => {
                         }
                       }}
                       onClick={() => handleDistrictClick(district)}
-                      className="w-full cursor-pointer hover:bg-tenn focus:bg-tenn hover:text-alabaster focus:text-alabaster focus:outline-none transition-all duration-300 ease-in-out py-[5px] px-6 xl:px-12"
+                      className="w-full cursor-pointer hover:bg-tenn focus:bg-tenn hover:text-alabaster focus:text-alabaster focus:outline-none transition-all duration-300 ease-in-out text-sm xl:text-base py-[5px] px-6 xl:px-12"
                       aria-selected={selectedDistrict === district}
                       {...register('district')}
                     >

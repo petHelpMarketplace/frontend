@@ -81,7 +81,7 @@ const BookingCategory = () => {
             >
               {animals.map(animal => (
                 <div key={animal.name}>
-                  <h3 className="text-fire text-center capitalize">
+                  <h3 className="text-fire text-center capitalize mb-1">
                     {animal.name}
                   </h3>
                   <ul className="leading-[187%]">
@@ -97,7 +97,7 @@ const BookingCategory = () => {
                           }
                         }}
                         onClick={() => handleServiceClick(service, animal.name)}
-                        className="cursor-pointer hover:text-fire hover:underline focus:text-fire focus:underline focus:outline-none transition-all duration-300 ease-in-out"
+                        className="text-sm xl:text-base leading-[214%] cursor-pointer hover:text-fire hover:underline focus:text-fire focus:underline focus:outline-none transition-all duration-300 ease-in-out"
                         aria-selected={selectedService === service}
                       >
                         {service}
