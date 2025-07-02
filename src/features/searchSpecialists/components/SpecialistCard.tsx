@@ -83,7 +83,6 @@ const SpecialistCard = ({ specialist }: Props) => {
               onError={e => {
                 setHasImageError(true);
                 e.currentTarget.onerror = null;
-                e.currentTarget.src = '/placeholder.webp';
               }}
               loading="lazy"
             />
