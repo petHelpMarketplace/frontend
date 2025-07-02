@@ -168,7 +168,7 @@ button:not(:disabled) {
   }
 
   .book-checkbox-btn+span {
-    @apply fill-none;
+    @apply fill-none border-fire;
   }
 
   .book-checkbox-btn:checked+span {

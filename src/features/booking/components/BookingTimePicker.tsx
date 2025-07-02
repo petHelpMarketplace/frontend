@@ -9,11 +9,11 @@ const BookingTimePicker = () => {
 
   return (
     <div>
-      <h2 className="xl:text-xl xl:font-semibold text-fire xl:mb-5">
+      <h2 className="text-lg xl:text-xl font-semibold text-fire mb-4 xl:mb-5">
         Час виконання замовлення
       </h2>
       <div className="relative">
-        <fieldset className="flex gap-2">
+        <fieldset className="flex gap-x-10 gap-y-2 xl:gap-2 justify-center flex-wrap">
           <legend className="sr-only">Оберіть час</legend>
           {timeSlots.map((slot, index) => {
             return (
@@ -27,7 +27,7 @@ const BookingTimePicker = () => {
                   value={slot}
                   className="book-checkbox-btn sr-only"
                 />
-                <span className="flex items-center justify-center w-5 h-5 rounded-[4px] border-2 border-fire">
+                <span className="flex items-center justify-center w-5 h-5 rounded-sm border-2">
                   <svg className="w-4 h-3">
                     <use href="/icons.svg#icon-tick" />
                   </svg>
