@@ -1,14 +1,10 @@
+import type { RegisterResponse } from '@/features/auth/model/types';
 export interface RegisterRequest {
   email: string;
   name: string;
   password: string;
   password_confirmation: string;
   phone: string;
-}
-
-export interface RegisterResponse {
-  field: string;
-  message: string;
 }
 
 export async function registerUserApi(
@@ -24,5 +20,19 @@ export async function registerUserApi(
   );
   const result = await res.json();
   if (!res.ok) throw result;
-  return result;
+
+  // Перевіряємо, чи прийшов правильний об'єкт
+  if (
+    typeof result === 'object' &&
+    result !== null &&
+    'id' in result &&
+    'message' in result &&
+    typeof result.id === 'string' &&
+    typeof result.message === 'string'
+  ) {
+    return result as RegisterResponse;
+  }
+
+  // Якщо не той shape — кидаємо помилку
+  throw { message: 'Unexpected response from server' };
 }
