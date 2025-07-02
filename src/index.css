@@ -167,7 +167,6 @@ button:not(:disabled) {
     /* Chrome, Safari, Opera */
   }
 
-
   .book-checkbox-btn+span {
     @apply fill-none;
   }
@@ -180,6 +179,4 @@ button:not(:disabled) {
     box-shadow: 0 0 0 1000px var(--color-alabaster) inset !important;
     -webkit-text-fill-color: inherit !important;
   }
-
-
 }
