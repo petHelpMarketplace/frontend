@@ -93,13 +93,13 @@ const SpecialistCard = ({ specialist }: Props) => {
 
       {/* Контент */}
       <div className="[grid-area:text] flex flex-col h-full">
-        <div className="flex flex-col gap-[13px] only:gap-0 xl:gap-[18px] mb-[12px] xl:mb-[30px] flex-grow">
+        <div className="flex flex-col gap-[13px] only:gap-0 xl:gap-[18px] xl:mb-[30px] flex-grow">
           {/* Ім’я + іконка */}
           <div className="flex items-center">
             <span className="inline-flex items-center gap-2 whitespace-nowrap">
-              <h2 className="text-lg font-semibold text-fire leading-[122%] xl:leading-[150%]">
+              <div className="text-lg font-semibold text-fire leading-[122%] xl:leading-[150%]">
                 {name} {shortFamilyName}
-              </h2>
+              </div>
               {is_verified && (
                 <svg
                   className="w-[17px] h-[17px] fill-fire shrink-0"

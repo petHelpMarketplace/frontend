@@ -5,7 +5,7 @@ type Props = {
   specialists: Specialist[];
 };
 const gridClasses =
-  'grid grid-cols-1 justify-items-center gap-y-[30px] mb-[30px] xl:grid-cols-2 xl:gap-x-10 xl:gap-y-10 xl:mb-[58px]';
+  'grid grid-cols-1 justify-items-center gap-y-5 mb-5 xl:grid-cols-2 xl:gap-x-10 xl:gap-y-10 xl:mb-[58px]';
 const SpecialistsList = ({ specialists }: Props) => {
   return (
     <div className={gridClasses}>

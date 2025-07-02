@@ -43,7 +43,7 @@ const Pagination = ({ totalPages }: Props) => {
 
   return (
     <nav
-      className="flex justify-center items-center gap-5 xl:gap-[30px] select-none"
+      className="flex justify-center items-center gap-5 xl:gap-[30px] select-none mb-10 xl:mb-[58px]"
       role="navigation"
       aria-label="Пагінація"
       aria-live="polite"

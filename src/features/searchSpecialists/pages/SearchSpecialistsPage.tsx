@@ -8,7 +8,7 @@ import StateDisplay from '@/features/searchSpecialists/components/StateDisplay';
 import SpecialistCardSkeleton from '@/features/searchSpecialists/components/SpecialistCardSkeleton';
 const SearchSpecialistsPage = () => {
   const specialistsPerPage = 16;
-  const [searchParams] = useSearchParams()
+  const [searchParams] = useSearchParams();
 
   const page = Number(searchParams.get('page')) || 1;
 
@@ -48,9 +48,8 @@ const SearchSpecialistsPage = () => {
     return () => clearTimeout(timer);
   }, [page]);
 
-  
   const renderSkeletons = () => (
-    <div className="grid grid-cols-1 gap-[30px] mb-[30px] xl:grid-cols-2 xl:gap-x-[40px] xl:gap-y-[40px] xl:mb-[58px]">
+    <div className="grid grid-cols-1 gap-y-5 mb-[30px] xl:grid-cols-2 xl:gap-x-[40px] xl:gap-y-[40px] xl:mb-[58px]">
       {Array.from({ length: skeletonCount }).map((_, i) => (
         <SpecialistCardSkeleton key={`skeleton-${i}`} />
       ))}
@@ -70,10 +69,10 @@ const SearchSpecialistsPage = () => {
   }
 
   return (
-    <div className="w-full max-w-[375px] xl:max-w-[1280px] mx-auto px-[15px] pt-[39px] pb-[30px] xl:px-30 xl:pt-[69px] xl:pb-[58px]">
+    <div className="w-full max-w-[375px] xl:max-w-[1280px] mx-auto px-[15px] pt-[39px] xl:px-30 xl:pt-[69px]">
       <BackButton />
       {!loading && !hasError && specialistsToShow.length > 0 && (
-        <h1 className="font-semibold text-sm xl:text-xl text-fire mb-[39px] xl:mb-5">
+        <h1 className="font-semibold text-sm xl:text-xl text-fire mb-[25px] xl:mb-5">
           Ми знайшли фахівців для вашого{' '}
           <span className="whitespace-nowrap inline-flex items-center gap-2">
             запиту
@@ -85,9 +84,7 @@ const SearchSpecialistsPage = () => {
       )}
       <div ref={listRef}>{content}</div>
       {!loading && !hasError && specialistsToShow.length > 0 && (
-        <Pagination
-          totalPages={totalPages}
-        />
+        <Pagination totalPages={totalPages} />
       )}
     </div>
   );
