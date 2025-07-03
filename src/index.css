@@ -92,7 +92,7 @@ button:not(:disabled) {
 
 @layer components {
   .btn {
-    @apply bg-tenn text-alabaster rounded-2xl px-5 min-w-[200px] h-[40px] transition-shadow duration-300 ease-in-out;
+    @apply bg-tenn text-alabaster rounded-2xl  transition-shadow duration-300 ease-in-out px-5 xl:min-w-[200px] h-[40px];
   }
 
   .btn:hover,
@@ -109,7 +109,7 @@ button:not(:disabled) {
   }
 
   .btn-2lg {
-    @apply min-w-[304px] min-h-[68px] text-xl;
+    @apply min-w-[303px]  xl:min-w-[304px] min-h-[66px] xl:min-h-[68px] text-[22px] xl:text-xl;
   }
 
   .btn-disabled {
@@ -168,20 +168,16 @@ button:not(:disabled) {
     /* Chrome, Safari, Opera */
   }
 
+  .book-checkbox-btn + span {
+    @apply fill-none;
+  }
 
-.book-checkbox-btn + span {
-  @apply fill-none;
-}
-
-.book-checkbox-btn:checked + span {
-  @apply bg-tenn fill-alabaster border-tenn;
-}
+  .book-checkbox-btn:checked + span {
+    @apply bg-tenn fill-alabaster border-tenn;
+  }
 
   input:-webkit-autofill {
     box-shadow: 0 0 0 1000px var(--color-alabaster) inset !important;
     -webkit-text-fill-color: inherit !important;
   }
-
- 
 }
-
