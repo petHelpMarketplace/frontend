@@ -53,7 +53,7 @@ const BookingDatePicker = () => {
           className="absolute z-10 left-0 xl:left-[-20px] top-1/2 -translate-y-1/2"
         >
           <svg
-            className={`w-2.5 xl:w-3.5 h-5 xl:h-6.5  ${
+            className={`w-2.5 xl:w-3.5 h-5 xl:h-6.5 ${
               showLeftArrow ? 'fill-fire' : 'fill-fire/40 cursor-auto'
             }`}
           >
@@ -109,7 +109,7 @@ const BookingDatePicker = () => {
           })}
         </div>
         {errors.date?.message && (
-          <p className="absolute text-red-tenn text-[10px] pl-4 mt-1">
+          <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-4 mt-1">
             {String(errors.date.message)}
           </p>
         )}

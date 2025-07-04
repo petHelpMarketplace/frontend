@@ -44,7 +44,7 @@ const BookingCategory = () => {
         Оберіть категорію послуг
       </h1>
 
-      <div className="flex flex-col gap-6 xl:relative">
+      <div className="flex flex-col gap-6 xl:gap-0 xl:relative">
         {/* Dropdown */}
         <div className="relative w-full xl:w-[472px]" ref={dropdownRef}>
           <h2 className="sr-only">Обрати тварину/послугу</h2>
@@ -108,10 +108,15 @@ const BookingCategory = () => {
               ))}
             </div>
           )}
+          {errors.service?.message && (
+            <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-12 mt-1">
+              {String(errors.service.message)}
+            </p>
+          )}
         </div>
 
         {/* Location radio buttons */}
-        <fieldset className="flex justify-center xl:flex-col text-xs xl:text-sm gap-10 xl:gap-5 xl:absolute xl:left-[520px]">
+        <fieldset className="flex justify-center xl:flex-col text-xs xl:text-sm gap-10 xl:gap-6 xl:absolute xl:left-[520px]">
           <legend className="sr-only">Місце виконання замовлення</legend>
           <label className="flex items-center gap-[10px] leading-none">
             <input
@@ -140,43 +145,38 @@ const BookingCategory = () => {
 
         {/* Dog weight radio buttons */}
         {selectedAnimal === 'собаки' && (
-          <fieldset className="grid grid-cols-2 xl:grid-cols-1 gap-x-6 gap-y-3 text-sm xl:absolute xl:left-[520px] xl:top-[126px] px-4 py-3 xl:p-0 border-[2px] rounded-xl border-fire xl:border-none">
-            <legend className="sr-only">Вага собаки</legend>
-            {dogsWeight.map(weight => (
-              <label
-                key={weight.range}
-                className="flex items-center gap-[10px]"
-                aria-selected={selectedWeight === weight.range}
-                aria-hidden={selectedAnimal !== 'собаки'}
-              >
-                <input
-                  type="radio"
-                  value={weight.range}
-                  {...register('weight')}
-                  checked={selectedWeight === weight.range}
-                  onChange={() => setValue('weight', weight.range)}
-                  className="book-radio-btn"
-                />
-                {weight.label} {weight.range}
-              </label>
-            ))}
-
+          <div className="xl:absolute xl:left-[520px] xl:top-[130px]">
+            <fieldset className="grid grid-cols-2 xl:grid-cols-1 gap-x-6 gap-y-3 xl:gap-y-6.5 text-sm px-4 py-3 xl:p-0 border-[2px] rounded-2xl border-tenn xl:border-none">
+              <legend className="sr-only">Вага собаки</legend>
+              {dogsWeight.map(weight => (
+                <label
+                  key={weight.range}
+                  className="flex items-center gap-[10px]"
+                  aria-selected={selectedWeight === weight.range}
+                  aria-hidden={selectedAnimal !== 'собаки'}
+                >
+                  <input
+                    type="radio"
+                    value={weight.range}
+                    {...register('weight')}
+                    checked={selectedWeight === weight.range}
+                    onChange={() => setValue('weight', weight.range)}
+                    className="book-radio-btn"
+                  />
+                  {weight.label} {weight.range}
+                </label>
+              ))}
+            </fieldset>
             {errors.weight?.message && (
               <div className="relative">
-                <p className="absolute text-red-tenn text-[10px] pl-8">
+                <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-8 mt-1">
                   {String(errors.weight.message)}
                 </p>
               </div>
             )}
-          </fieldset>
+          </div>
         )}
       </div>
-
-      {errors.service?.message && (
-        <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
-          {String(errors.service.message)}
-        </p>
-      )}
     </div>
   );
 };

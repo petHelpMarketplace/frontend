@@ -16,10 +16,14 @@ const BookingTimePicker = () => {
         <fieldset className="flex gap-x-10 gap-y-2 xl:gap-2 justify-center flex-wrap">
           <legend className="sr-only">Оберіть час</legend>
           {timeSlots.map((slot, index) => {
+            const isAnyTime = slot === 'Будь-коли';
+
             return (
               <label
                 key={index}
-                className="h-10 flex items-center gap-2 leading-none text-sm px-[10px] w-[132px] border-2 border-fire rounded-2xl hover:cursor-pointer"
+                className={`h-10 flex items-center gap-2 leading-none text-sm px-[10px] w-[132px] border-2 border-fire rounded-2xl hover:cursor-pointer ${
+                  isAnyTime ? 'order-last xl:order-first' : ''
+                }`}
               >
                 <input
                   type="checkbox"
@@ -39,7 +43,7 @@ const BookingTimePicker = () => {
         </fieldset>
 
         {errors.time?.message && (
-          <p className="absolute text-red-tenn text-[10px] pl-4 mt-1">
+          <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-4 mt-1">
             {String(errors.time.message)}
           </p>
         )}

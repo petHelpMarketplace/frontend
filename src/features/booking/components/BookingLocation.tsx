@@ -84,7 +84,7 @@ const BookingLocation = () => {
               </button>
 
               {errors.district?.message && (
-                <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
+                <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-12 mt-0.5 xl:mt-1">
                   {String(errors.district.message)}
                 </p>
               )}
@@ -128,7 +128,7 @@ const BookingLocation = () => {
               aria-hidden={selectedLocationOption !== 'customer'}
             />
             {errors.street?.message && (
-              <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
+              <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-12 mt-0.5 xl:mt-1">
                 {String(errors.street.message)}
               </p>
             )}
@@ -144,7 +144,7 @@ const BookingLocation = () => {
               className="input-base h-12 pl-6 xl:pl-12 xl:w-[472px]"
             />
             {errors.house?.message && (
-              <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
+              <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-12 mt-0.5 xl:mt-1">
                 {String(errors.house.message)}
               </p>
             )}
