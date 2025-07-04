@@ -11,7 +11,8 @@ type Props = {
 const config = {
   empty: {
     animationData: emptyAnimation,
-    size: 200,
+    sizeMobile: 160,
+    sizeDesktop: 200,
     message: (
       <>
         На жаль, ми не знайшли фахівців за вашим запитом.
@@ -22,23 +23,34 @@ const config = {
   },
   error: {
     animationData: errorAnimation,
-    size: 300,
+    sizeMobile: 220,
+    sizeDesktop: 300,
     message: <>Щось пішло не так. Спробуйте ще раз пізніше.</>,
   },
 };
 
 const StateDisplay = ({ type }: Props) => {
-  const { animationData, size, message } = config[type];
+  const { animationData, sizeMobile, sizeDesktop, message } = config[type];
 
   return (
-    <div className="flex flex-col items-center gap-6 my-10 px-4">
-      <Lottie
-        autoplay
-        loop
-        animationData={animationData}
-        style={{ width: `${size}px`, height: `${size}px` }}
-      />
-      <div className="text-center text-lg text-cod-gray">{message}</div>
+    <div className="flex flex-col items-center gap-6 my-6 xl:my-10 px-4 text-center">
+      {/* Мобільна анімація */}
+      <div
+        className="block xl:hidden"
+        style={{ width: sizeMobile, height: sizeMobile }}
+      >
+        <Lottie autoplay loop animationData={animationData} />
+      </div>
+
+      {/* Десктопна анімація */}
+      <div
+        className="hidden xl:block"
+        style={{ width: sizeDesktop, height: sizeDesktop }}
+      >
+        <Lottie autoplay loop animationData={animationData} />
+      </div>
+
+      <div className="text-base xl:text-lg text-cod-gray">{message}</div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Pagination from '@/features/searchSpecialists/components/Pagination';
 import SpecialistsList from '@/features/searchSpecialists/components/SpecialistsList';
 import { mockSpecialists } from '@/data/mockSpecialists';
@@ -7,12 +8,14 @@ import StateDisplay from '@/features/searchSpecialists/components/StateDisplay';
 import SpecialistCardSkeleton from '@/features/searchSpecialists/components/SpecialistCardSkeleton';
 const SearchSpecialistsPage = () => {
   const specialistsPerPage = 16;
-  const [page, setPage] = useState(1);
+  const [searchParams] = useSearchParams();
+
+  const page = Number(searchParams.get('page')) || 1;
+
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [skeletonCount, setSkeletonCount] = useState(16);
   const [isFirstRender, setIsFirstRender] = useState(true);
-
   const listRef = useRef<HTMLDivElement | null>(null);
 
   const totalPages = Math.ceil(mockSpecialists.length / specialistsPerPage);
@@ -45,11 +48,8 @@ const SearchSpecialistsPage = () => {
     return () => clearTimeout(timer);
   }, [page]);
 
-  const handleChangePage = (newPage: number) => {
-    setPage(newPage);
-  };
   const renderSkeletons = () => (
-    <div className="grid grid-cols-2 gap-x-[40px] gap-y-[40px] mb-[58px]">
+    <div className="grid grid-cols-1 gap-y-5 mb-[30px] xl:grid-cols-2 xl:gap-x-[40px] xl:gap-y-[40px] xl:mb-[58px]">
       {Array.from({ length: skeletonCount }).map((_, i) => (
         <SpecialistCardSkeleton key={`skeleton-${i}`} />
       ))}
@@ -69,23 +69,22 @@ const SearchSpecialistsPage = () => {
   }
 
   return (
-    <div className="max-w-[1040px] mx-auto pt-[47px] pb-[58px]">
+    <div className="w-full max-w-[375px] xl:max-w-[1280px] mx-auto px-[15px] pt-[39px] xl:px-30 xl:pt-[69px]">
       <BackButton />
       {!loading && !hasError && specialistsToShow.length > 0 && (
-        <h1 className="flex items-center gap-2 font-semibold text-xl text-fire mb-5">
-          Ми знайшли фахівців для вашого запиту
-          <svg className="w-[17px] h-[15px] fill-fire">
-            <use href="/icons.svg#icon-two-paws-print" />
-          </svg>
+        <h1 className="font-semibold text-sm xl:text-xl text-fire mb-[25px] xl:mb-5">
+          Ми знайшли фахівців для вашого{' '}
+          <span className="whitespace-nowrap inline-flex items-center gap-2">
+            запиту
+            <svg className="w-[15px] xl:w-[17px] h-[15px] fill-fire">
+              <use href="/icons.svg#icon-two-paws-print" />
+            </svg>
+          </span>
         </h1>
       )}
       <div ref={listRef}>{content}</div>
       {!loading && !hasError && specialistsToShow.length > 0 && (
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onChange={handleChangePage}
-        />
+        <Pagination totalPages={totalPages} />
       )}
     </div>
   );
