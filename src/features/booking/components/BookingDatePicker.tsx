@@ -109,7 +109,7 @@ const BookingDatePicker = () => {
           })}
         </div>
         {errors.date?.message && (
-          <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-4 mt-1">
+          <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-4 mt-1">
             {String(errors.date.message)}
           </p>
         )}

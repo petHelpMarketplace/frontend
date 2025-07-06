@@ -109,7 +109,7 @@ const BookingCategory = () => {
             </div>
           )}
           {errors.service?.message && (
-            <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-12 mt-1">
+            <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-1">
               {String(errors.service.message)}
             </p>
           )}
@@ -169,7 +169,7 @@ const BookingCategory = () => {
             </fieldset>
             {errors.weight?.message && (
               <div className="relative">
-                <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-8 mt-1">
+                <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-8 mt-1">
                   {String(errors.weight.message)}
                 </p>
               </div>

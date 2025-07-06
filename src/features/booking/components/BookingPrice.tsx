@@ -40,7 +40,7 @@ const BookingPrice = () => {
               />
 
               {errors.email?.message && (
-                <p className="absolute text-red-tenn text-[10px] pl-6.5 xl:pl-12 mt-[1px]">
+                <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-[1px]">
                   {String(errors.email.message)}
                 </p>
               )}
