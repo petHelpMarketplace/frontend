@@ -2,12 +2,13 @@ import type {
   RegisterRequest,
   RegisterResponse,
 } from '@/features/auth/model/types';
+import { API_URL } from '@/shared/constants/api';
 
 export async function registerUserApi(
   data: RegisterRequest
 ): Promise<RegisterResponse> {
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/v1/specialist/register`,
+    `${API_URL}/api/v1/specialist/register`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
