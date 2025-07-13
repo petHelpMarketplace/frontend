@@ -14,7 +14,7 @@ const SpecialistReview = () => {
     selectedLocationOption === 'customer' ? 'line-clamp-8' : 'line-clamp-5';
 
   return (
-    <div>
+    <div className="hidden xl:block">
       <h2 className="text-xl font-semibold text-fire mb-5 text-center">
         Останні відгуки
       </h2>
