@@ -19,7 +19,7 @@ const SearchButton = () => {
         isOpen={openRegisterModal}
         onClose={() => setOpenRegisterModal(false)}
       >
-        <RegisterForm />
+        <RegisterForm onOpenLogin={() => setOpenRegisterModal(false)} />
       </Modal>
     </>
   );

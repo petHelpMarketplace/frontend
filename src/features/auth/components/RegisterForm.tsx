@@ -7,39 +7,72 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
+import { registerUser } from '@/features/auth/model/registerThunks';
+import { resetRegisterState } from '@/features/auth/model/registerSlice';
+import { selectRegisterLoading } from '@/features/auth/model/selectors';
+import type { AppDispatch } from '@/app/store';
+import { toast } from 'react-hot-toast';
 
-const RegisterForm = () => {
+const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const loading = useSelector(selectRegisterLoading);
   const [hasInput, setHasInput] = useState(false);
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors, dirtyFields },
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
   });
 
-  const onSubmit = (data: RegisterSchemaType) => {
-    const finalData = {
-      ...data,
-      phone: '38' + data.phone, // Add the prefix +38
-      email: data.email.toLowerCase(),
-      fullName: data.name.replace(/\s+/g, ' ').trim(),
-    };
-    console.log('Sending data:', finalData);
-  };
+  // Скидання стану форми при відкритті компонента
+  useEffect(() => {
+    dispatch(resetRegisterState());
+  }, [dispatch]);
 
+  const onSubmit = async (data: RegisterSchemaType) => {
+    const requestBody = {
+      email: data.email.toLowerCase(),
+      name: data.name.replace(/\s+/g, ' ').trim(),
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+      phone: '+38' + data.phone,
+    };
+
+    try {
+      await dispatch(registerUser(requestBody)).unwrap();
+      toast.success('Registration successful!');
+      setTimeout(() => {
+        onOpenLogin();
+        dispatch(resetRegisterState());
+        reset();
+      }, 1500);
+    } catch (error) {
+      let msg = 'Registration failed';
+      if (
+        error &&
+        typeof error === 'object' &&
+        'message' in error &&
+        typeof (error as { message?: unknown }).message === 'string'
+      ) {
+        msg = (error as { message: string }).message;
+      }
+      toast.error(msg);
+    }
+  };
   const getInputClass = (error: boolean, success: boolean) => {
     if (error) return 'input-base border-red-tenn focus:border-red-tenn';
     if (success) return 'input-base border-tenn focus:border-tenn';
     return 'input-base';
   };
-
   return (
     <div className="flex flex-col gap-4 xl:gap-4.5">
       <h3 className="text-fire uppercase text-center">РЕЄСТРАЦІЯ</h3>
@@ -164,36 +197,38 @@ const RegisterForm = () => {
             type="password"
             placeholder="Повторити пароль"
             className={getInputClass(
-              !!errors.confirmPassword,
-              !!(!errors.confirmPassword && dirtyFields.confirmPassword)
+              !!errors.password_confirmation,
+              !!(
+                !errors.password_confirmation &&
+                dirtyFields.password_confirmation
+              )
             )}
-            {...register('confirmPassword')}
+            {...register('password_confirmation')}
           />
-          {errors.confirmPassword && <ErrorIcon />}
-          {!errors.confirmPassword && dirtyFields.confirmPassword && (
-            <SuccessIcon />
-          )}
+          {errors.password_confirmation && <ErrorIcon />}
+          {!errors.password_confirmation &&
+            dirtyFields.password_confirmation && <SuccessIcon />}
 
-          {errors.confirmPassword && (
+          {errors.password_confirmation && (
             <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
-              {errors.confirmPassword.message}
+              {errors.password_confirmation.message}
             </p>
           )}
         </div>
 
         <p className="text-[10px] font-semibold text-center text-cod-gray">
           Вже маєте обліковий запис?{' '}
-          <Link to={'#'} className="text-fire">
+          <Link to={'/login'} className="text-fire">
             Увійти
           </Link>
         </p>
-        <Button label="Зареєструватися" type="submit" />
+        <Button label="Зареєструватися" type="submit" disabled={loading} />
       </form>
 
       <p className="text-[10px] text-mineShaft text-center">
         Реєструючись, ви погоджуєтесь з{' '}
         <Link
-          to={'#'}
+          to={'/terms-and-conditions'}
           className="font-semibold underline [text-decoration-skip-ink:none] text-fire"
         >
           правилами
