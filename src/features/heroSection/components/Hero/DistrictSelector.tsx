@@ -178,7 +178,7 @@ export default function DistrictSelector({
         <ul
           id="district-list"
           ref={listRef}
-          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 xl:pl-12 text-shark bg-alabaster rounded-[15px] hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark"
+          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 text-shark bg-alabaster rounded-[15px] hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark"
           role="listbox"
           aria-label="Оберіть район"
           tabIndex={0}
@@ -192,7 +192,7 @@ export default function DistrictSelector({
               aria-selected={selected === area.value}
               tabIndex={0}
               className={clsx(
-                'w-full h-[34px] flex items-center transition cursor-pointer focus:outline-none',
+                'w-full h-[34px] flex items-center transition cursor-pointer focus:outline-none pl-[22px] xl:pl-11',
                 selected === area.value
                   ? 'bg-tenn text-white pointer-events-none'
                   : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn  focus:text-alabaster'
@@ -200,7 +200,7 @@ export default function DistrictSelector({
               onClick={() => handleSelect(area.value)}
               data-value={area.value}
             >
-              <span className="pl-[22px] xl:pl-11">{area.label}</span>
+              <span className="">{area.label}</span>
             </li>
           ))}
         </ul>
