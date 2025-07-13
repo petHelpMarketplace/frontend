@@ -12,7 +12,7 @@ const AnimalSelector = () => {
   };
 
   return (
-    <div className="flex justify-center rounded-[15px] xl:rounded-[16px] bg-alabaster  w-full xl:w-1/2 border-[2px] border-tenn">
+    <div className="flex justify-center rounded-[15px] xl:rounded-[16px] overflow-hidden bg-alabaster  w-full xl:w-1/2 border-[2px] border-tenn">
       {(['dog', 'cat'] as const).map(animal => (
         <button
           key={animal}
