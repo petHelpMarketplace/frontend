@@ -28,7 +28,7 @@ const BookingForm = () => {
   return (
     <form
       onSubmit={methods.handleSubmit(onSubmit)}
-      className="flex flex-col gap-6 xl:gap-[30px] xl:w-[692px]"
+      className="flex flex-col gap-9 xl:gap-[30px] xl:w-[692px]"
       noValidate
     >
       <BookingCategory />

@@ -44,7 +44,7 @@ const BookingCategory = () => {
         Оберіть категорію послуг
       </h1>
 
-      <div className="flex flex-col gap-6 xl:gap-0 xl:relative">
+      <div className="flex flex-col gap-9 xl:gap-0 xl:relative">
         {/* Dropdown */}
         <div className="relative w-full xl:w-[472px]" ref={dropdownRef}>
           <h2 className="sr-only">Обрати тварину/послугу</h2>

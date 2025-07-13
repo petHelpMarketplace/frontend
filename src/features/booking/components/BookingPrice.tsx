@@ -30,7 +30,7 @@ const BookingPrice = () => {
 
         <div className="flex flex-col gap-6 xl:gap-3">
           <div>
-            <div className="relative mb-3">
+            <div className="relative mb-4">
               <input
                 type="email"
                 {...register('email')}
@@ -40,7 +40,7 @@ const BookingPrice = () => {
               />
 
               {errors.email?.message && (
-                <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-[1px]">
+                <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-1">
                   {String(errors.email.message)}
                 </p>
               )}
