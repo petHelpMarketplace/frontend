@@ -4,14 +4,12 @@ type HeroImageProps = {
 const HeroImage = ({ className = '' }: HeroImageProps) => {
   return (
     <div
-      className={`hidden xl:block relative overflow-visible w-full max-w-md ${className}`}
+      className={`hidden xl:block absolute right-[51px] top-[41px] overflow-visible w-full max-w-[524px] max-h-[738px] ${className}`}
     >
       <img
         src="/images/hero-mops-1x.png"
         alt="Dog"
-        width={524}
-        height={738}
-        className="relative z-15 w-full h-auto"
+        className="relative z-50 w-full h-auto"
       />
     </div>
   );

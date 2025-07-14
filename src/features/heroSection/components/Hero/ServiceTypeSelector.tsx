@@ -25,7 +25,7 @@ const ServiceTypeSelector = () => {
       {services.map(service => (
         <button
           key={service.label}
-          className="flex flex-col items-center justify-center py-4.5 rounded-[14px] text-[15px] leading-[120%] xl:rounded-2xl border-tenn border-[2px] hover:bg-tenn hover:text-alabaster  hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark group xl:gap-2 xl:py-3 xl:px-13 xl:flex-row"
+          className="flex flex-col items-center justify-center py-4.5 rounded-[14px] text-[15px] leading-[120%] xl:rounded-2xl border-tenn border-[2px] hover:bg-tenn hover:text-alabaster  hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark group xl:gap-2 xl:py-4 xl:px-13"
         >
           <svg
             className="hidden xl:block h-[52px] w-[55px] shrink-0 fill-tenn group-hover:fill-alabaster"
