@@ -29,24 +29,24 @@ const BookingLocation = () => {
 
   return (
     <div>
-      <h2 className="xl:text-xl xl:font-semibold text-fire xl:mb-5">
+      <h2 className="text-lg xl:text-xl font-semibold text-fire mb-4 xl:mb-5">
         Місце виконання замовлення
       </h2>
       {selectedLocationOption === 'specialist' ? (
         <div
-          className={`flex items-center input-base h-12 pl-12 xl:w-[472px] text-fire select-none cursor-not-allowed ${
-            selectedAnimal === 'собаки' ? ' mb-[63px]' : ''
+          className={`flex items-center input-base h-12 pl-6 xl:pl-12 xl:w-[472px] text-fire select-none cursor-not-allowed ${
+            selectedAnimal === 'собаки' ? 'xl:mb-[63px]' : ''
           }`}
           aria-label={`Місце виконання замовлення: Київ / ${districts[9]}`}
         >
           Київ / {districts[9]}
         </div>
       ) : (
-        <div className="xl:flex xl:flex-col xl:gap-[21px]">
+        <div className="flex flex-col gap-5 xl:gap-[21px]">
           <input
             type="text"
             defaultValue="Київ"
-            className="input-base h-12 pl-12 xl:w-[472px] pointer-events-none placeholder:text-fire text-fire select-none"
+            className="input-base h-12 pl-6 xl:pl-12 xl:w-[472px] pointer-events-none placeholder:text-fire text-fire select-none"
             readOnly
             aria-readonly="true"
             tabIndex={-1}
@@ -71,7 +71,7 @@ const BookingLocation = () => {
                 aria-expanded={dropdownOpen}
                 aria-controls="districts-dropdown"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="input-base h-12 pl-12 flex items-center justify-between"
+                className="input-base h-12 p-6 xl:pl-12 xl:pr-8 flex items-center justify-between"
               >
                 {selectedDistrict || 'Обрати район'}
                 <svg
@@ -84,7 +84,7 @@ const BookingLocation = () => {
               </button>
 
               {errors.district?.message && (
-                <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
+                <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-1">
                   {String(errors.district.message)}
                 </p>
               )}
@@ -92,7 +92,7 @@ const BookingLocation = () => {
               {dropdownOpen && (
                 <ul
                   id="districts-dropdown"
-                  className="absolute z-10 mt-2 flex flex-col justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full py-5"
+                  className="xl:absolute z-10 mt-4 xl:mt-2 flex flex-col justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full py-5"
                   aria-hidden={selectedLocationOption !== 'customer'}
                 >
                   {sortedDistricts.map((district, index) => (
@@ -107,7 +107,7 @@ const BookingLocation = () => {
                         }
                       }}
                       onClick={() => handleDistrictClick(district)}
-                      className="w-full cursor-pointer hover:bg-tenn focus:bg-tenn hover:text-alabaster focus:text-alabaster focus:outline-none transition-all duration-300 ease-in-out py-[5px] px-12"
+                      className="w-full cursor-pointer hover:bg-tenn focus:bg-tenn hover:text-alabaster focus:text-alabaster focus:outline-none transition-all duration-300 ease-in-out text-sm xl:text-base py-[5px] px-6 xl:px-12"
                       aria-selected={selectedDistrict === district}
                       {...register('district')}
                     >
@@ -123,12 +123,12 @@ const BookingLocation = () => {
               type="text"
               {...register('street')}
               placeholder="Приклад: вул. Шевченка"
-              className="input-base h-12 pl-12 xl:w-[472px]"
+              className="input-base h-12 pl-6 xl:pl-12 xl:w-[472px]"
               aria-label="Вулиця"
               aria-hidden={selectedLocationOption !== 'customer'}
             />
             {errors.street?.message && (
-              <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
+              <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-1">
                 {String(errors.street.message)}
               </p>
             )}
@@ -141,10 +141,10 @@ const BookingLocation = () => {
               placeholder="Приклад: буд. 1, корп. 2, кв. 3"
               aria-label="Номер будинку, корпус, квартира"
               aria-hidden={selectedLocationOption !== 'customer'}
-              className="input-base h-12 pl-12 xl:w-[472px]"
+              className="input-base h-12 pl-6 xl:pl-12 xl:w-[472px]"
             />
             {errors.house?.message && (
-              <p className="absolute text-red-tenn text-[10px] pl-12 mt-1">
+              <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-12 mt-1">
                 {String(errors.house.message)}
               </p>
             )}

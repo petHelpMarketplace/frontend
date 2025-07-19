@@ -3,6 +3,8 @@ export type Specialist = {
   name: string;
   family_name: string;
   district: string;
+  rating?: number | null;
+  reviews_count: number | null;
   experience: number;
   is_verified: boolean;
   description?: string;
