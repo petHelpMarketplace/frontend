@@ -80,13 +80,6 @@ const Header = () => {
         onClose={() => setOpenRegisterModal(false)}
       >
         <RegisterForm
-          onOpenLogin={() =>
-            openLogin(() => {
-              setOpenRegisterModal(false);
-            })
-          }
-        />
-        <RegisterForm
           onOpenLogin={() => {
             setOpenRegisterModal(false);
             setTimeout(() => setOpenLoginModal(true), 350);
