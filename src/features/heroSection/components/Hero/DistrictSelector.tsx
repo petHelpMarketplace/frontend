@@ -141,7 +141,7 @@ export default function DistrictSelector({
 
   return (
     <div
-      className="relative w-full xl:w-1/2 border-[2px] border-tenn rounded-[15px] xl:rounded-2xl"
+      className="relative w-full xl:w-1/2 rounded-[15px] xl:rounded-2xl"
       ref={dropdownRef}
     >
       {/* Toggle button */}
@@ -151,7 +151,7 @@ export default function DistrictSelector({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="district-list"
-        className="w-full flex items-center justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark rounded-[15px] xl:rounded-2xl"
+        className="w-full flex items-center border-[2px] border-tenn justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark rounded-[15px] xl:rounded-2xl"
         onClick={() => setIsOpen(prev => !prev)}
       >
         {selectedLabel}
