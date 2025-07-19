@@ -91,7 +91,6 @@ export default function DistrictSelector({
       const focusedIndex = options.findIndex(
         option => option === document.activeElement
       );
-
       switch (event.key) {
         case 'ArrowDown':
           event.preventDefault();
