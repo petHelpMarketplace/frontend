@@ -17,7 +17,7 @@ const HeroFilters = () => {
 
   return (
     <div
-      className={`absolute z-60 bg-alabaster shadow-box rounded-[25px] xl:rounded-2xl py-[27px] px-4.5 xl:py-5 xl:px-8 xl:w-[1040px] mx-auto xl:max-h-[298px] flex flex-col xl:gap-3.5 xl:mb-0 xl:top-[476px] left-1/2 -translate-x-1/2 ${heightClass} ${mobileBottomPadding}`}
+      className={`absolute z-20 xl:z-60 bg-alabaster shadow-box rounded-[25px] xl:rounded-2xl py-[27px] px-4.5 xl:py-5 xl:px-8 xl:w-[1040px] mx-auto xl:max-h-[298px] flex flex-col xl:gap-3.5 xl:mb-0 xl:top-[476px] left-1/2 -translate-x-1/2 ${heightClass} ${mobileBottomPadding}`}
     >
       <div className="flex flex-col xl:flex-row xl:justify-center gap-[13px] xl:gap-8 mb-[38px] xl:mb-0">
         <AnimalSelector />
