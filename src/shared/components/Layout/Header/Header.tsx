@@ -16,7 +16,7 @@ const Header = () => {
   const isHomePage = location.pathname === '/';
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
 
   const onMenuToggle = () => setMenuOpen(open => !open);
 
@@ -79,7 +79,19 @@ const Header = () => {
         isOpen={openRegisterModal}
         onClose={() => setOpenRegisterModal(false)}
       >
-        <RegisterForm />
+        <RegisterForm
+          onOpenLogin={() =>
+            openLogin(() => {
+              setOpenRegisterModal(false);
+            })
+          }
+        />
+        <RegisterForm
+          onOpenLogin={() => {
+            setOpenRegisterModal(false);
+            setTimeout(() => setOpenLoginModal(true), 350);
+          }}
+        />
       </Modal>
     </>
   );
