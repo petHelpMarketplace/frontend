@@ -11,7 +11,8 @@
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.woff2') format('woff2'),
+  src: url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.woff2')
+      format('woff2'),
     url('/src/assets/fonts/Open_Sans/OpenSans-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
@@ -66,11 +67,42 @@
   --color-hot-cinnamon-500: #d9732b;
   --color-disabled: rgba(217, 115, 43, 0.46);
   --color-shark: #272727;
+  --color-peru-tan: #803500;
+  --color-ecstasy: #ff7b1c;
+  --color-peru-tan-tan: #893900;
 
   --shadow-box: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-shark: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-smoke: 0 1px 4px 4px rgba(0, 0, 0, 0.25);
+  --shadow-filter: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-shark: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-inset-thin: inset 0 0px 1px 0 rgba(0, 0, 0, 0.25);
+  --shadow-inset-language: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  --shadow-inset-mobile-logo: inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+}
+@layer utilities {
+  .bg-hero-gradient {
+    background: linear-gradient(
+      191deg,
+      #803500 18.51%,
+      #ff7b1c 53.85%,
+      #893900 89.9%
+    );
+  }
+  @media (min-width: 1280px) {
+    .bg-hero-gradient {
+      background: linear-gradient(
+        226deg,
+        #803500 18.51%,
+        #ff7b1c 53.85%,
+        #893900 89.9%
+      );
+    }
+  }
+
+  .bg-footer-gradient {
+    background: linear-gradient(360deg, #6d2e01 0%, #ce5601 100%);
+  }
 }
 
 @layer base {
@@ -167,11 +199,17 @@ button:not(:disabled) {
     /* Chrome, Safari, Opera */
   }
 
-  .book-checkbox-btn+span {
+  .book-checkbox-btn + span {
+    @apply fill-none;
+  }
+  .book-checkbox-btn + span {
     @apply fill-none border-fire;
   }
 
-  .book-checkbox-btn:checked+span {
+  .book-checkbox-btn:checked + span {
+    @apply bg-tenn fill-alabaster border-tenn;
+  }
+  .book-checkbox-btn:checked + span {
     @apply bg-tenn fill-alabaster border-tenn;
   }
 

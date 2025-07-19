@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Pagination from '@/features/searchSpecialists/components/Pagination';
 import SpecialistsList from '@/features/searchSpecialists/components/SpecialistsList';
 import { mockSpecialists } from '@/data/mockSpecialists';
@@ -7,10 +7,11 @@ import BackButton from '@/features/searchSpecialists/components/BackButton';
 import StateDisplay from '@/features/searchSpecialists/components/StateDisplay';
 import SpecialistCardSkeleton from '@/features/searchSpecialists/components/SpecialistCardSkeleton';
 const SearchSpecialistsPage = () => {
+  // Дістаємо district з query params
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const selectedDistrict = params.get('district') || '';
   const specialistsPerPage = 16;
-  const [searchParams] = useSearchParams();
-
-  const page = Number(searchParams.get('page')) || 1;
 
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -18,9 +19,17 @@ const SearchSpecialistsPage = () => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const listRef = useRef<HTMLDivElement | null>(null);
 
-  const totalPages = Math.ceil(mockSpecialists.length / specialistsPerPage);
+  const filteredSpecialists = selectedDistrict
+    ? mockSpecialists.filter(s => s.district === selectedDistrict)
+    : mockSpecialists;
+  const totalPages = Math.ceil(filteredSpecialists.length / specialistsPerPage);
+  const [page, setPage] = useState(1);
 
-  const specialistsToShow = mockSpecialists.slice(
+  useEffect(() => {
+    if (page !== 1) setPage(1);
+  }, [selectedDistrict]);
+
+  const specialistsToShow = filteredSpecialists.slice(
     (page - 1) * specialistsPerPage,
     page * specialistsPerPage
   );
