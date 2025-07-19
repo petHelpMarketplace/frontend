@@ -6,7 +6,7 @@ const DogWithBlob = ({ className = '' }: DogWithBlobProps) => {
     <img
       src="/images/blob-behind-dog.png"
       alt="Decorative blob behind dog"
-      className={`hidden xl:block relative z-[1] w-auto h-auto -top-[784px] -right-[528px] ${className}`}
+      className={`hidden xl:block relative z-[1] w-auto h-auto -top-[344px] -right-[528px] ${className}`}
     />
   );
 };
