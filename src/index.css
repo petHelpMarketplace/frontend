@@ -206,4 +206,9 @@ button:not(:disabled) {
   .book-checkbox-btn:checked + span {
     @apply bg-tenn fill-alabaster border-tenn;
   }
+
+  input:-webkit-autofill {
+    box-shadow: 0 0 0 1000px var(--color-alabaster) inset !important;
+    -webkit-text-fill-color: inherit !important;
+  }
 }
