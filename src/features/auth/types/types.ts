@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface User {
   id?: string;
   name: string;
@@ -39,3 +41,11 @@ export interface LoginResponse {
   access_token: string;
   refresh_token: string;
 }
+
+export type LoginFormProps = {
+  onClose: () => void;
+};
+
+export type PrivateRouteProps = {
+  children: ReactNode;
+};

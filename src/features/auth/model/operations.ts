@@ -5,11 +5,11 @@ import {
   LoginResponse,
   RegisterRequest,
   RegisterResponse,
-} from '@/features/auth/model/types';
+} from '@/features/auth/types/types';
 import { AxiosError } from 'axios';
 
-const setAuthHeader = (token: string) => {
-  petsHelpApi.defaults.headers.common.Authorization = `Bearer ${token}`;
+const setAuthHeader = (access_token: string) => {
+  petsHelpApi.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 };
 
 // const clearAuthHeader = () => {
