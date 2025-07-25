@@ -10,8 +10,8 @@ export interface AuthState {
   id: string | null;
   name: string | null;
   email: string | null;
-  access_token: string | null;
-  refresh_token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   loading: boolean;
   error: string | null;
   success: boolean;

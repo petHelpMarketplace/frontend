@@ -6,8 +6,8 @@ const initialState: AuthState = {
   id: null,
   name: null,
   email: null,
-  access_token: null,
-  refresh_token: null,
+  accessToken: null,
+  refreshToken: null,
   loading: false,
   success: false,
   error: null,
@@ -22,6 +22,10 @@ const authSlice = createSlice({
     resetRegisterState(state) {
       state.loading = false;
       state.success = false;
+    },
+    logout: state => {
+      state.isLoggedIn = false;
+      state.accessToken = null;
     },
   },
   extraReducers: builder => {
@@ -43,8 +47,8 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.access_token = action.payload.access_token;
-        state.refresh_token = action.payload.refresh_token;
+        state.accessToken = action.payload.access_token;
+        state.refreshToken = action.payload.refresh_token;
         state.isLoggedIn = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -69,5 +73,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetRegisterState } = authSlice.actions;
+export const { resetRegisterState, logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;
