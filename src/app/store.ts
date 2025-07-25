@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import heroReducer from '@/features/hero/heroSlice';
+import heroReducer from '@/features/heroSection/hooks/heroSlice';
 import { authReducer } from '@/features/auth/model/slice';
-// import { persistStore, persistReducer } from 'redux-persist';
 import {
   persistStore,
   persistReducer,
