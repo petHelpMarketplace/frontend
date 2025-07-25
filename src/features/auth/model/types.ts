@@ -8,11 +8,13 @@ export interface AuthState {
   id: string | null;
   name: string | null;
   email: string | null;
-  accessToken: string | null;
-  refreshToken: string | null;
+  access_token: string | null;
+  refresh_token: string | null;
   loading: boolean;
   error: string | null;
   success: boolean;
+  isLoggedIn: boolean;
+  isRefreshing: boolean;
 }
 
 export interface RegisterRequest {
@@ -26,4 +28,14 @@ export interface RegisterRequest {
 export interface RegisterResponse {
   id: string;
   message: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
 }
