@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
-import { registerUser } from '@/features/auth/model/registerThunks';
-import { resetRegisterState } from '@/features/auth/model/registerSlice';
+import { registerUser } from '@/features/auth/model/operations';
+import { resetRegisterState } from '@/features/auth/model/slice';
 import { selectRegisterLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
@@ -176,6 +176,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="password"
             placeholder="Пароль"
+            autoComplete="new-password"
             className={getInputClass(
               !!errors.password,
               !!(!errors.password && dirtyFields.password)

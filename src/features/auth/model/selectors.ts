@@ -2,9 +2,7 @@
 
 import type { RootState } from '@/app/store';
 
-export const selectRegisterState = (state: RootState) => state.registration;
+export const selectRegisterState = (state: RootState) => state.auth;
 
-export const selectRegisterLoading = (state: RootState) =>
-  state.registration.loading;
-export const selectRegisterSuccess = (state: RootState) =>
-  state.registration.success;
+export const selectRegisterLoading = (state: RootState) => state.auth.loading;
+export const selectRegisterSuccess = (state: RootState) => state.auth.success;
