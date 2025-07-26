@@ -1,20 +1,22 @@
 import { logout } from '@/features/auth/model/slice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const SpecialistMenu = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem('access_token');
     // Перехід на головну сторінку або інша логіка:
-    window.location.href = '/';
+    navigate('/');
   };
 
   return (
     <div className="flex gap-10 z-150">
       <button
         onClick={handleLogout}
-        className="text-base-[122%] text-fire py-1 px-2 border border-transparent hover:border-fire rounded-2xl transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-fire focus-visible:ring-offset-2"
+        className="text-base/[122%] text-fire py-1 px-2 border border-transparent hover:border-fire rounded-2xl transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-fire focus-visible:ring-offset-2"
       >
         Вийти
       </button>

@@ -8,6 +8,7 @@ import {
 } from '@/features/auth/types/types';
 import { AxiosError } from 'axios';
 
+//TODO This will be changed once the CORS policy issue is resolved on the backend.
 const setAuthHeader = (access_token: string) => {
   petsHelpApi.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 };
