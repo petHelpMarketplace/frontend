@@ -10,6 +10,9 @@ import LoginForm from '@/features/auth/components/LoginForm';
 import RegisterForm from '@/features/auth/components/RegisterForm';
 import MobileMenu from '@/shared/components/Layout/Header/MobileMenu';
 import Modal from '@/shared/components/UI/Modal';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '@/features/auth/model/selectors';
+import SpecialistMenu from './SpecialistMenu';
 
 const Header = () => {
   const location = useLocation();
@@ -17,6 +20,7 @@ const Header = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const onMenuToggle = () => setMenuOpen(open => !open);
 
@@ -58,11 +62,14 @@ const Header = () => {
           </div>
           <div className="hidden xl:flex xl:items-center">
             {/* Desktop: We don't pass a closeMenu callback here, as there's no mobile menu to close */}
-            <UserActions
-              onLogin={() => openLogin()} // Calls openLogin without closeMenu
-              onRegister={() => openRegister()} // Calls openRegister without closeMenu
-              className="hidden xl:flex xl:gap-2"
-            />
+            {!isLoggedIn && (
+              <UserActions
+                onLogin={() => openLogin()} // Calls openLogin without closeMenu
+                onRegister={() => openRegister()} // Calls openRegister without closeMenu
+                className="hidden xl:flex xl:gap-2"
+              />
+            )}
+            {isLoggedIn && <SpecialistMenu />}
           </div>
         </div>
       </header>
@@ -73,7 +80,7 @@ const Header = () => {
         onRegister={() => openRegister(() => setMenuOpen(false))} // Mobile: Passes a callback to close the menu
       />
       <Modal isOpen={openLoginModal} onClose={() => setOpenLoginModal(false)}>
-        <LoginForm />
+        <LoginForm onClose={() => setOpenLoginModal(false)} />
       </Modal>
       <Modal
         isOpen={openRegisterModal}
