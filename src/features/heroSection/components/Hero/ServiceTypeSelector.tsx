@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/shared/hooks/index';
-import { selectAnimal } from '@/features/hero/heroSelectors';
+import { selectAnimal } from '@/features/heroSection/hooks/heroSelectors';
 
 const dogservices = [
   { label: 'Вигул', icon: 'icon-dog-on-the-leash' },
@@ -17,15 +17,19 @@ const catservices = [
 const ServiceTypeSelector = () => {
   const selected = useAppSelector(selectAnimal);
   const services = selected === 'dog' ? dogservices : catservices;
+  const mbClass = selected === 'cat' ? 'mb-6 xl:mb-0' : 'mb-[33px] xl:mb-0';
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-7">
+    <div
+      className={`grid grid-cols-2 gap-x-[10px] gap-y-3.5 ${mbClass} xl:grid-cols-4 xl:gap-7`}
+    >
       {services.map(service => (
         <button
           key={service.label}
-          className="flex flex-col items-center justify-center gap-2 py-3 px-13 rounded-[16px] border-tenn border-[2px] hover:bg-tenn hover:text-alabaster hover:border-none hover:shadow-shark active:shadow-inset-shark group"
+          // className="flex flex-col items-center justify-center gap-2 py-3 px-13 rounded-[16px] border-tenn border-[2px] hover:bg-tenn hover:text-alabaster hover:border-none hover:shadow-shark active:shadow-inset-shark group"
+          className="flex flex-col items-center justify-center py-4.5 rounded-[14px] text-[15px] leading-[120%] xl:rounded-2xl border-tenn border-[2px] hover:bg-tenn hover:text-alabaster  hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark group xl:gap-2 xl:py-4 xl:px-13"
         >
           <svg
-            className="h-[52px] w-[55px] shrink-0 fill-tenn group-hover:fill-alabaster"
+            className="hidden xl:block h-[52px] w-[55px] shrink-0 fill-tenn group-hover:fill-alabaster"
             role="img"
             aria-label={service.label}
           >

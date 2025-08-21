@@ -8,19 +8,36 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
+import { loginUser } from '@/features/auth/model/operations';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/store';
+import toast from 'react-hot-toast';
+import { LoginFormProps } from '@/features/auth/types/types';
 
-const LoginForm = () => {
+const LoginForm = ({ onClose }: LoginFormProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, dirtyFields },
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
   });
 
-  const onSubmit = (data: LoginSchemaType) => {
-    console.log('Form data:', data);
+  const onSubmit = async (data: LoginSchemaType) => {
+    try {
+      await dispatch(loginUser(data)).unwrap();
+      // toast.success('Login successful!');
+      reset();
+      onClose();
+    } catch (e) {
+      const error =
+        typeof e === 'string' ? e : 'Login failed. Please try again.';
+      toast.error(error);
+    }
   };
 
   const getInputClass = (error: boolean, success: boolean) => {

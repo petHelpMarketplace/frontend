@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { addDays, subDays, isSameDay, format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { useFormContext } from 'react-hook-form';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 const BookingDatePicker = () => {
+  const isMobile = useMediaQuery('(max-width: 1279px)');
   // Number of dates to display in picker
-  const NUM_DAYS = 5;
+  const numDays = isMobile ? 3 : 5;
 
   const {
     register,
@@ -19,7 +21,7 @@ const BookingDatePicker = () => {
   const formDate = watch('date');
   const selectedDate = formDate ? new Date(formDate) : today;
 
-  const displayedDates = Array.from({ length: NUM_DAYS }, (_, i) =>
+  const displayedDates = Array.from({ length: numDays }, (_, i) =>
     addDays(startDate, i)
   );
 
@@ -41,25 +43,27 @@ const BookingDatePicker = () => {
 
   return (
     <div>
-      <h2 className="xl:text-xl xl:font-semibold text-fire xl:mb-5">
+      <h2 className="text-lg xl:text-xl font-semibold text-fire mb-4 xl:mb-5">
         Дата виконання замовлення
       </h2>
       <div className="relative">
-        {showLeftArrow && (
-          <button
-            type="button"
-            onClick={handlePrev}
-            className="absolute left-[-20px] top-1/2 -translate-y-1/2"
+        <button
+          type="button"
+          onClick={handlePrev}
+          className="absolute z-10 left-0 xl:left-[-20px] top-1/2 -translate-y-1/2"
+        >
+          <svg
+            className={`w-2.5 xl:w-3.5 h-5 xl:h-6.5 ${
+              showLeftArrow ? 'fill-fire' : 'fill-fire/40 cursor-auto'
+            }`}
           >
-            <svg className="w-[13px] h-[26px] fill-fire">
-              <use href="/icons.svg#icon-arrow-left" />
-            </svg>
-          </button>
-        )}
+            <use href="/icons.svg#icon-arrow-left" />
+          </svg>
+        </button>
 
         <input type="hidden" {...register('date')} />
 
-        <div className="flex justify-center gap-2 relative">
+        <div className="flex justify-center gap-6.5 xl:gap-2 relative">
           {displayedDates.map((date, index) => {
             const isSelected = isSameDay(selectedDate, date);
             const isToday = isSameDay(date, today);
@@ -72,7 +76,7 @@ const BookingDatePicker = () => {
                 type="button"
                 key={index}
                 onClick={() => handleDateClick(date)}
-                className={`flex flex-col justify-between xl:w-[132px] xl:h-[132px] rounded-2xl px-2 py-3 text-center transition border-2
+                className={`flex flex-col justify-between w-[86px] xl:w-[132px] h-[85px] xl:h-[132px] rounded-xl xl:rounded-2xl p-1 xl:px-2 xl:py-3 text-center transition border-2
                 ${
                   isSelected
                     ? 'bg-tenn text-alabaster border-tenn'
@@ -88,16 +92,16 @@ const BookingDatePicker = () => {
                     isSelected ? 'bg-alabaster rounded-2xl text-fire' : ''
                   }`}
                 >
-                  <p className="text-sm capitalize">{month}</p>
+                  <p className="text-xs xl:text-sm capitalize">{month}</p>
                 </div>
                 <p
-                  className={`text-[40px] font-semibold ${
+                  className={`text-[26px] xl:text-[40px] font-semibold ${
                     isSelected ? 'text-alabaster' : 'text-tenn'
                   }`}
                 >
                   {day}
                 </p>
-                <p className="text-sm capitalize">
+                <p className="text-xs xl:text-sm capitalize">
                   {isToday ? 'сьогодні' : dayOfWeek}
                 </p>
               </button>
@@ -105,7 +109,7 @@ const BookingDatePicker = () => {
           })}
         </div>
         {errors.date?.message && (
-          <p className="absolute text-red-tenn text-[10px] pl-4 mt-1">
+          <p className="absolute text-red-tenn text-[8px] xl:text-[10px] pl-6.5 xl:pl-4 mt-1">
             {String(errors.date.message)}
           </p>
         )}
@@ -113,9 +117,9 @@ const BookingDatePicker = () => {
         <button
           type="button"
           onClick={handleNext}
-          className="absolute right-[-20px] top-1/2 -translate-y-1/2"
+          className="absolute right-0 xl:right-[-20px] top-1/2 -translate-y-1/2"
         >
-          <svg className="w-[13px] h-[26px] fill-fire transform rotate-180">
+          <svg className="w-2.5 xl:w-3.5 h-5 xl:h-6.5 fill-fire transform rotate-180">
             <use href="/icons.svg#icon-arrow-left" />
           </svg>
         </button>

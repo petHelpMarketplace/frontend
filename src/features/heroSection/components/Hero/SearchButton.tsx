@@ -4,7 +4,11 @@ import Button from '@/shared/components/UI/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SearchButton = () => {
+type SearchButtonProps = {
+  selected: string;
+};
+
+const SearchButton = ({ selected }: SearchButtonProps) => {
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const navigate = useNavigate();
   return (
@@ -12,14 +16,20 @@ const SearchButton = () => {
       <Button
         label="Пошук"
         type="button"
-        onClick={() => navigate('/specialists')}
-        className="flex flex-1 items-center justify-center text-[20px] max-w-[304px] h-auto px-6 py-4 rounded-[16px] hover:shadow-shark active:shadow-inset-shark"
+        onClick={() =>
+          navigate(
+            selected
+              ? `/specialists?district=${encodeURIComponent(selected)}`
+              : '/specialists'
+          )
+        }
+        className="flex flex-1 w-full items-center justify-center text-xl xl:text-[22px] btn-2lg xl:px-6 xl:py-4 rounded-[15px] xl:rounded-2xl"
       />
       <Modal
         isOpen={openRegisterModal}
         onClose={() => setOpenRegisterModal(false)}
       >
-        <RegisterForm />
+        <RegisterForm onOpenLogin={() => setOpenRegisterModal(false)} />
       </Modal>
     </>
   );

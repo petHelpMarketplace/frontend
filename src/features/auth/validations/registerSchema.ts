@@ -1,5 +1,6 @@
 import {
   emailField,
+  // family_nameField,
   nameField,
   passwordField,
   phoneField,
@@ -9,10 +10,11 @@ import { z } from 'zod';
 export const registerSchema = z
   .object({
     name: nameField,
+    // family_name: family_nameField,
     phone: phoneField,
     email: emailField,
     password: passwordField,
-    confirmPassword: z.string({
+    password_confirmation: z.string({
       required_error: 'Підтвердіть пароль',
     }),
   })
@@ -20,9 +22,9 @@ export const registerSchema = z
     message: 'Не можна використовувати email як пароль',
     path: ['password'],
   })
-  .refine(data => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.password_confirmation, {
     message: 'Паролі не збігаються',
-    path: ['confirmPassword'],
+    path: ['password_confirmation'],
   });
 
 export type RegisterSchemaType = z.infer<typeof registerSchema>;

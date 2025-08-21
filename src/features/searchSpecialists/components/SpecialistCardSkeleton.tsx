@@ -5,36 +5,37 @@ interface SpecialistCardSkeletonProps {
 function SpecialistCardSkeleton({ delay = 0 }: SpecialistCardSkeletonProps) {
   return (
     <div
-      className="w-[500px] h-[400px] rounded-xl p-5 gap-6 flex overflow-hidden animate-pulse transition-all duration-300 ease-in-out shadow-[0_1px_4px_4px_rgba(0,0,0,0.15)] bg-alabaster"
+      className="h-full w-full max-w-full grid 
+    bg-alabaster rounded-2xl shadow-smoke
+    px-5 py-[12px] xl:p-5 gap-x-[10px] gap-y-[12px] xl:gap-6
+    [grid-template-areas:'photo_text'_'btn_btn']
+    [grid-template-rows:96px_auto] xl:[grid-template-rows:auto]
+    xl:[grid-template-areas:'photo text']
+    [grid-template-columns:96px_minmax(0,1fr)]
+    xl:[grid-template-columns:236px_minmax(0,1fr)]
+    xl:max-w-[500px] max-h-[400px]"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Зображення */}
-      <div className="w-[236px] h-[360px] rounded-xl flex-shrink-0 bg-hot-cinnamon-500/30" />
+      {/* Фото */}
+      <div className="[grid-area:photo] max-w-[96px] h-[96px] xl:max-w-[236px] xl:h-[360px] rounded-2xl overflow-hidden bg-hot-cinnamon-500/20 animate-pulse"></div>
 
       {/* Контент */}
-      <div className="flex flex-col justify-between h-[360px] flex-1">
-        {/* Ім’я */}
-        <div className="h-6 w-[60%] rounded mb-5 bg-hot-cinnamon-500/40" />
-
-        {/* Verified */}
-        <div className="flex gap-[7px] mb-6 items-center">
-          <div className="w-[17px] h-[17px] rounded-full bg-hot-cinnamon-500/30" />
-          <div className="w-[120px] h-[16px] rounded bg-hot-cinnamon-500/30" />
+      <div className="[grid-area:text] flex flex-col h-full mb-[12px] xl:mb-[30px]">
+        <div className="flex flex-col gap-[13px] xl:gap-[18px]">
+          {/* Ім’я */}
+          <div className="h-6 w-2/3 bg-hot-cinnamon-500/20 rounded-2xl animate-pulse"></div>
+          {/* Рейтинг */}
+          <div className="h-5 w-1/4 bg-hot-cinnamon-500/20 rounded-2xl animate-pulse"></div>
+          {/* Досвід */}
+          <div className="h-5 w-1/3 bg-hot-cinnamon-500/20 rounded-2xl animate-pulse"></div>
+          {/* Біо */}
+          <div className="hidden xl:block h-40 w-full bg-hot-cinnamon-500/20 rounded-2xl animate-pulse"></div>
         </div>
-
-        {/* Досвід */}
-        <div className="h-[16px] w-[180px] rounded mb-8 bg-hot-cinnamon-500/30" />
-
-        {/* Опис */}
-        <div className="space-y-2">
-          <div className="h-[14px] w-full rounded bg-hot-cinnamon-500/30" />
-          <div className="h-[14px] w-[90%] rounded bg-hot-cinnamon-500/30" />
-          <div className="h-[14px] w-[75%] rounded bg-hot-cinnamon-500/30" />
-        </div>
-
-        {/* Кнопка */}
-        <div className="w-[200px] h-[40px] rounded-xl mt-auto bg-hot-cinnamon-500/40" />
+        {/* Кнопка десктоп */}
+        <div className="hidden xl:block [grid-area:btn] max-w-[304px] w-full min-h-[40px] mt-auto xl:min-w-[200px] xl:h-[40px] rounded-2xl bg-hot-cinnamon-500/20 animate-pulse"></div>
       </div>
+      {/* Кнопка мобілка */}
+      <div className="xl:hidden [grid-area:btn] max-w-[304px] w-full min-h-[40px] mt-auto rounded-2xl bg-hot-cinnamon-500/20 animate-pulse"></div>
     </div>
   );
 }

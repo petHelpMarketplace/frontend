@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Footer from '@/shared/components/Layout/Footer/Footer';
-import Header from '@/components/Header/Header';
+import Header from '@/shared/components/Layout/Header/Header';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/shared/components/ErrorFallback';

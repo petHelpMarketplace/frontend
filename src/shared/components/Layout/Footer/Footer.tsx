@@ -9,11 +9,17 @@ const Footer = () => {
   return (
     <footer
       role="contentinfo"
-      className="w-full mx-auto text-alabaster bg-gradient-to-t from-red-beech to-fiery-tenn rounded-t-[60px] p-10 max-w-[375px] xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px]"
+      className="w-full mx-auto text-alabaster bg-footer-gradient rounded-t-[60px] p-10 max-w-[375px] xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px] mt-[137px] xl:mt-0"
     >
       {/* Логотип */}
       <div className="flex justify-center mb-[77px] xl:mb-[39px]">
-        <Logo className="text-alabaster" iconFill="fill-alabaster" />
+        <Logo
+          iconSize="w-[60px] h-[40px]"
+          iconFill="fill-alabaster"
+          textColor="text-alabaster"
+          textSize="text-lg"
+          textShadow="text-shadow-none"
+        />
       </div>
 
       {/* Mobile: Accordion */}
@@ -27,7 +33,7 @@ const Footer = () => {
               setOpenAccordion(prev => (prev === title ? null : title))
             }
           >
-            <ul className="flex flex-col text-sm gap-[14px] mt-5">
+            <ul className="flex flex-col text-sm gap-3.5 mt-5">
               {links.map(({ text, to }) => (
                 <li key={`${to}-${text}`}>
                   <Link

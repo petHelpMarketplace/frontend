@@ -1,6 +1,5 @@
-import '@/components/App/App.css';
-import { lazy, useEffect } from 'react';
 import '@/app/App.css';
+import { lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
@@ -37,6 +36,14 @@ function App() {
           <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
           <Route path="/account" element={<AccountPage />} />
+          {/* <Route
+            path="/account"
+            element={
+              <PrivateRoute>
+                <AccountPage />
+              </PrivateRoute>
+            }
+          /> */}
           <Route
             path="/review/specialists/:id"
             element={<ReviewServicePage />}

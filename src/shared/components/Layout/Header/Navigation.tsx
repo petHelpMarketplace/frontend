@@ -5,7 +5,7 @@ export const Navigation = () => {
     <nav>
       <Link
         to="#"
-        className="flex text-fire px-2 py-1 border-[2px] border-transparent rounded-full hover:border-fire transition-colors"
+        className="flex text-fire px-2 xl:py-1 leading-[122%] border border-transparent rounded-full hover:border-fire transition-colors duration-300"
       >
         Сервіси
       </Link>
