@@ -61,7 +61,7 @@ const SpecialistServices = ({ profile, services }: Props) => {
               Коти
             </h2>
           </div>
-          <ul className="space-y-1">
+          <ul className="flex flex-col gap-2">
             {catServices.map((service, index) => (
               <li key={index} className="flex">
                 <span className="mr-8 min-w-[120px]">{service.title}</span>

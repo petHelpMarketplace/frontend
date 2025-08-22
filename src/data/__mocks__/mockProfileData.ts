@@ -40,8 +40,8 @@ const mockProfileData: SpecialistMock = {
       id: 'dog-srv3',
       type: 'dog',
       title: 'Грумінг',
-      duration: 'грн/тушка',
-      price: 350,
+      duration: 'грн/тварина',
+      price: 500,
       currency: '₴',
     },
     {
@@ -72,8 +72,8 @@ const mockProfileData: SpecialistMock = {
       id: 'cat-srv3',
       type: 'cat',
       title: 'Грумінг',
-      duration: 'грн/тушка',
-      price: 250,
+      duration: 'грн/тварина',
+      price: 450,
       currency: '₴',
     },
     {
