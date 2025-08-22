@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/index'; // твої хелпери
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/index'; // helpers
 import {
   setEmail,
   toggleActiveStatus,
-} from '@/features/account/model/settingsSlice'; // приклад
+} from '@/features/account/model/settingsSlice'; // example
 import TelegramConnectButton from './TelegramConnectButton';
 import DeleteProfileButton from './DeleteProfileButton';
+import Tippy from '@tippyjs/react';
 
 type GeneralFormValues = {
   email: string;
@@ -13,7 +14,7 @@ type GeneralFormValues = {
 
 const AccountGeneralForm = () => {
   const dispatch = useAppDispatch();
-  const { email, isActive } = useAppSelector(state => state.account); // приклад
+  const { email, isActive } = useAppSelector(state => state.account); // example
 
   const {
     register,
@@ -35,7 +36,7 @@ const AccountGeneralForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 w-full"
+      className="flex flex-col gap-6 w-full"
     >
       {/* Email input */}
       <div className="relative flex items-center">
@@ -45,12 +46,11 @@ const AccountGeneralForm = () => {
           {...register('email')}
           className="input-base h-12"
         />
-        {/* Іконка олівця */}
         <svg
-          className="absolute w-5 h-5 fill-mist-gray right-6"
+          className="absolute w-5 h-5 fill-mist-gray right-8"
           aria-label="Редагувати"
         >
-          <use href="/icons.svg#icon-pencil-2" />
+          <use href="/icons.svg#icon-pencil-3" />
         </svg>
       </div>
 
@@ -69,12 +69,26 @@ const AccountGeneralForm = () => {
               before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-alabaster`}
           ></span>
         </label>
-        <span className="font-semibold">
+
+        <span id="tooltip" className="text-cod-gray font-semibold">
           Профіль{' '}
-          {!isActive ? (
-            'неактивний'
-          ) : (
+          {isActive ? (
             <span className="text-fire">активний</span>
+          ) : (
+            <Tippy
+              placement="right"
+              offset={[0, 14]} // Spacing between the trigger element and the tooltip
+              className="w-51 h-20 py-2 px-4 rounded-2xl shadow-tooltip text-cod-gray text-xs bg-alabaster"
+              content={
+                // Tooltip
+                <span>
+                  В статусі “Профіль неактивний” замовник не зможе надсилати Вам
+                  замовлення
+                </span>
+              }
+            >
+              <span className="cursor-help">неактивний</span>
+            </Tippy>
           )}
         </span>
       </div>

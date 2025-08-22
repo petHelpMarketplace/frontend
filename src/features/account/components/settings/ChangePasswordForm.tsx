@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
 
 type PasswordFormValues = {
   currentPassword: string;
@@ -28,7 +29,7 @@ const ChangePasswordForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 w-full"
+      className="flex flex-col gap-6 w-full"
     >
       <input
         type="password"
@@ -53,7 +54,10 @@ const ChangePasswordForm = () => {
 
       <button
         type="submit"
-        className="btn bg-tenn text-alabaster rounded-2xl h-12 w-2/3"
+        className={twMerge(
+          'btn',
+          'xl:w-2/3 flex gap-4 items-center justify-center'
+        )}
         disabled={!isDirty}
       >
         Зберегти пароль

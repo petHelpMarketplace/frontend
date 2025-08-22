@@ -46,7 +46,7 @@ export default function PersonalInfoBlock() {
             placeholder="Ім'я"
           />
           <svg
-            className="absolute w-6 h-6 fill-mist-gray right-6"
+            className="absolute w-6 h-6 fill-mist-gray right-8"
             aria-label="Редагувати"
           >
             <use href="/icons.svg#icon-pencil-3" />
@@ -142,7 +142,7 @@ export default function PersonalInfoBlock() {
             placeholder="Прізвище"
           />
           <svg
-            className="absolute w-6 h-6 fill-mist-gray right-6"
+            className="absolute w-6 h-6 fill-mist-gray right-8"
             aria-label="Редагувати"
           >
             <use href="/icons.svg#icon-pencil-3" />
@@ -185,7 +185,7 @@ export default function PersonalInfoBlock() {
             placeholder="+38 (XXX) XXX XX XX"
           />
           <svg
-            className="absolute w-6 h-6 fill-mist-gray right-6"
+            className="absolute w-6 h-6 fill-mist-gray right-8"
             aria-label="Редагувати"
           >
             <use href="/icons.svg#icon-pencil-3" />

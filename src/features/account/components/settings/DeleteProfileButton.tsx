@@ -1,5 +1,7 @@
 // import { useState } from 'react';
 
+import { twMerge } from 'tailwind-merge';
+
 const DeleteProfileButton = () => {
   // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -11,7 +13,10 @@ const DeleteProfileButton = () => {
   return (
     <button
       type="button"
-      className="xl:w-2/3 xl:h-12 flex gap-4 items-center justify-center btn bg-tenn text-alabaster rounded-2xl"
+      className={twMerge(
+        'btn',
+        'xl:w-2/3 flex gap-4 items-center justify-center'
+      )}
       // onClick={handleOpenModal}
     >
       <svg
