@@ -1,10 +1,9 @@
 import '@/app/App.css';
-import { lazy, useEffect } from 'react';
+import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
-import { useAppDispatch } from '@/shared/hooks/index';
-import { login } from '@/features/auth/model/authSlice';
+import PrivateRoute from '@/features/auth/components/PrivateRoute';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -21,12 +20,6 @@ const ReviewServicePage = lazy(
 const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 
 function App() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    // Тимчасова авторизація при завантаженні сторінки
-    dispatch(login('demo'));
-  }, []);
   return (
     <>
       <Routes>
@@ -35,15 +28,14 @@ function App() {
           <Route path="/specialists" element={<SearchSpecialistsPage />} />
           <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          {/* <Route
+          <Route
             path="/account"
             element={
               <PrivateRoute>
                 <AccountPage />
               </PrivateRoute>
             }
-          /> */}
+          />
           <Route
             path="/review/specialists/:id"
             element={<ReviewServicePage />}

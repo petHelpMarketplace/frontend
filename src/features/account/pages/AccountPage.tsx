@@ -1,7 +1,7 @@
 import { JSX, useState } from 'react';
 import { tabs, TabKey } from '../tabs';
 
-import AccountDataForm from '../components/personalData/AccountPersonalDataForm';
+import AccountPersonalDataForm from '../components/personalData/AccountPersonalDataForm';
 import PortfolioGallery from '../components/portfolio/PortfolioGallery';
 import SettingsForm from '../components/settings/AccountSettingsForm';
 import AccountServicesForm from '../components/services/AccountServicesForm';
@@ -11,7 +11,7 @@ export default function AccountPage() {
 
   const renderTabContent = (key: TabKey) => {
     const componentsMap: Record<TabKey, JSX.Element> = {
-      personal: <AccountDataForm />,
+      personal: <AccountPersonalDataForm />,
       services: <AccountServicesForm />,
       portfolio: <PortfolioGallery />,
       settings: <SettingsForm />,
@@ -21,16 +21,16 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="xl:max-w-[1280px] xl:mx-auto xl:mt-5 xl:pt-12 xl:pb-16 xl:px-30 flex flex-col">
+    <section className="mx-auto max-w-[375px] xl:max-w-7xl xl:pt-17 xl:pb-16 xl:px-30 flex flex-col">
       <button
         type="button"
-        className="btn-outline text-left font-semibold text-fire hover:text-tenn transition mb-4"
+        className="btn-outline text-left font-semibold text-fire transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs mb-8.5"
       >
         Зберегти
       </button>
 
       {/* Навігація вкладок */}
-      <div className="flex flex-col justify-between items-center xl:mb-8">
+      <div className="flex flex-col justify-between items-center xl:mb-12">
         <div className="w-full flex gap-13 items-start justify-between overflow-hidden px-4">
           {tabs.map((tab, i) => (
             <button
@@ -40,11 +40,11 @@ export default function AccountPage() {
               className={`relative text-xl font-semibold flex flex-wrap justify-center items-end gap-col-4 pb-4 ${
                 i === activeTab
                   ? 'after:content-[""] after:absolute after:w-[calc(100%+32px)] after:h-[3px] after:bg-tenn after:bottom-[0] text-fire fill-fire'
-                  : 'text-shark/50 fill-shark/50'
+                  : 'text-cod-gray/80 fill-cod-gray/80 transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-lg'
               }`}
             >
               <svg
-                className="h-[26px] w-[26px] mr-4"
+                className="h-[26px] w-[26px] mr-3.5"
                 role="img"
                 aria-label={tab.label}
               >
@@ -60,6 +60,6 @@ export default function AccountPage() {
       {/* Контент активної вкладки */}
 
       {renderTabContent(tabs[activeTab].key)}
-    </div>
+    </section>
   );
 }

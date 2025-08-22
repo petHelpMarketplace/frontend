@@ -20,7 +20,11 @@ const SpecialistMenu = () => {
       >
         Вийти
       </button>
-      <button className="flex justify-center items-center">
+      <button
+        className="flex justify-center items-center"
+        onClick={() => navigate('/account')}
+        aria-label="Перейти до аккаунту"
+      >
         <svg className="w-6 h-6 fill-fire rounded-full transition-all duration-300 ease-in-out hover:shadow-[0_0_4px_1px_rgba(207,86,0,0.8)] focus:shadow-[0_0_4px_1px_rgba(207,86,0,0.8)] focus:outline-none">
           <use href="/icons.svg#icon-user" />
         </svg>

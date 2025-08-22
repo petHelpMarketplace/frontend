@@ -8,7 +8,7 @@ import PhotoBlock from './PhotoBlock';
 import DetailsBlock from './DetailsBlock';
 import PersonalInfoBlock from './PersonalInfoBlock';
 
-export default function AccountDataForm() {
+export default function AccountPersonalDataForm() {
   // const methods = useForm<AccountFormValues>({
   //   resolver: zodResolver(accountSchema),
   //   defaultValues: {

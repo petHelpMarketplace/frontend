@@ -13,8 +13,6 @@ import Modal from '@/shared/components/UI/Modal';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '@/features/auth/model/selectors';
 import SpecialistMenu from './SpecialistMenu';
-// import { AccUserActions } from '@/features/account/components/userAction/accUserAction';
-// import { useAppSelector } from '@/shared/hooks/index';
 
 const Header = () => {
   const location = useLocation();
@@ -23,11 +21,8 @@ const Header = () => {
   const [openRegisterModal, setOpenRegisterModal] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const { isAuthenticated } = useAppSelector(state => state.auth);
-  // const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated);
 
   const onMenuToggle = () => setMenuOpen(open => !open);
-
   const openLogin = (closeMenu?: () => void) => {
     closeMenu?.(); // If closeMenu is provided (from mobile menu), call it. Otherwise, do nothing.
     setOpenLoginModal(true); // Always open the login modal.
@@ -72,9 +67,6 @@ const Header = () => {
                 onRegister={() => openRegister()} // Calls openRegister without closeMenu
                 className="hidden xl:flex xl:gap-2"
               />
-              // <div className="hidden xl:flex items-center gap-6">
-              //   {isAuthenticated ? <AccUserActions /> : <UserActions />}
-              // </div>
             )}
             {isLoggedIn && <SpecialistMenu />}
           </div>
