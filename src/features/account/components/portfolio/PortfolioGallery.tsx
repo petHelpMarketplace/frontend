@@ -57,7 +57,7 @@ export default function PortfolioGallery() {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-12.5">
+    <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-x-12.5 gap-y-9">
       {Array.from({ length: MAX_PHOTOS }).map((_, index) => {
         const photo = photos[index];
 

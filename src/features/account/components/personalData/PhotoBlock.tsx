@@ -33,9 +33,9 @@ export default function PhotoBlock() {
 
   const hasPhoto = Boolean(preview);
   const ariaLabel = hasPhoto ? 'Редагувати фото' : 'Додати фото';
-  // const iconHref = hasPhoto
-  //   ? '/icons.svg#icon-pencil'
-  //   : '/icons.svg#icon-acc-photo-add';
+  const iconHref = hasPhoto
+    ? '/icons.svg#icon-photo-change'
+    : '/icons.svg#icon-photo-add';
   const iconColorClass = hasPhoto
     ? 'fill-alabaster absolute z-5'
     : 'fill-fire ';
@@ -49,10 +49,10 @@ export default function PhotoBlock() {
         <label
           htmlFor="photo"
           title={ariaLabel}
-          className={`cursor-pointer ${iconColorClass} hover:scale-115 transition duration-300`}
+          className={`cursor-pointer ${iconColorClass} hover:scale-115 transition duration-300 ease-in-out`}
         >
           <svg className="w-32 h-32">
-            <use href="/icons.svg#icon-placeholder" />
+            <use href={iconHref} />
           </svg>
         </label>
 
@@ -74,39 +74,6 @@ export default function PhotoBlock() {
             height={364}
           />
         )}
-
-        {/* {hasPhoto ? (
-          <img
-            src={preview!}
-            alt="Фото фахівця"
-            className="object-cover w-full h-full"
-            width={272}
-            height={364}
-          />
-        ) : (
-          <svg className="w-32 h-32 fill-fire">
-            <use href="/icons.svg#icon-placeholder" />
-          </svg>
-        )} */}
-
-        {/* <label
-          htmlFor="photo"
-          title={ariaLabel}
-          className={`absolute top-3.5 right-3.5 cursor-pointer flex items-center gap-2 ${iconColorClass} font-medium transition`}
-        >
-          <svg className="w-5 h-5">
-            <use href={iconHref} />
-          </svg>
-        </label>
-
-        <input
-          type="file"
-          id="photo"
-          accept="image/*"
-          onChange={handlePhotoChange}
-          className="hidden"
-          aria-label={ariaLabel}
-        /> */}
       </div>
 
       {hasPhoto && (

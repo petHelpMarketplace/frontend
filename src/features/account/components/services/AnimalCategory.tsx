@@ -24,7 +24,7 @@ export function AnimalCategory({
         <span>{type}</span>
       </div>
 
-      <ul className="flex flex-col gap-6.5">
+      <ul className="flex flex-col gap-7">
         {services.map(({ name }) => (
           <li key={name} className="flex justify-between items-center">
             <Controller
