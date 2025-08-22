@@ -59,10 +59,9 @@ export default function PhotoBlock() {
         <input
           type="file"
           id="photo"
-          accept="image/*"
+          accept="image/jpeg,image/png"
           onChange={handlePhotoChange}
           className="hidden"
-          aria-label={ariaLabel}
         />
 
         {hasPhoto && (

@@ -1,7 +1,9 @@
+import type { ChangeEvent } from 'react';
+
 type PortfolioSlotProps = {
   photo?: string;
   onRemove?: () => void;
-  onAdd?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onAdd?: (e: ChangeEvent<HTMLInputElement>) => void;
   isAddSlot?: boolean;
 };
 
@@ -38,7 +40,7 @@ export default function PortfolioSlot({
           title="Редагувати фото"
           className="absolute w-full aspect-square flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition"
         >
-          <svg className="w-20 h-18 fill-alabaster opacity-0 group-hover:opacity-100 transition-opacity duration-300 easy-in-out">
+          <svg className="w-20 h-18 fill-alabaster opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
             <use href="/icons.svg#icon-photo-change" />
           </svg>
           <input
