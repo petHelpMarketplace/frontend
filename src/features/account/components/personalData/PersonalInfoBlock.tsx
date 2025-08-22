@@ -182,7 +182,7 @@ export default function PersonalInfoBlock() {
             autoComplete="tel"
             aria-required="true"
             className="w-full input-base h-12 pl-11"
-            placeholder="+38 (0__) ___ __ __"
+            placeholder="+38 (XXX) XXX XX XX"
           />
           <svg
             className="absolute w-6 h-6 fill-mist-gray right-6"
