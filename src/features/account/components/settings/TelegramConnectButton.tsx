@@ -14,9 +14,13 @@ const TelegramConnectButton = () => {
   return (
     <button
       onClick={handleConnect}
+      type="button"
       className="w-2/3 h-12 btn bg-picton-blue text-alabaster flex items-center justify-center gap-4 rounded-2xl"
     >
-      <svg className="w-4.5 h-4.5 fill-alabaster" aria-label="Зайти з Телеграм">
+      <svg
+        className="w-4.5 h-4.5 fill-alabaster"
+        aria-label={isConnected ? 'Telegram підключено' : 'Зайти з Telegram'}
+      >
         <use href="/icons.svg#icon-tg" />
       </svg>
       {isConnected ? 'Telegram підключено' : 'Зайти з Telegram'}

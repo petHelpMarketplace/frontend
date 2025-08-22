@@ -33,7 +33,7 @@ export default function PortfolioSlot({
 
   if (photo) {
     return (
-      <div className="relative w-full aspect-square rounded-2xl overflow-hidden group hover:brightness-80 transition duration-300 easy-in-out">
+      <div className="relative w-full aspect-square rounded-2xl overflow-hidden group hover:brightness-80 transition duration-300 ease-in-out">
         <label
           title="Редагувати фото"
           className="absolute w-full aspect-square flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition"

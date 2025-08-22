@@ -20,9 +20,10 @@ const DeleteProfileButton = () => {
       // onClick={handleOpenModal}
     >
       <svg
-        role="image"
         className="w-4.5 h-4.5 fill-alabaster"
         aria-label="Видалити профіль"
+        focusable="false"
+        aria-hidden="true"
       >
         <use href="/icons.svg#icon-delete" />
       </svg>

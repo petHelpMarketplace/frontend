@@ -1,6 +1,5 @@
-import { JSX, useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { tabs, TabKey } from '../tabs';
-
 import AccountPersonalDataForm from '../components/personalData/AccountPersonalDataForm';
 import PortfolioGallery from '../components/portfolio/PortfolioGallery';
 import SettingsForm from '../components/settings/AccountSettingsForm';
@@ -10,7 +9,7 @@ export default function AccountPage() {
   const [activeTab, setActiveTab] = useState(0);
 
   const renderTabContent = (key: TabKey) => {
-    const componentsMap: Record<TabKey, JSX.Element> = {
+    const componentsMap: Record<TabKey, ReactNode> = {
       personal: <AccountPersonalDataForm />,
       services: <AccountServicesForm />,
       portfolio: <PortfolioGallery />,
@@ -24,6 +23,7 @@ export default function AccountPage() {
     <section className="mx-auto max-w-[375px] xl:max-w-7xl xl:pt-17 xl:pb-16 xl:px-30 flex flex-col">
       <button
         type="button"
+        id="save-btn"
         className="btn-outline text-left font-semibold text-fire transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs mb-8.5"
       >
         Зберегти

@@ -12,7 +12,7 @@ export default function DetailsBlock() {
         name="about"
         rows={6}
         className="w-full flex flex-1 input-base h-12 px-7 py-6 resize-none"
-        placeholder="Приклад: Привіт! Я Ігор, з дитинства обжнюю тварин, особливо собак. Маю досвід у вигулі та догляді ..."
+        placeholder="Приклад: Привіт! Я Ігор, з дитинства обожнюю тварин, особливо собак. Маю досвід у вигулі та догляді ..."
       />
     </div>
   );

@@ -31,21 +31,34 @@ const ChangePasswordForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-6 w-full"
     >
+      <label htmlFor="currentPassword" className="sr-only">
+        Поточний пароль
+      </label>
       <input
+        id="currentPassword"
         type="password"
         placeholder="Поточний пароль"
+        autoComplete="current-password"
         {...register('currentPassword')}
         className="input-base h-12 "
       />
 
+      <label htmlFor="newPassword" className="sr-only">
+        Новий пароль
+      </label>
       <input
+        id="newPassword"
         type="password"
         placeholder="Новий пароль"
         {...register('newPassword')}
         className="input-base h-12 "
       />
 
+      <label htmlFor="confirmPassword" className="sr-only">
+        Повторити пароль
+      </label>
       <input
+        id="confirmPassword"
         type="password"
         placeholder="Повторити пароль"
         {...register('confirmPassword')}
