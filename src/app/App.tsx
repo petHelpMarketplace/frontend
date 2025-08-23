@@ -15,6 +15,10 @@ const BookingPage = lazy(() => import('@/features/booking/pages/BookingPage'));
 const ReviewServicePage = lazy(
   () => import('@/features/review/pages/ReviewServicePage')
 );
+const FaqPage = lazy(() => import("@/features/faq/pages/FaqPage"));
+const FaqCategoryPage = lazy(() => import("@/features/faq/pages/FaqCategoryPage"));
+const FaqQuestionPage = lazy(() => import("@/features/faq/pages/FaqQuestionPage"));
+
 
 function App() {
   return (
@@ -29,6 +33,11 @@ function App() {
             path="/review/specialists/:id"
             element={<ReviewServicePage />}
           />
+               {/* FAQ */}
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/faq/:category" element={<FaqCategoryPage />} />
+        <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
+         
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

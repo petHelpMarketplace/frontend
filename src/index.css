@@ -70,11 +70,13 @@
   --color-peru-tan: #803500;
   --color-ecstasy: #ff7b1c;
   --color-peru-tan-tan: #893900;
+  --color-black: #000000;
 
   --shadow-box: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-shark: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-smoke: 0 1px 4px 4px rgba(0, 0, 0, 0.25);
   --shadow-filter: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
+  --shadow-faq: 0 1px 5px 4px rgba(0, 0, 0, 0.25);
   --shadow-inset-shark: inset 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-thin: inset 0 0px 1px 0 rgba(0, 0, 0, 0.25);
   --shadow-inset-language: inset 0 3px 4px 0 rgba(0, 0, 0, 0.25);
