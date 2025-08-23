@@ -99,7 +99,7 @@ export default function PersonalInfoBlock() {
             {dropdownOpen && (
               <ul
                 id="districts-dropdown"
-                className="xl:absolute z-10 mt-4 xl:mt-2 max-h-[138px] overflow-y-hidden flex flex-col justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full py-5"
+                className="xl:absolute z-10 mt-4 xl:mt-2 max-h-[138px] overflow-y-auto flex flex-col justify-between bg-alabaster border-2 border-tenn rounded-2xl shadow-[0_2px_3px_0_rgba(0,0,0,0.25)] w-full py-5"
                 // aria-hidden={selectedLocationOption !== 'customer'}
               >
                 {sortedDistricts.map((district, index) => (
@@ -164,7 +164,7 @@ export default function PersonalInfoBlock() {
           type="number"
           autoComplete="off"
           min="0"
-          max="99"
+          max="70"
           className="input-base h-12 items-center w-full"
         />
       </div>
