@@ -44,7 +44,7 @@ const AccountGeneralForm = () => {
           type="email"
           placeholder="Email"
           {...register('email')}
-          className="input-base h-12"
+          className="input-base h-12 pl-11"
         />
         <svg
           className="absolute w-5 h-5 fill-mist-gray right-8"

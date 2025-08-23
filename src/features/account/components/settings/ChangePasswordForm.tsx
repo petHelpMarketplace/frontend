@@ -40,7 +40,7 @@ const ChangePasswordForm = () => {
         placeholder="Поточний пароль"
         autoComplete="current-password"
         {...register('currentPassword')}
-        className="input-base h-12 "
+        className="input-base h-12 pl-11"
       />
 
       <label htmlFor="newPassword" className="sr-only">
@@ -51,7 +51,7 @@ const ChangePasswordForm = () => {
         type="password"
         placeholder="Новий пароль"
         {...register('newPassword')}
-        className="input-base h-12 "
+        className="input-base h-12 pl-11"
       />
 
       <label htmlFor="confirmPassword" className="sr-only">
@@ -62,7 +62,7 @@ const ChangePasswordForm = () => {
         type="password"
         placeholder="Повторити пароль"
         {...register('confirmPassword')}
-        className="input-base h-12 "
+        className="input-base h-12 pl-11"
       />
 
       <button
