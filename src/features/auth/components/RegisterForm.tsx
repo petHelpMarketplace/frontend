@@ -11,15 +11,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
-import { registerUser } from '@/features/auth/model/registerThunks';
-import { resetRegisterState } from '@/features/auth/model/registerSlice';
-import { selectRegisterLoading } from '@/features/auth/model/selectors';
+import { registerUser } from '@/features/auth/model/operations';
+import { resetRegisterState } from '@/features/auth/model/slice';
+import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
 
 const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const loading = useSelector(selectRegisterLoading);
+  const loading = useSelector(selectAuthLoading);
   const [hasInput, setHasInput] = useState(false);
 
   const {
@@ -56,15 +56,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         reset();
       }, 1500);
     } catch (error) {
-      let msg = 'Registration failed';
-      if (
-        error &&
-        typeof error === 'object' &&
-        'message' in error &&
-        typeof (error as { message?: unknown }).message === 'string'
-      ) {
-        msg = (error as { message: string }).message;
-      }
+      const msg = typeof error === 'string' ? error : 'Registration failed';
       toast.error(msg);
     }
   };
@@ -176,6 +168,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="password"
             placeholder="Пароль"
+            autoComplete="new-password"
             className={getInputClass(
               !!errors.password,
               !!(!errors.password && dirtyFields.password)

@@ -19,7 +19,7 @@ export const UserActions = ({
       <button
         key={label}
         className={clsx(
-          'flex items-center justify-between w-full text-xl leading-[114%] text-fire uppercase font-semibold px-3 xl:px-2 py-[2px] xl:py-[3px] border border-transparent rounded-full group hover:border-fire transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-fire focus-visible:ring-offset-2 xl:normal-case xl:text-base xl:font-normal xl:w-auto'
+          'flex items-center justify-between w-full text-xl leading-[114%] text-fire uppercase font-semibold px-3 xl:px-2 py-[2px] xl:py-1 border border-transparent rounded-full group hover:border-fire transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-fire focus-visible:ring-offset-2 xl:normal-case xl:text-base/[122%] xl:font-normal xl:w-auto'
         )}
         type="button"
         onClick={onClick}
