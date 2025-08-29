@@ -17,7 +17,8 @@ const isCat = (v: string | undefined): v is CategorySlug =>
 
 export default function FaqCategoryPage() {
   const { category: raw } = useParams<{ category: string }>();
-  if (!isCat(raw)) return <NotFoundPage />; // 404 за ТЗ
+  if (!isCat(raw)) return <NotFoundPage />; 
+  
 
   const questions = FAQ_ITEMS.filter((i) => i.category === raw);
 

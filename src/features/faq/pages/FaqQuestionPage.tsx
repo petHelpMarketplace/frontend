@@ -133,13 +133,11 @@ export default function FaqQuestionPage() {
         />
 
         {/* Справа: відповідь (тайтл схований) */}
-        <article aria-labelledby="q-title" className="[font-family:var(--font-family)]">
+        <article aria-labelledby="q-title">
           <h1 id="q-title" className="sr-only">{item.question}</h1>
           <div
             ref={answerRef}
-            className="
-               text-[16px] leading-[1.6]
-
+            className="leading-[169%]
     /* відступ між сусідніми блоками за замовчуванням */
     [&>*+*]:mt-5
 
