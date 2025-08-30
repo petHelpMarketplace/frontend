@@ -105,7 +105,7 @@ export default function FaqQuestionPage() {
   if (!item) {
     return (
       <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-        <BackButton className="mb-11.5" />
+        <BackButton to={cat ? `/faq/${cat}` : '/faq'} replace className="mb-11.5" />
         <p className="leading-[135%]">Question not found. Please go back to the FAQ.</p>
       </div>
     );
@@ -114,7 +114,7 @@ export default function FaqQuestionPage() {
   // 4) Рендер
   return (
     <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-      <BackButton className="mb-11.5" />
+      <BackButton to={`/faq/${cat}`} replace className="mb-11.5" />
 
       <div className="grid grid-cols-[328px_1fr] gap-11.5">
         {/* Зліва: "пігулка" + список категорії */}
@@ -137,21 +137,16 @@ export default function FaqQuestionPage() {
           <h1 id="q-title" className="sr-only">{item.question}</h1>
           <div
             ref={answerRef}
-            className="leading-[169%]
-    /* відступ між сусідніми блоками за замовчуванням */
+          className="
+          leading-[169%]
     [&>*+*]:mt-5
-
-    /* але між абзацом і наступним списком — НУЛЬ */
     [&>p+ol]:mt-0
     [&>p+ul]:mt-0
-
-    /* після списку перед наступним абзацом — лишаємо відступ */
     [&>ol+p]:mt-5
     [&>ul+p]:mt-5
-
-    /* стилі списків */
     [&_ol]:list-decimal [&_ol]:pl-6
     [&_ul]:list-[circle]  [&_ul]:pl-5
+  [&_strong]:text-fire [&_b]:text-fire 
             "
             dangerouslySetInnerHTML={{ __html: sanitized }}
           />

@@ -1,6 +1,7 @@
 export interface FooterLink {
   text: string;
   to: string;
+  external?: boolean
 }
 
 export interface FooterSection {
@@ -25,7 +26,7 @@ export const footerSections: FooterSection[] = [
   {
     title: 'Допомога',
     links: [
-      { text: 'Питання та відповіді', to: '#' },
+      { text: 'Питання та відповіді', to: '/faq' },
       { text: 'Правила конфіденційності', to: '#' },
       { text: 'Служба підтримки', to: '#' },
       { text: 'Публічна оферта', to: '#' },

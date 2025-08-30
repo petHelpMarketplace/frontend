@@ -11,7 +11,11 @@ const TITLE: Record<CategorySlug, string> = {
   orders: "Замовлення",
   general: "Загальні питання",
 };
-
+const ICON_BY_SLUG: Record<CategorySlug, string> = {
+  registration: "icon-registration",
+  orders: "icon-order",
+  general: "icon-questions",
+};
 const isCat = (v: string | undefined): v is CategorySlug =>
   v === "registration" || v === "orders" || v === "general";
 
@@ -24,19 +28,23 @@ export default function FaqCategoryPage() {
 
   return (
     <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-      <BackButton className="mb-11.5" />
+      <BackButton to="/faq" className="mb-11.5" />
  
       <section
         aria-labelledby="cat-title"
         className={`${S.card} w-full h-auto max-w-[328px]`}
       >
-        <h1
-          id="cat-title"
-          className="text-[24px]/[135%] font-semibold text-fire mb-10"
-        >
-          {TITLE[raw]}
-        </h1>
-
+      <h1
+  id="cat-title"
+  className="flex items-end gap-3.5 text-xl/[135%] font-semibold text-fire mb-10"
+>
+  <svg className={S.icon} aria-hidden focusable="false">
+    <use href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`} />
+    {/* опціонально для старих Safari:
+    <use xlinkHref={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`} /> */}
+  </svg>
+  {TITLE[raw]}
+</h1>
         {questions.length > 0 ? (
           <ul className="flex flex-col gap-11.5" role="list">
             {questions.map((q) => (

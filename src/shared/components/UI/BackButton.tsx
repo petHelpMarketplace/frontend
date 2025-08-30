@@ -4,21 +4,28 @@ import clsx from 'clsx';
 type BackButtonProps = {
   label?: string;
   className?: string;
+  to?: string;        // куди перейти замість history back
+  replace?: boolean;  // не додавати новий запис в історію
 };
 
-const BackButton: React.FC<BackButtonProps> = ({
+const BackButton = ({
   label = 'Назад',
   className,
-}) => {
+    to,
+  replace = false,
+}: BackButtonProps) => {
+   const navigate = useNavigate();
+
   const backBtnClass = clsx(
     'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs',
     className
   );
 
-  const navigate = useNavigate();
+ 
 
   const handleClick = () => {
-    navigate(-1); // Returns to the previous page
+    if (to) navigate(to, {replace});
+    else navigate(-1); // Returns to the previous page
   };
 
   return (

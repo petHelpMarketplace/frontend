@@ -22,7 +22,7 @@ export default function FaqPage() {
   return (
     <div aria-labelledby="faq-title" className="w-full xl:px-[120px] xl:pt-17 xl:pb-18 mx-auto xl:max-w-[1280px]">
           <div className="mx-auto px-0">
-        <BackButton className="mb-11.5"/>
+        <BackButton to="/" className="mb-11.5"/>
       <h1 id="faq-title" className="sr-only">FAQ</h1>
       <div className="flex justify-center mx-auto xl:max-w-[1042px] xl:gap-x-7">
         {categories.map(cat => (
