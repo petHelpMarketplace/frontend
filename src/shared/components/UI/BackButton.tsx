@@ -17,15 +17,15 @@ const BackButton = ({
    const navigate = useNavigate();
 
   const backBtnClass = twMerge(
-    'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs',
+    'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-fire',
     className
   );
 
  
 
   const handleClick = () => {
-    if (to) navigate(to, {replace});
-    else if (window.history.length > 1) navigate(-1);
+    if (to) navigate(to, { replace });
+    else if (typeof window !== 'undefined' && window.history.length > 1) navigate(-1);
     else navigate('/faq'); 
   };
 

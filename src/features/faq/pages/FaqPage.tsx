@@ -1,16 +1,20 @@
 import BackButton from "@/shared/components/UI/BackButton";
 import FaqCategoryCard, {S} from "../components/FaqCategoryCard";
-import { categories, FAQ_ITEMS } from "../content/faqContentCard";
-import type { CategorySlug } from "../types";
+import { FAQ_ITEMS } from "../content/faqContentCard";
+import { CATEGORY_SLUGS, type CategorySlug } from "../types";
 import { TITLE as TITLES, ICON_BY_SLUG } from "../constants";
+import { useMemo } from "react";
 
 
 export default function FaqPage() {
-  const byCat = FAQ_ITEMS.reduce<Record<CategorySlug,{id:number;question:string}[]>>(
+  const byCat =useMemo( () =>  FAQ_ITEMS.reduce<Record<CategorySlug,{id:number;question:string}[]>>(
  (acc, {id, question, category}) => {
   (acc[category] ??= []).push({ id, question });
    return acc;
- }, { registration: [], orders: [], general: [] });
+ }, 
+ { registration: [], orders: [], general: [] }),
+ []
+);
  const getByCategory = (slug: CategorySlug) => byCat[slug];
 
   return (
@@ -19,7 +23,7 @@ export default function FaqPage() {
         <BackButton to="/" className="mb-11.5"/>
       <h1 id="faq-title" className="sr-only">FAQ</h1>
       <div className="flex justify-center mx-auto xl:max-w-[1042px] xl:gap-x-7">
-        {categories.map(cat => (
+        {CATEGORY_SLUGS.map(cat => (
           <FaqCategoryCard
             key={cat}
             icon={

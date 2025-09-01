@@ -18,7 +18,7 @@ export default function FaqCategoryPage() {
   return (
     <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
       <BackButton to="/faq" className="mb-11.5" />
- 
+
       <section
         aria-labelledby="cat-title"
         className={`${S.card} w-full h-auto max-w-[328px]`}

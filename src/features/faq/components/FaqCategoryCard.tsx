@@ -71,7 +71,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
         </div>
 
         {/* картка зі списком */}
-        <section className={twMerge(S.card, "pt-9 min-h-[540px]", cardClassName)} id={`faq-${slug}-title`}>
+        <section className={twMerge(S.card, "pt-9 min-h-[540px]", cardClassName)} aria-labelledby={`faq-${slug}-title`}>
           {items.length ? (
             <ul className={twMerge(S.list, listClassName)}>
               {items.map((q) => (

@@ -1,4 +1,5 @@
-import { CATEGORY_SLUGS, type CategorySlug } from "./types";
+
+import type { CategorySlug } from "./types";
 
 export const TITLE: Record<CategorySlug, string> = {
   registration: "Реєстрація фахівців",
@@ -12,5 +13,4 @@ export const ICON_BY_SLUG: Record<CategorySlug, string> = {
   general: "icon-questions",
 };
 
-export const isCategorySlug = (v: unknown): v is CategorySlug =>
-  typeof v === "string" && (CATEGORY_SLUGS as readonly string[]).includes(v);
+export { isCategorySlug } from "./types";

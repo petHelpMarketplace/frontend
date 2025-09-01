@@ -8,5 +8,5 @@ export type FaqItem = {
   answer: string;
 };
 
-export const isCategorySlug = (v: string): v is CategorySlug =>
-  (CATEGORY_SLUGS as readonly string[]).includes(v);
+export const isCategorySlug = (v: unknown): v is CategorySlug =>
+  typeof v === 'string' && (CATEGORY_SLUGS as readonly string[]).includes(v);
