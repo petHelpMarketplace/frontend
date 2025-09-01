@@ -1,7 +1,7 @@
 export interface FooterLink {
   text: string;
   to: string;
-  external?: boolean
+  external?: boolean;
 }
 
 export interface FooterSection {

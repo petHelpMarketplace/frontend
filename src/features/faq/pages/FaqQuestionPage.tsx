@@ -7,24 +7,12 @@ import NotFoundPage from "@/pages/NotFound/NotFoundPage";
 import { FAQ_ITEMS } from "@/features/faq/content/faqContentCard";
 import BackButton from "@/shared/components/UI/BackButton";
 import FaqCategoryCard, { S } from "@/features/faq/components/FaqCategoryCard";
-
-const TITLE: Record<CategorySlug, string> = {
-  registration: "Реєстрація фахівців",
-  orders: "Замовлення",
-  general: "Загальні питання",
-};
-
-const ICON_BY_SLUG: Record<CategorySlug, string> = {
-  registration: "icon-registration",
-  orders: "icon-order",
-  general: "icon-questions",
-};
-
-const isCat = (v: string | undefined): v is CategorySlug =>
-  v === "registration" || v === "orders" || v === "general";
+import { TITLE, ICON_BY_SLUG, isCategorySlug as isCat } from "../constants";
 
 export default function FaqQuestionPage() {
   const { category: rawCat, id: rawId } = useParams<{ category: string; id: string }>();
+
+
 
   // 1) ХУКИ/дані — БЕЗ умов
   const answerRef = useRef<HTMLDivElement>(null);
@@ -40,6 +28,18 @@ export default function FaqQuestionPage() {
     ALLOWED_TAGS: ["p","br","strong","em","ul","ol","li","a","blockquote","code","pre"],
     ALLOWED_ATTR: ["href","title","target","rel"],
   });
+
+  DOMPurify.addHook('afterSanitizeAttributes', node => {
+if (node.nodeName === 'A' && node.getAttribute('href')) {
+const href = node.getAttribute('href') || '';
+const safe = /^(https?:|mailto:|tel:)/i.test(href);
+if (!safe) node.removeAttribute('href');
+const tgt = node.getAttribute('target');
+if (tgt === '_blank') {
+node.setAttribute('rel', 'noopener noreferrer');
+}
+}
+});
 
   useEffect(() => {
     const root = answerRef.current;

@@ -1,10 +1,8 @@
 import type { CategorySlug, FaqItem } from "../types";
+import { CATEGORY_SLUGS } from "../types";
 
-export const categories: CategorySlug[] = [
-  "registration",
-  "orders",
-  "general",
-];
+// беремо список із ЄДИНОГО джерела
+export const categories: readonly CategorySlug[] = CATEGORY_SLUGS;
 
 export const FAQ_ITEMS: FaqItem[] = [
   // === Реєстрація фахівців ===
@@ -340,3 +338,17 @@ export const FAQ_ITEMS: FaqItem[] = [
 <p>Це гарантує прозорість співпраці та захищає як замовників, так і фахівців.</p>`,
   },
 ];
+// Dev-only sanity checks
+if (import.meta.env.DEV) {
+ const ids = new Set<number>();
+  for (const it of FAQ_ITEMS) {
+    if (!Number.isInteger(it.id) || it.id <= 0) {
+     
+      console.warn(`[FAQ] Non-integer or non-positive id detected:`, it);
+   }
+    if (ids.has(it.id)) {
+      console.error(`[FAQ] Duplicate id detected:`, it.id);
+    }
+   ids.add(it.id);
+  }
+}

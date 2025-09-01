@@ -1,8 +1,12 @@
-export type CategorySlug = "registration" | "orders" | "general";
+export const CATEGORY_SLUGS = ['registration', 'orders', 'general'] as const;
+export type CategorySlug = (typeof CATEGORY_SLUGS)[number];
 
 export type FaqItem = {
-    id: number;
-    category: CategorySlug;
-    question: string;
-    answer: string; 
-}
+  id: number;
+  category: CategorySlug;
+  question: string;
+  answer: string;
+};
+
+export const isCategorySlug = (v: string): v is CategorySlug =>
+  (CATEGORY_SLUGS as readonly string[]).includes(v);

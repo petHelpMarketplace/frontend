@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
+import { useNavigate, type To } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
 
 type BackButtonProps = {
   label?: string;
   className?: string;
-  to?: string;        // куди перейти замість history back
-  replace?: boolean;  // не додавати новий запис в історію
+  to?: To;        
+  replace?: boolean; 
 };
 
 const BackButton = ({
@@ -16,7 +16,7 @@ const BackButton = ({
 }: BackButtonProps) => {
    const navigate = useNavigate();
 
-  const backBtnClass = clsx(
+  const backBtnClass = twMerge(
     'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs',
     className
   );
@@ -25,7 +25,8 @@ const BackButton = ({
 
   const handleClick = () => {
     if (to) navigate(to, {replace});
-    else navigate(-1); // Returns to the previous page
+    else if (window.history.length > 1) navigate(-1);
+    else navigate('/faq'); 
   };
 
   return (

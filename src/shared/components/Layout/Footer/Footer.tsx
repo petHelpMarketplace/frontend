@@ -5,7 +5,33 @@ import Accordion from '@/shared/components/Layout/Footer/Accordion';
 import Logo from '@/shared/components/UI/Logo';
 
 const Footer = () => {
-  const [openAcordion, setOpenAccordion] = useState<string | null>(null);
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+ const isExternal = (to: string) => {
+  if (to.startsWith("mailto:") || to.startsWith("tel:")) return true;
+  try {
+    const url = new URL(to, window.location.origin);
+    // зовнішнім вважаємо все, що не http(s) того ж origin
+    const isHttp = url.protocol === "http:" || url.protocol === "https:";
+    return !isHttp || url.origin !== window.location.origin;
+  } catch {
+    // відносні "/faq" або "#id" — внутрішні
+    return false;
+  }
+};
+
+const toInternalPath = (to: string) => {
+  try {
+    const url = new URL(to, window.location.origin);
+    if (url.origin === window.location.origin) {
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+  } catch {
+   return to;
+  }
+  return to;
+};
+
   return (
     <footer
       role="contentinfo"
@@ -28,7 +54,7 @@ const Footer = () => {
           <Accordion
             key={title}
             title={title}
-            isOpen={openAcordion === title}
+            isOpen={openAccordion === title}
             onToggle={() =>
               setOpenAccordion(prev => (prev === title ? null : title))
             }
@@ -36,13 +62,21 @@ const Footer = () => {
             <ul className="flex flex-col text-sm gap-3.5 mt-5">
               {links.map(({ text, to }) => (
                 <li key={`${to}-${text}`}>
-                  <Link
-                    to={to}
+                  {isExternal(to) ? (
+                    <a href={to}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-alabaster text-sm font-normal block leading-[120%]"
-                    tabIndex={openAcordion === title ? 0 : -1}
+                    tabIndex={openAccordion === title ? 0 : -1}>{text}</a>
+                  ) : (
+ <Link
+                    to={toInternalPath(to)}
+                    className="text-alabaster text-sm font-normal block leading-[120%]"
+                    tabIndex={openAccordion === title ? 0 : -1}
                   >
                     {text}
                   </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -58,9 +92,13 @@ const Footer = () => {
             <ul className="leading-[2.5]">
               {links.map(({ text, to }) => (
                 <li key={`${to}-${text}`}>
-                  <Link to={to} className="text-alabaster">
+                  {isExternal(to) ? (
+                    <a href={to} target="_blank" rel="noopener noreferrer" className="text-alabaster">{text}</a>
+                  ) : (
+ <Link to={toInternalPath(to)} className="text-alabaster">
                     {text}
                   </Link>
+                  )}
                 </li>
               ))}
             </ul>

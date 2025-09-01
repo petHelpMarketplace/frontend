@@ -1,5 +1,5 @@
 import { memo, useMemo, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import type { CategorySlug, FaqItem } from "@/features/faq/types";
 
@@ -24,13 +24,12 @@ export type FaqCategoryCardProps = {
   icon?: ReactNode;
   emptyText?: string;
   className?: string;
-
-  // варіанти відображення
-  variant?: Variant;         // "card" (за замовч.) або "split"
-  activeId?: number;         // підсвітка активного питання у списку
-  headerClassName?: string;  // тонке налаштування хедера
-  listClassName?: string;    // тонке налаштування списку
-} & React.ComponentPropsWithoutRef<"section">;
+  variant?: Variant;       
+  activeId?: number;        
+  headerClassName?: string;  
+  listClassName?: string;   
+  cardClassName?: string;
+} & React.HTMLAttributes<HTMLElement>;
 
 const FaqCategoryCard = memo(function FaqCategoryCard({
   title,
@@ -44,6 +43,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   activeId,
   headerClassName,
   listClassName,
+  cardClassName,
   ...rest
 }: FaqCategoryCardProps) {
   const items = useMemo(
@@ -54,12 +54,12 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   // ========= ВАРІАНТ "split": пігулка заголовка + окрема картка зі списком =========
   if (variant === "split") {
     return (
-      <aside className={twMerge("w-[328px]", className)} {...rest}>
+      <aside className={twMerge("w-[328px]", className)} aria-labelledby={`faq-${slug}-title`} {...rest}>
         {/* пігулка заголовка */}
         <div className="max-w-[328px] h-[68px] rounded-2xl shadow-smoke px-10.5 py-4.5 mb-4.5">
           <header className={twMerge(S.header, headerClassName)}>
             {icon && <span aria-hidden className={S.icon}>{icon}</span>}
-            <h3 className={S.title}>
+            <h3 className={S.title} id={`faq-${slug}-title`}>
               <Link
                 to={`/faq/${slug}`}
                 className="outline-none focus-visible:ring-2 focus-visible:ring-fire rounded"
@@ -71,22 +71,22 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
         </div>
 
         {/* картка зі списком */}
-        <section className={twMerge(S.card, "pt-9 min-h-[540px]")}>
+        <section className={twMerge(S.card, "pt-9 min-h-[540px]", cardClassName)} id={`faq-${slug}-title`}>
           {items.length ? (
             <ul className={twMerge(S.list, listClassName)}>
               {items.map((q) => (
                 <li key={q.id}>
-                  <Link
+                  <NavLink
                     to={`/faq/${slug}/${q.id}`}
                     aria-current={q.id === activeId ? "page" : undefined}
-                    className={twMerge(
+                    className={({isActive}) => twMerge(
                       S.item,
                       "outline-none focus-visible:ring-2 focus-visible:ring-fire/40 rounded",
-                      q.id === activeId && "text-fire"
+                      isActive && "text-fire"
                     )}
                   >
                     {q.question}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -103,7 +103,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
     <section className={twMerge(S.card, className)} aria-label={`${title} category`} {...rest}>
       <header className={twMerge(S.header, headerClassName)}>
         {icon && <span aria-hidden className={S.icon}>{icon}</span>}
-        <h3 className={S.title}>
+        <h3 className={S.title} id={`faq-${slug}-title`}>
           <Link
             to={`/faq/${slug}`}
             className="outline-none focus-visible:ring-2 focus-visible:ring-fire rounded"

@@ -3,21 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import NotFoundPage from "@/pages/NotFound/NotFoundPage";
 import { FAQ_ITEMS } from "@/features/faq/content/faqContentCard";
 import { S } from "@/features/faq/components/FaqCategoryCard";
-import type { CategorySlug } from "@/features/faq/types";
+import { TITLE as TITLES, ICON_BY_SLUG, isCategorySlug as isCat} from "../constants";
 import BackButton from "@/shared/components/UI/BackButton";
 
-const TITLE: Record<CategorySlug, string> = {
-  registration: "Реєстрація фахівців",
-  orders: "Замовлення",
-  general: "Загальні питання",
-};
-const ICON_BY_SLUG: Record<CategorySlug, string> = {
-  registration: "icon-registration",
-  orders: "icon-order",
-  general: "icon-questions",
-};
-const isCat = (v: string | undefined): v is CategorySlug =>
-  v === "registration" || v === "orders" || v === "general";
+
 
 export default function FaqCategoryPage() {
   const { category: raw } = useParams<{ category: string }>();
@@ -43,7 +32,7 @@ export default function FaqCategoryPage() {
     {/* опціонально для старих Safari:
     <use xlinkHref={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`} /> */}
   </svg>
-  {TITLE[raw]}
+  {TITLES[raw]}
 </h1>
         {questions.length > 0 ? (
           <ul className="flex flex-col gap-11.5" role="list">
@@ -60,7 +49,7 @@ export default function FaqCategoryPage() {
           </ul>
         ) : (
           <p className={S.empty}>
-            No questions are available in this category at the moment.
+            Наразі в цій категорії немає доступних запитань.
           </p>
         )}
       </section>
