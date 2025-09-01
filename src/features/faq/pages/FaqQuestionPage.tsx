@@ -1,53 +1,50 @@
 // /faq/:category/:id
 import { useParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import DOMPurify from "dompurify";
+import { useEffect, useRef, useMemo} from "react";
 import type { CategorySlug } from "@/features/faq/types";
 import NotFoundPage from "@/pages/NotFound/NotFoundPage";
 import { FAQ_ITEMS } from "@/features/faq/content/faqContentCard";
 import BackButton from "@/shared/components/UI/BackButton";
 import FaqCategoryCard, { S } from "@/features/faq/components/FaqCategoryCard";
-import { TITLE, ICON_BY_SLUG, isCategorySlug as isCat } from "../constants";
+import { TITLE, ICON_BY_SLUG, isCategorySlug as isCat } from "@/features/faq/constants";
+import { sanitizeHtml } from "@/features/faq/purify";
 
 export default function FaqQuestionPage() {
+  //Беремо з URL параметри категорії та id питання
   const { category: rawCat, id: rawId } = useParams<{ category: string; id: string }>();
 
-
-
   // 1) ХУКИ/дані — БЕЗ умов
-  const answerRef = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null); // контейнер для відповіді, в який будемо інжектити маркери-іконки
 
+ // Валідація категорії та приведення id до числа
   const cat: CategorySlug | null = isCat(rawCat) ? rawCat : null;
   const id = Number(rawId);
 
+   // Фільтруємо питання за категорією; шукаємо конкретне питання за id
   const list = cat ? FAQ_ITEMS.filter(i => i.category === cat) : [];
   const item = Number.isFinite(id) ? list.find(i => i.id === id) : undefined;
 
-  // Санітизація завжди (порожній рядок, якщо item немає)
-  const sanitized = DOMPurify.sanitize(item?.answer ?? "", {
-    ALLOWED_TAGS: ["p","br","strong","em","ul","ol","li","a","blockquote","code","pre"],
-    ALLOWED_ATTR: ["href","title","target","rel"],
-  });
-
-  DOMPurify.addHook('afterSanitizeAttributes', node => {
-if (node.nodeName === 'A' && node.getAttribute('href')) {
-const href = node.getAttribute('href') || '';
-const safe = /^(https?:|mailto:|tel:)/i.test(href);
-if (!safe) node.removeAttribute('href');
-const tgt = node.getAttribute('target');
-if (tgt === '_blank') {
-node.setAttribute('rel', 'noopener noreferrer');
-}
-}
-});
+  // 🔒 Санітизуємо HTML-відповідь (захист від XSS) і мемоємо за текстом відповіді.
+  // sanitizeHtml:
+  //  - дозволяє лише whitelist-теги/атрибути,
+  //  - блокує небезпечні URI (javascript:, data:),
+  //  - додає rel="noopener noreferrer" для target="_blank".
+ const sanitized = useMemo(
+  () => sanitizeHtml(item?.answer ?? ""),
+   [item?.answer]
+ );
 
   useEffect(() => {
+    // Після кожного оновлення sanitized (тобто новий HTML вже в DOM),
+    // пробігаємось по <p> на верхньому рівні і додаємо зліва маленькі SVG-трикутники.
     const root = answerRef.current;
     if (!root) return;
 
+    // Неймспейс і посилання на символ в SVG-спрайті
     const svgNS = "http://www.w3.org/2000/svg";
     const href  = `${import.meta.env.BASE_URL}icons.svg#icon-triangle`;
 
+     // Фабрика створення іконки <svg><use href="..."/></svg>
     const makeIcon = () => {
       const svg = document.createElementNS(svgNS, "svg");
       svg.setAttribute("class", "mt-[8px] w-[12px] h-[12px] shrink-0 fill-fire");
@@ -63,12 +60,15 @@ node.setAttribute('rel', 'noopener noreferrer');
       return svg;
     };
 
-    // 1) Обробляємо КОЖЕН <p>
+    // 1) Обробляємо КОЖЕН <p> лише на першому рівні вкладеності (":scope > p")
     root.querySelectorAll(":scope > p").forEach((p) => {
       const el = p as HTMLElement;
+       // Захист від повторної обробки: якщо вже ставили маркер — пропускаємо
       if (el.dataset.bullet === "1") return;
+       // Порожні абзаци не маркуємо
       if (!el.textContent?.trim()) return;
-
+ // Якщо після <p> одразу йде <ol> або <ul> — це логічний блок "текст + список".
+      // В такому випадку робимо один "wrap" з іконкою зліва для всього блоку.
       const next = el.nextElementSibling as HTMLElement | null;
       const hasList = next && (next.tagName === "OL" || next.tagName === "UL");
 
@@ -77,8 +77,9 @@ node.setAttribute('rel', 'noopener noreferrer');
         const wrap = document.createElement("div");
         wrap.className = "grid grid-cols-[12px_1fr] gap-x-[11px] items-start";
         const content = document.createElement("div");
-        content.className = "";
+        content.className = ""; // можна додати додаткові класи якщо потрібно
 
+ // Вставляємо обгортку перед <p>, потім переносимо <p> і список всередину
         el.parentElement!.insertBefore(wrap, el);
         wrap.appendChild(makeIcon());
         wrap.appendChild(content);
@@ -91,17 +92,21 @@ node.setAttribute('rel', 'noopener noreferrer');
 
       // Звичайний абзац
       el.classList.add("grid","grid-cols-[12px_1fr]","gap-x-[11px]","items-start");
+         // Обгортаємо наявний контент у <span>, щоб вставити іконку перед ним
       const span = document.createElement("span");
       while (el.firstChild) span.appendChild(el.firstChild);
       el.appendChild(span);
+           // Вставляємо іконку на початок абзацу
       el.insertBefore(makeIcon(), span);
+       // Позначаємо, що абзац уже оброблено
       el.dataset.bullet = "1";
     });
-  }, [sanitized]);
+  }, [sanitized]); // залежність: перераховуємо іконки, коли оновлюється відрендерений HTML
 
   // 3) Умовні рендери — ПІСЛЯ викликів хуків
   if (!cat) return <NotFoundPage />;
 
+   // Якщо питання з таким id у цій категорії не знайдено — показуємо fallback-контент із кнопкою "Назад"
   if (!item) {
     return (
       <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
@@ -111,7 +116,9 @@ node.setAttribute('rel', 'noopener noreferrer');
     );
   }
 
-  // 4) Рендер
+ // 4) Основний рендер сторінки:
+  // Ліва колонка — картка категорії з переліком питань
+  // Права колонка — контент відповіді (рендеримо санітизований HTML через dangerouslySetInnerHTML)
   return (
     <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
       <BackButton to={`/faq/${cat}`} replace className="mb-11.5" />

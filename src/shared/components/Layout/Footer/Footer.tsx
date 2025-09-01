@@ -84,59 +84,33 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Accordion from '@/shared/components/Layout/Footer/Accordion';
 import Logo from '@/shared/components/UI/Logo';
+import { isExternal, toInternalPath, isUnsafeProtocol } from "@/shared/components/Layout/Footer/links";
 
 const Footer = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
- const isExternal = (to: string) => {
-  if (to.startsWith("mailto:") || to.startsWith("tel:")) return true;
-  try {
-    const origin =
-        typeof window !== "undefined" ? window.location.origin : "http://localhost/";
-    const url = new URL(to, origin);
-    // зовнішнім вважаємо все, що не http(s) того ж origin
-    const isHttp = url.protocol === "http:" || url.protocol === "https:";
-    return !isHttp || url.origin !== window.location.origin;
-  } catch {
-    // відносні "/faq" або "#id" — внутрішні
-    return false;
-  }
-};
-
-const toInternalPath = (to: string) => {
-  try {
-    const base =
-        typeof window !== "undefined" ? window.location.origin : "http://localhost/";
-    const url = new URL(to, base);
-     const isSameOrigin = url.origin === base;
-      return isSameOrigin ? `${url.pathname}${url.search}${url.hash}` : to;
-  } catch {
-   return to;
-  }
-  
-};
-
-  // Єдиний рендер-функшн для мобайл/десктоп
   const renderFooterLink = (
-    {
-      text,
-      to,
-      external,
-    }: {
-      text: string;
-      to: string;
-      external?: boolean;
-    },
+    { text, to, external }: { text: string; to: string; external?: boolean },
     tabIndex?: number
   ) => {
-    const forceExternal = external ?? isExternal(to);
-    const isMailOrTel = to.startsWith("mailto:") || to.startsWith("tel:");
+    const lower = to.trim().toLowerCase();
+    const isMailOrTel = lower.startsWith("mailto:") || lower.startsWith("tel:");
 
+    // 1) небезпечні протоколи — інертний елемент
+    if (isUnsafeProtocol(to)) {
+      return (
+        <span className="text-alabaster text-sm font-normal block leading-[inherit] opacity-80" aria-disabled="true">
+          {text}
+        </span>
+      );
+    }
+
+    const forceExternal = external ?? isExternal(to);
+
+    // 2) зовнішні — <a>, внутрішні — <Link>
     if (forceExternal) {
-      // mailto/tel НЕ відкриваємо у новій вкладці
       const target = isMailOrTel ? undefined : "_blank";
       const rel = target === "_blank" ? "noopener noreferrer" : undefined;
-
       return (
         <a
           href={to}
