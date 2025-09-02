@@ -8,7 +8,7 @@ if (PURIFY) {
   PURIFY.addHook("afterSanitizeAttributes", (node: Element) => {
     if (node.nodeName === "A" && (node as HTMLElement).getAttribute("href")) {
       const href = ((node as HTMLElement).getAttribute("href") || "").trim();
-      const ok = /^(https?:|mailto:|tel:)/i.test(href);
+      const ok = /^(https?:|mailto:|tel:|\/(?!\/)|#)/i.test(href);
       if (!ok) (node as HTMLElement).removeAttribute("href");
       if ((node as HTMLElement).getAttribute("target") === "_blank") {
         (node as HTMLElement).setAttribute("rel", "noopener noreferrer");
@@ -27,6 +27,6 @@ export function sanitizeHtml(html: string): string {
     ALLOWED_TAGS: ALLOWED_TAGS as unknown as string[],
     ALLOWED_ATTR: ALLOWED_ATTR as unknown as string[],
     // додатково фільтруємо URI (дає захист навіть без хука)
-    ALLOWED_URI_REGEXP: /^(?:(?:https?:|mailto:|tel:)|\/)/i,
+    ALLOWED_URI_REGEXP: /^(?:(?:https?:|mailto:|tel:)|\/(?!\/)|#)/i,
   });
 }

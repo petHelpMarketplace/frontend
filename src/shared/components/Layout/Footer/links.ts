@@ -34,10 +34,19 @@ export const isExternal = (to: string): boolean => {
 
 // Для внутрішніх посилань повертаємо тільки шлях (щоб <Link> працював коректно)
 export const toInternalPath = (to: string): string => {
+    const raw =(to ?? "").trim();
+    if (!raw) return raw;
+    // 1) Hash-only – залишаємо як є, щоб якір працював від поточного роуту
+  if (raw.startsWith("#")) return raw;
+
+  // 2) Небезпечні протоколи – деградуємо в "ніщо"
+  if (isUnsafeProtocol(raw)) return "#";
+
+  // 3) Нормалізація same-origin шляху
   try {
     const url = new URL(to, ORIGIN);
-    return url.origin === ORIGIN ? `${url.pathname}${url.search}${url.hash}` : to;
+    return url.origin === ORIGIN ? `${url.pathname}${url.search}${url.hash}` : raw;
   } catch {
-    return to;
+    return raw;
   }
 };
