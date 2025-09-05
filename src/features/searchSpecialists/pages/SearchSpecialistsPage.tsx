@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import Pagination from '@/features/searchSpecialists/components/Pagination';
 import SpecialistsList from '@/features/searchSpecialists/components/SpecialistsList';
@@ -19,9 +19,15 @@ const SearchSpecialistsPage = () => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const listRef = useRef<HTMLDivElement | null>(null);
 
+   // 🔑 Унікальний ключ для позиції скролу цього списку (враховує фільтри/сторінку)
+  const scrollKey = useMemo(
+    () => `scroll:/specialists${location.search || ''}`,
+    [location.search]
+  ); 
   const filteredSpecialists = selectedDistrict
     ? mockSpecialists.filter(s => s.district === selectedDistrict)
     : mockSpecialists;
+
   const totalPages = Math.ceil(filteredSpecialists.length / specialistsPerPage);
   const [page, setPage] = useState(1);
 
@@ -41,6 +47,19 @@ const SearchSpecialistsPage = () => {
       else setSkeletonCount(4);
     }
   }, []);
+
+    // ⬅️ ВІДНОВЛЕННЯ позиції при монтуванні сторінки списку
+  useEffect(() => {
+    const saved = sessionStorage.getItem(scrollKey);
+    if (saved) {
+      const y = Number(saved);
+      // на наступний кадр, щоб DOM уже відмалювався
+      requestAnimationFrame(() => window.scrollTo({ top: y, left: 0, behavior: 'instant' as ScrollBehavior }));
+      // очищаємо, щоб не прилипало до наступних входів
+      sessionStorage.removeItem(scrollKey);
+    }
+  }, [scrollKey]); 
+
   useEffect(() => {
     setLoading(true);
     setHasError(false);
@@ -57,6 +76,12 @@ const SearchSpecialistsPage = () => {
     return () => clearTimeout(timer);
   }, [page]);
 
+   // ➡️ ЗБЕРЕЖЕННЯ позиції при виході зі сторінки списку (перехід у профіль)
+  useEffect(() => {
+    return () => {
+      sessionStorage.setItem(scrollKey, String(window.scrollY));
+    };
+  }, [scrollKey]); 
   const renderSkeletons = () => (
     <div className="grid grid-cols-1 gap-y-5 mb-[30px] xl:grid-cols-2 xl:gap-x-[40px] xl:gap-y-[40px] xl:mb-[58px]">
       {Array.from({ length: skeletonCount }).map((_, i) => (
