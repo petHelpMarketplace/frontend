@@ -6,17 +6,20 @@ import mockProfileData from '../../../data/__mocks__/mockProfileData';
 import BackButton from '@/shared/components/UI/BackButton';
 
 const SpecialistProfilePage = () => {
-  const h1Ref = useRef<HTMLHeadingElement>(null);
+  const regionRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     // Завжди з початку сторінки профілю
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto'  });
     // A11y: фокус на заголовок (після рендера)
-    requestAnimationFrame(() => h1Ref.current?.focus());
+    requestAnimationFrame(() => regionRef.current?.focus());
   }, []);
   return (
     <div className="mx-auto px-[120px] pt-17 pb-30 max-w-[1280px]">
-      <div className="flex mb-12">
+      <div 
+        ref={regionRef}
+        tabIndex={-1}
+        className="flex mb-12">
         <BackButton />
         <h1 className="sr-only flex text-5xl uppercase mx-auto text-center">
           Сторінка фахівця
