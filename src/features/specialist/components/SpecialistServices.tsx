@@ -10,8 +10,12 @@ type Props = {
 
 const SpecialistServices = ({ profile, services }: Props) => {
   const { iconDog, iconCat } = profile;
-  const dogServices = services.filter((s): s is AnimalService => s.type === 'dog')
-  const catServices = services.filter((s): s is AnimalService => s.type === 'cat')
+  const dogServices = services.filter(
+    (s): s is AnimalService => s.type === 'dog'
+  );
+  const catServices = services.filter(
+    (s): s is AnimalService => s.type === 'cat'
+  );
 
   return (
     <>
@@ -45,14 +49,19 @@ const SpecialistServices = ({ profile, services }: Props) => {
         {/* Коти */}
         <div>
           <div className="flex items-center gap-5 justify-center mb-4">
-            <svg className="fill-fire" width="30" height="30" aria-hidden="true">
+            <svg
+              className="fill-fire"
+              width="30"
+              height="30"
+              aria-hidden="true"
+            >
               <use href={`/icons.svg#${iconCat}`} />
             </svg>
             <h2 className="text-xl font-semibold flex items-center gap-2 text-fire">
               Коти
             </h2>
           </div>
-          <ul className="space-y-1">
+          <ul className="flex flex-col gap-2">
             {catServices.map((service, index) => (
               <li key={index} className="flex">
                 <span className="mr-8 min-w-[120px]">{service.title}</span>

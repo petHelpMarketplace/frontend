@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { ReviewCard } from "./SpecialistReviewCard";
-import { ReviewMock } from "../types";
+import { useState } from 'react';
+import { ReviewCard } from './SpecialistReviewCard';
+import { ReviewMock } from '../types';
 
 interface Props {
   reviews: ReviewMock[];
 }
 
 const arrowMore = {
-  title: "Більше відгуків",
-  titleBack: "Згорнути відгуки",
-  icon: "icon-arrow-bottom",
+  title: 'Більше відгуків',
+  titleBack: 'Згорнути відгуки',
+  icon: 'icon-arrow-bottom',
 };
 
 export const ReviewsList = ({ reviews }: Props) => {
@@ -26,7 +26,7 @@ export const ReviewsList = ({ reviews }: Props) => {
       </div>
     );
   }
-    // Сортуємо відгуки за датою
+  // Сортуємо відгуки за датою
   const sortedReviews = [...reviews].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
@@ -41,13 +41,13 @@ export const ReviewsList = ({ reviews }: Props) => {
     if (isFullyExpanded) {
       setVisibleCount(initialCount);
     } else {
-      setVisibleCount((prev) => Math.min(prev + 3, totalCount));
+      setVisibleCount(prev => Math.min(prev + 3, totalCount));
     }
   };
 
   return (
     <div className="flex flex-col gap-6">
-      {visibleReviews.map((review) => (
+      {visibleReviews.map(review => (
         <ReviewCard key={review.id} review={review} />
       ))}
 
@@ -57,9 +57,9 @@ export const ReviewsList = ({ reviews }: Props) => {
           className="self-center px-6 py-2 text-shark hover:underline hover:fill-fire flex items-center gap-3 transition"
           title={isFullyExpanded ? arrowMore.titleBack : arrowMore.title}
         >
-          {isFullyExpanded ? "Згорнути" : `Всі відгуки (${totalCount})`}
+          {isFullyExpanded ? 'Згорнути' : `Всі відгуки (${totalCount})`}
           <svg
-            className={`hover:fill-fire transition-transform ${isFullyExpanded ? "rotate-180" : ""}`}
+            className={`hover:fill-fire transition-transform ${isFullyExpanded ? 'rotate-180' : ''}`}
             width="22"
             height="12"
             aria-hidden="true"

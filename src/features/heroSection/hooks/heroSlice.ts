@@ -1,19 +1,19 @@
 // src/features/hero/heroSlice.ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface HeroState {
-  animal: "dog" | "cat";
+  animal: 'dog' | 'cat';
 }
 
 const initialState: HeroState = {
-  animal: "dog",
+  animal: 'dog',
 };
 
 const heroSlice = createSlice({
-  name: "hero",
+  name: 'hero',
   initialState,
   reducers: {
-    setAnimal(state, action: PayloadAction<"dog" | "cat">) {
+    setAnimal(state, action: PayloadAction<'dog' | 'cat'>) {
       state.animal = action.payload;
     },
   },

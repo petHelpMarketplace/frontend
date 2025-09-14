@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import heroReducer from '@/features/heroSection/hooks/heroSlice';
 import { authReducer } from '@/features/auth/model/slice';
+import accountReducer from '@/features/account/model/settingsSlice';
 import {
   persistStore,
   persistReducer,
@@ -25,6 +26,7 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     hero: heroReducer,
+    account: accountReducer,
     auth: persistedReducer,
   },
   middleware: getDefaultMiddleware =>
