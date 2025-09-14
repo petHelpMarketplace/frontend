@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useMemo, type ReactNode } from 'react';
-import { useLocation, useNavigationType } from 'react-router-dom';
+import { useState, useEffect, useRef, useMemo, useLayoutEffect, type ReactNode } from 'react';
+import { useLocation, useNavigationType, useNavigate } from 'react-router-dom';
 import Pagination from '@/features/searchSpecialists/components/Pagination';
 import SpecialistsList from '@/features/searchSpecialists/components/SpecialistsList';
 import { mockSpecialists } from '@/data/mockSpecialists';
@@ -10,6 +10,7 @@ import SpecialistCardSkeleton from '@/features/searchSpecialists/components/Spec
 const SearchSpecialistsPage = () => {
   const location = useLocation();
   const navType = useNavigationType(); // 'POP' | 'PUSH' | 'REPLACE'
+  const navigate = useNavigate();
 
   // query params
   const params = new URLSearchParams(location.search);
@@ -29,17 +30,41 @@ const SearchSpecialistsPage = () => {
   );
 
   const filteredSpecialists = selectedDistrict
-    ? mockSpecialists.filter((s) => s.district === selectedDistrict)
+    ? mockSpecialists.filter(s => s.district === selectedDistrict)
     : mockSpecialists;
 
-  const totalPages = Math.ceil(filteredSpecialists.length / specialistsPerPage);
-  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(filteredSpecialists.length / specialistsPerPage) || 1;
 
-  // якщо змінився фільтр — повертаємося на 1 сторінку (без зайвих перерендерів)
+  // helper: читаємо і обмежуємо page з URL
+  const getPageFromSearch = () => {
+    const p = Number(new URLSearchParams(location.search).get('page')) || 1;
+    return Math.min(Math.max(p, 1), totalPages || 1);
+  };
+
+  // page ініціалізуємо з URL (джерело істини)
+  const [page, setPage] = useState(getPageFromSearch());
+
+  // синхронізуємо локальний page із URL при будь-якій навігації
   useEffect(() => {
-    if (page !== 1) setPage(1);
-  }, [selectedDistrict, page]);
+    const p = getPageFromSearch();
+    if (p !== page) setPage(p);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, totalPages]);
 
+  // при зміні district — скидаємо і URL до ?page=1
+  useEffect(() => {
+    const sp = new URLSearchParams(location.search);
+    if (sp.get('page') !== '1') {
+      sp.set('page', '1');
+      navigate(
+        { pathname: location.pathname, search: `?${sp.toString()}` },
+        { replace: true }
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDistrict]);
+
+  // дані для поточної сторінки
   const specialistsToShow = filteredSpecialists.slice(
     (page - 1) * specialistsPerPage,
     page * specialistsPerPage
@@ -53,40 +78,47 @@ const SearchSpecialistsPage = () => {
     return () => window.removeEventListener('resize', apply);
   }, []);
 
-  // -------- ВІДНОВЛЕННЯ {page, y} НА POP --------
+  // утиліта для синхронного скролу на верх
+  const scrollToTopSync = () => {
+    const el = document.scrollingElement || document.documentElement || document.body;
+    el.scrollTop = 0;
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  };
+
+  // ВІДНОВЛЕННЯ {page, y} НА POP
   const pendingRestoreY = useRef<number | null>(null);
 
   useEffect(() => {
     const raw = sessionStorage.getItem(scrollKey);
 
-    if (navType === 'POP' && raw) {
-      sessionStorage.removeItem(scrollKey); // не тримаємо застаріле
-      try {
-        const saved = JSON.parse(raw) as { y?: number; page?: number };
-        const y = Number(saved?.y) || 0;
+    if (navType === 'POP') {
+      if (raw) {
+        sessionStorage.removeItem(scrollKey);
+        try {
+          const saved = JSON.parse(raw) as { y?: number; page?: number };
+          const y = Number(saved?.y) || 0;
+          const targetPage = Math.min(Math.max(saved?.page ?? 1, 1), totalPages || 1);
 
-        // clamp сторінки в межах [1, totalPages] (з урахуванням порожнього списку)
-        const targetPage = Math.min(Math.max(saved?.page ?? 1, 1), totalPages || 1);
-
-        if (targetPage !== page) {
-          // спочатку відновимо сторінку, а скрол зробимо після її рендера
-          pendingRestoreY.current = y;
-          setPage(targetPage);
-        } else {
+          if (targetPage !== page) {
+            pendingRestoreY.current = y;
+            setPage(targetPage);
+          } else {
+            requestAnimationFrame(() =>
+              window.scrollTo({ top: y, left: 0, behavior: 'auto' })
+            );
+          }
+        } catch {
+          const y = Number(raw) || 0;
           requestAnimationFrame(() =>
             window.scrollTo({ top: y, left: 0, behavior: 'auto' })
           );
         }
-      } catch {
-        // fallback для старого формату (рядок-число)
-        const y = Number(raw) || 0;
-        requestAnimationFrame(() =>
-          window.scrollTo({ top: y, left: 0, behavior: 'auto' })
-        );
+      } else {
+        // POP між ?page=... → позиції немає → показуємо з хедера
+        scrollToTopSync();
       }
-    } else if (navType !== 'POP') {
-      // Якщо немає глобального ScrollManager у лейауті — розкоментуй це:
-      // requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+    } else {
+      // non-POP
       if (raw) sessionStorage.removeItem(scrollKey);
     }
   }, [scrollKey, navType, page, totalPages]);
@@ -102,31 +134,23 @@ const SearchSpecialistsPage = () => {
     }
   }, [page, navType]);
 
-  // -------- Прокрутка до початку списку лише при РЕАЛЬНІЙ зміні сторінки (і не на POP) --------
+  // СКРОЛ НА ВЕРХ ПРИ ЗМІНІ СТОРІНКИ (не POP)
   const prevPageRef = useRef(page);
-  useEffect(() => {
-    setLoading(true);
-    setHasError(false);
-
+  useLayoutEffect(() => {
     const changed = prevPageRef.current !== page;
     if (changed && navType !== 'POP') {
-      listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scrollToTopSync(); // клік по пагінації → одразу з самого верху (від хедера)
     }
     prevPageRef.current = page;
-
-    const t = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(t);
   }, [page, navType]);
 
-  // -------- ЗБЕРЕЖЕННЯ {y, page} при виході --------
+  // Керування loading (окремо від скролу)
   useEffect(() => {
-    return () => {
-      sessionStorage.setItem(
-        scrollKey,
-        JSON.stringify({ y: window.scrollY, page })
-      );
-    };
-  }, [scrollKey, page]);
+    setHasError(false);
+    setLoading(true);
+    const t = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(t);
+  }, [page, selectedDistrict]);
 
   // рендер
   const renderSkeletons = () => (
