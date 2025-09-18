@@ -37,7 +37,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   questions,
   previewCount = 8,
   icon,
-  emptyText = "No questions are available in this category at the moment.",
+  emptyText = "Наразі в цій категорії немає запитань.",
   className,
   variant = "card",
   activeId,
@@ -54,15 +54,23 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   // ========= ВАРІАНТ "split": пігулка заголовка + окрема картка зі списком =========
   if (variant === "split") {
     return (
-      <aside className={twMerge("w-[328px]", className)} aria-labelledby={`faq-${slug}-title`} {...rest}>
+      <aside
+        className={twMerge('w-[328px]', className)}
+        aria-labelledby={`faq-${slug}-title`}
+        {...rest}
+      >
         {/* пігулка заголовка */}
-        <div className="max-w-[328px] h-[68px] rounded-2xl shadow-smoke px-10.5 py-4.5 mb-4.5">
+        <div className="shadow-smoke mb-4.5 h-[68px] max-w-[328px] rounded-2xl px-10.5 py-4.5">
           <header className={twMerge(S.header, headerClassName)}>
-            {icon && <span aria-hidden className={S.icon}>{icon}</span>}
+            {icon && (
+              <span aria-hidden className={S.icon}>
+                {icon}
+              </span>
+            )}
             <h3 className={S.title} id={`faq-${slug}-title`}>
               <Link
                 to={`/faq/${slug}`}
-                className="outline-none focus-visible:ring-2 focus-visible:ring-fire rounded"
+                className="focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2"
               >
                 {title}
               </Link>
@@ -71,19 +79,25 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
         </div>
 
         {/* картка зі списком */}
-        <section className={twMerge(S.card, "pt-9 min-h-[540px]", cardClassName)} aria-labelledby={`faq-${slug}-title`}>
+        <section
+          className={twMerge(S.card, 'min-h-[540px] pt-9', cardClassName)}
+          aria-labelledby={`faq-${slug}-title`}
+        >
           {items.length ? (
             <ul className={twMerge(S.list, listClassName)}>
-              {items.map((q) => (
+              {items.map(q => (
                 <li key={q.id}>
                   <NavLink
                     to={`/faq/${slug}/${q.id}`}
-                    aria-current={q.id === activeId ? "page" : undefined}
-                    className={({isActive}) => twMerge(
-                      S.item,
-                      "outline-none focus-visible:ring-2 focus-visible:ring-fire/40 rounded",
-                      isActive && "text-fire"
-                    )}
+                    aria-current={q.id === activeId ? 'page' : undefined}
+                    className={({ isActive }) =>
+                      twMerge(
+                        S.item,
+                        'focus-visible:ring-fire/40 rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2',
+                        isActive &&
+                          'text-fire transition-colors duration-300 ease-in-out'
+                      )
+                    }
                   >
                     {q.question}
                   </NavLink>
@@ -100,13 +114,21 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
 
   // ========= ВАРІАНТ "card": заголовок всередині картки (для /faq) =========
   return (
-    <section className={twMerge(S.card, className)} aria-label={`${title} category`} {...rest}>
+    <section
+      className={twMerge(S.card, className)}
+      aria-label={`${title} category`}
+      {...rest}
+    >
       <header className={twMerge(S.header, headerClassName)}>
-        {icon && <span aria-hidden className={S.icon}>{icon}</span>}
+        {icon && (
+          <span aria-hidden className={S.icon}>
+            {icon}
+          </span>
+        )}
         <h3 className={S.title} id={`faq-${slug}-title`}>
           <Link
             to={`/faq/${slug}`}
-            className="outline-none focus-visible:ring-2 focus-visible:ring-fire rounded"
+            className="focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2"
           >
             {title}
           </Link>
@@ -115,13 +137,13 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
 
       {items.length ? (
         <ul className={twMerge(S.list, listClassName)}>
-          {items.map((q) => (
+          {items.map(q => (
             <li key={q.id}>
               <Link
                 to={`/faq/${slug}/${q.id}`}
                 className={twMerge(
                   S.item,
-                  "outline-none focus-visible:ring-2 focus-visible:ring-fire/40 rounded"
+                  'focus-visible:ring-fire/40 rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2'
                 )}
               >
                 {q.question}

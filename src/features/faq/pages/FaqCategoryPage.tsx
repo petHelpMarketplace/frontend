@@ -16,31 +16,33 @@ export default function FaqCategoryPage() {
   const questions = FAQ_ITEMS.filter((i) => i.category === raw);
 
   return (
-    <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
+    <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
       <BackButton to="/faq" className="mb-11.5" />
 
       <section
         aria-labelledby="cat-title"
-        className={`${S.card} w-full h-auto max-w-[328px]`}
+        className={`${S.card} h-auto w-full max-w-[328px]`}
       >
-      <h1
-  id="cat-title"
-  className="flex items-end gap-3.5 text-xl/[135%] font-semibold text-fire mb-10"
->
-  <svg className={S.icon} aria-hidden focusable="false">
-    <use href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`} />
-    {/* опціонально для старих Safari:
+        <h1
+          id="cat-title"
+          className="text-fire mb-10 flex items-end gap-3.5 text-xl/[135%] font-semibold"
+        >
+          <svg className={S.icon} aria-hidden focusable="false">
+            <use
+              href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`}
+            />
+            {/* опціонально для старих Safari:
     <use xlinkHref={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`} /> */}
-  </svg>
-  {TITLES[raw]}
-</h1>
+          </svg>
+          {TITLES[raw]}
+        </h1>
         {questions.length > 0 ? (
           <ul className="flex flex-col gap-11.5" role="list">
-            {questions.map((q) => (
+            {questions.map(q => (
               <li key={q.id}>
                 <Link
                   to={`/faq/${raw}/${q.id}`}
-                  className={`${S.item} outline-none focus-visible:ring-2 focus-visible:ring-[#aa4700]/40 rounded`}
+                  className={`${S.item} rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2 focus-visible:ring-[#aa4700]/40`}
                 >
                   {q.question}
                 </Link>

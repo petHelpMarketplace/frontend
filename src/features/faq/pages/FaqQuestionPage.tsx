@@ -111,7 +111,7 @@ export default function FaqQuestionPage() {
     return (
       <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
         <BackButton to={cat ? `/faq/${cat}` : '/faq'} replace className="mb-11.5" />
-        <p className="leading-[135%]">Question not found. Please go back to the FAQ.</p>
+        <p className="leading-[135%]">Наразі в цій категорії немає запитань.</p>
       </div>
     );
   }
@@ -122,7 +122,6 @@ export default function FaqQuestionPage() {
   return (
     <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
       <BackButton to={`/faq/${cat}`} replace className="mb-11.5" />
-
       <div className="grid grid-cols-[328px_1fr] gap-11.5">
         {/* Зліва: "пігулка" + список категорії */}
         <FaqCategoryCard
