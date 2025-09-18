@@ -40,7 +40,6 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   emptyText = "Наразі в цій категорії немає запитань.",
   className,
   variant = "card",
-  activeId,
   headerClassName,
   listClassName,
   cardClassName,
@@ -87,9 +86,8 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
             <ul className={twMerge(S.list, listClassName)}>
               {items.map(q => (
                 <li key={q.id}>
-                  <NavLink
+                  <NavLink         
                     to={`/faq/${slug}/${q.id}`}
-                    aria-current={q.id === activeId ? 'page' : undefined}
                     className={({ isActive }) =>
                       twMerge(
                         S.item,
@@ -116,7 +114,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   return (
     <section
       className={twMerge(S.card, className)}
-      aria-label={`${title} category`}
+      aria-labelledby={`faq-${slug}-title`}
       {...rest}
     >
       <header className={twMerge(S.header, headerClassName)}>

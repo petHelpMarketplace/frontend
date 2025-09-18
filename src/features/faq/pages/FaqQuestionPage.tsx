@@ -18,7 +18,7 @@ export default function FaqQuestionPage() {
 
  // Валідація категорії та приведення id до числа
   const cat: CategorySlug | null = isCat(rawCat) ? rawCat : null;
-  const id = Number(rawId);
+  const id = rawId && /^\d+$/.test(rawId) ? Number(rawId) : NaN;
 
    // Фільтруємо питання за категорією; шукаємо конкретне питання за id
   const list = cat ? FAQ_ITEMS.filter(i => i.category === cat) : [];
@@ -109,9 +109,15 @@ export default function FaqQuestionPage() {
    // Якщо питання з таким id у цій категорії не знайдено — показуємо fallback-контент із кнопкою "Назад"
   if (!item) {
     return (
-      <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-        <BackButton to={cat ? `/faq/${cat}` : '/faq'} replace className="mb-11.5" />
-        <p className="leading-[135%]">Наразі в цій категорії немає запитань.</p>
+      <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
+        <BackButton
+          to={cat ? `/faq/${cat}` : '/faq'}
+          replace
+          className="mb-11.5"
+        />
+        <p className="leading-[135%]">
+          Питання не знайдено. Будь ласка, поверніться до розділу FAQ.
+        </p>
       </div>
     );
   }
@@ -120,7 +126,7 @@ export default function FaqQuestionPage() {
   // Ліва колонка — картка категорії з переліком питань
   // Права колонка — контент відповіді (рендеримо санітизований HTML через dangerouslySetInnerHTML)
   return (
-    <div className="w-full mx-auto xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
+    <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
       <BackButton to={`/faq/${cat}`} replace className="mb-11.5" />
       <div className="grid grid-cols-[328px_1fr] gap-11.5">
         {/* Зліва: "пігулка" + список категорії */}
@@ -130,7 +136,9 @@ export default function FaqQuestionPage() {
           slug={cat}
           icon={
             <svg className={S.icon} aria-hidden focusable="false">
-              <use href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[cat]}`} />
+              <use
+                href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[cat]}`}
+              />
             </svg>
           }
           questions={list.map(({ id, question }) => ({ id, question }))}
@@ -139,21 +147,13 @@ export default function FaqQuestionPage() {
         />
 
         {/* Справа: відповідь (тайтл схований) */}
-        <article aria-labelledby="q-title">
-          <h1 id="q-title" className="sr-only">{item.question}</h1>
+        <article aria-labelledby={`q-title-${id}`}>
+          <h1 id={`q-title-${id}`} className="sr-only">
+            {item.question}
+          </h1>
           <div
             ref={answerRef}
-          className="
-          leading-[169%]
-    [&>*+*]:mt-5
-    [&>p+ol]:mt-0
-    [&>p+ul]:mt-0
-    [&>ol+p]:mt-5
-    [&>ul+p]:mt-5
-    [&_ol]:list-decimal [&_ol]:pl-6
-    [&_ul]:list-[circle]  [&_ul]:pl-5
-  [&_strong]:text-fire [&_b]:text-fire 
-            "
+            className="[&_strong]:text-fire [&_b]:text-fire leading-[169%] [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-[circle] [&_ul]:pl-5 [&>*+*]:mt-5 [&>ol+p]:mt-5 [&>p+ol]:mt-0 [&>p+ul]:mt-0 [&>ul+p]:mt-5"
             dangerouslySetInnerHTML={{ __html: sanitized }}
           />
         </article>
