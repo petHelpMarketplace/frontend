@@ -5,51 +5,9 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/shared/components/ErrorFallback';
 import { Toaster } from 'react-hot-toast';
-import { useEffect, useRef } from 'react';
-import { useLocation, useNavigationType } from 'react-router-dom';
-
-function ScrollManager() {
-  const { pathname, search, hash } = useLocation();
-  const navType = useNavigationType(); // 'PUSH' | 'REPLACE' | 'POP'
-  const lastKeyRef = useRef<string>(''); // щоб не скролити двічі в StrictMode по тому ж ключу
-
-  // гарантуємо, що браузер не відновлює скрол сам
-  useEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      const prev = window.history.scrollRestoration;
-      window.history.scrollRestoration = 'manual';
-      return () => {
-        window.history.scrollRestoration = prev || 'auto';
-      };
-    }
-  }, []);
-
-  useEffect(() => {
-    // уникаємо дублю в StrictMode
-    const key = pathname + search + '|' + navType;
-    if (lastKeyRef.current === key) return;
-    lastKeyRef.current = key;
-
-    // НЕ чіпаємо список спеціалістів — він керує скролом сам
-    if (pathname.startsWith('/specialists')) return;
+import ScrollManager from '@/shared/components/ScrollManager';
 
 
-// решта сторінок — завжди зверху (або до якоря)
-    requestAnimationFrame(() => {
-      if (hash) {
-        const id = hash.slice(1);
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ block: 'start' });
-          return;
-        }
-      }
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-    });
-  }, [pathname, search, hash, navType]);
-
-  return null;
-}
 const MainLayout = () => {
   return (
     <>
