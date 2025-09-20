@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
+import PublicOfferPage from '@/features/publicOffer/PublicOfferPage';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -40,6 +41,7 @@ function App() {
             path="/review/specialists/:id"
             element={<ReviewServicePage />}
           />
+          <Route path="/public-offer" element={<PublicOfferPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
