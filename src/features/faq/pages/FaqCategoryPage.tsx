@@ -1,42 +1,51 @@
 // route /faq/:category
-import { Link, useParams } from "react-router-dom";
-import NotFoundPage from "@/pages/NotFound/NotFoundPage";
-import { FAQ_ITEMS } from "@/features/faq/content/faqContentCard";
-import { S } from "@/features/faq/components/FaqCategoryCard";
-import { TITLE as TITLES, ICON_BY_SLUG, isCategorySlug as isCat} from "../constants";
-import BackButton from "@/shared/components/UI/BackButton";
-
-
+import { Link, useParams } from 'react-router-dom';
+import NotFoundPage from '@/pages/NotFound/NotFoundPage';
+import { FAQ_ITEMS } from '@/features/faq/content/faqContentCard';
+import { S } from '@/features/faq/components/FaqCategoryCard';
+import {
+  TITLE as TITLES,
+  ICON_BY_SLUG,
+  isCategorySlug as isCat,
+} from '../constants';
+import BackButton from '@/shared/components/UI/BackButton';
 
 export default function FaqCategoryPage() {
   const { category: raw } = useParams<{ category: string }>();
-  if (!isCat(raw)) return <NotFoundPage />; 
-  
+  if (!isCat(raw)) return <NotFoundPage />; // невалідна категорія → 404
 
-  const questions = FAQ_ITEMS.filter((i) => i.category === raw);
+  // після цієї перевірки TS звужує тип, тож raw — це CategorySlug
+  const questions = FAQ_ITEMS.filter(i => i.category === raw);
+  const isEmpty = questions.length === 0;
 
   return (
     <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
       <BackButton to="/faq" className="mb-11.5" />
 
-      <section
-        aria-labelledby="cat-title"
-        className={`${S.card} h-auto w-full max-w-[328px]`}
-      >
-        <h1
-          id="cat-title"
-          className="text-fire mb-10 flex items-end gap-3.5 text-xl/[135%] font-semibold"
+      {isEmpty ? (
+        <NotFoundPage
+          showBackButton={false}
+          message="Схоже, в цій категорії поки немає питань"
+          primaryTo="/faq"
+          primaryText="До FAQ"
+        />
+      ) : (
+        <section
+          aria-labelledby="cat-title"
+          className={`${S.card} h-auto w-full max-w-[328px]`}
         >
-          <svg className={S.icon} aria-hidden focusable="false">
-            <use
-              href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`}
-            />
-            {/* опціонально для старих Safari:
-    <use xlinkHref={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`} /> */}
-          </svg>
-          {TITLES[raw]}
-        </h1>
-        {questions.length > 0 ? (
+          <h1
+            id="cat-title"
+            className="text-fire mb-10 flex items-end gap-3.5 text-xl/[135%] font-semibold"
+          >
+            <svg className={S.icon} aria-hidden focusable="false">
+              <use
+                href={`${import.meta.env.BASE_URL}icons.svg#${ICON_BY_SLUG[raw]}`}
+              />
+            </svg>
+            {TITLES[raw]}
+          </h1>
+
           <ul className="flex flex-col gap-11.5" role="list">
             {questions.map(q => (
               <li key={q.id}>
@@ -49,12 +58,8 @@ export default function FaqCategoryPage() {
               </li>
             ))}
           </ul>
-        ) : (
-          <p className={S.empty}>
-            Наразі в цій категорії немає доступних запитань.
-          </p>
-        )}
-      </section>
+        </section>
+      )}
     </div>
   );
 }
