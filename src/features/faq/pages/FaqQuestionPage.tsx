@@ -1,8 +1,7 @@
-// /faq/:category/:id
-import { useParams } from 'react-router-dom';
+// src/features/faq/pages/FaqQuestionPage.tsx
+import { useParams, Navigate, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useMemo } from 'react';
 import type { CategorySlug } from '@/features/faq/types';
-import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import { FAQ_ITEMS } from '@/features/faq/content/faqContentCard';
 import BackButton from '@/shared/components/UI/BackButton';
 import FaqCategoryCard, { S } from '@/features/faq/components/FaqCategoryCard';
@@ -18,19 +17,17 @@ export default function FaqQuestionPage() {
     category: string;
     id: string;
   }>();
+  const location = useLocation();
 
-  // refs/hooks (без умов)
   const answerRef = useRef<HTMLDivElement>(null);
 
-  // валідація
   const cat: CategorySlug | null = isCat(rawCat) ? rawCat : null;
   const id = rawId && /^\d+$/.test(rawId) ? Number(rawId) : NaN;
 
-  // дані
   const list = cat ? FAQ_ITEMS.filter(i => i.category === cat) : [];
   const item = Number.isFinite(id) ? list.find(i => i.id === id) : undefined;
 
-  // санітизація HTML (хуки викликаємо ДО будь-яких return)
+  // хуки до будь-яких return
   const sanitized = useMemo(
     () => sanitizeHtml(item?.answer ?? ''),
     [item?.answer]
@@ -39,10 +36,8 @@ export default function FaqQuestionPage() {
   useEffect(() => {
     const root = answerRef.current;
     if (!root) return;
-
     const svgNS = 'http://www.w3.org/2000/svg';
     const href = `${import.meta.env.BASE_URL}icons.svg#icon-triangle`;
-
     const makeIcon = () => {
       const svg = document.createElementNS(svgNS, 'svg');
       svg.setAttribute(
@@ -56,14 +51,11 @@ export default function FaqQuestionPage() {
       svg.appendChild(useEl);
       return svg;
     };
-
     root.querySelectorAll(":scope > p:not([data-bullet='1'])").forEach(p => {
       const el = p as HTMLElement;
       if (!el.textContent?.trim()) return;
-
       const next = el.nextElementSibling as HTMLElement | null;
       const hasList = next && (next.tagName === 'OL' || next.tagName === 'UL');
-
       if (hasList) {
         const wrap = document.createElement('div');
         wrap.className = 'grid grid-cols-[12px_1fr] gap-x-[11px] items-start';
@@ -76,7 +68,6 @@ export default function FaqQuestionPage() {
         el.dataset.bullet = '1';
         return;
       }
-
       el.classList.add(
         'grid',
         'grid-cols-[12px_1fr]',
@@ -91,31 +82,17 @@ export default function FaqQuestionPage() {
     });
   }, [sanitized]);
 
-  // ЄДИНИЙ ҐАРД → зовнішня Back + NotFoundPage, і ОБОВʼЯЗКОВО return
+  // редірект на окремий 404-роут
   if (!cat || !Number.isInteger(id) || !item) {
-    const primaryTo = cat ? `/faq/${cat}` : '/faq';
-    const primaryText = cat ? 'До розділу FAQ' : 'До FAQ';
-    const message = cat
-      ? 'Схоже, ми не можемо знайти питання, яке ви шукаєте'
-      : 'Схоже, ми не можемо знайти сторінку, яку Ви шукаєте';
-
     return (
-      <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-        <BackButton to={primaryTo} replace className="mb-11.5" />
-        <NotFoundPage
-          showBackButton={false}
-          message={message}
-          primaryTo={primaryTo}
-          primaryText={primaryText}
-        />
-      </div>
+      <Navigate to="/not-found" replace state={{ from: location.pathname }} />
     );
   }
 
-  // Основний рендер (валідні cat/id/item)
+  // основний рендер
   return (
     <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-      <BackButton to={`/faq/${cat}`} replace className="mb.11.5" />
+      <BackButton className="mb-11.5" />
       <div className="grid grid-cols-[328px_1fr] gap-11.5">
         <FaqCategoryCard
           variant="split"
@@ -132,7 +109,6 @@ export default function FaqQuestionPage() {
           activeId={id}
           previewCount={8}
         />
-
         <article aria-labelledby={`q-title-${id}`}>
           <h1 id={`q-title-${id}`} className="sr-only">
             {item.question}
