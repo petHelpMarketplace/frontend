@@ -7,5 +7,5 @@ export const dogsWeight = [
 
 export const dogWeightRanges = dogsWeight.map(w => w.range) as [
   string,
-  ...string[]
+  ...string[],
 ];

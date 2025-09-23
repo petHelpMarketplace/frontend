@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { FC, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { twMerge } from 'tailwind-merge';
 
 type ModalProps = {
   isOpen: boolean;
@@ -56,11 +57,13 @@ const Modal: FC<ModalProps> = ({
     >
       <div
         className={clsx(
-          'relative bg-alabaster rounded-3xl xl:rounded-2xl w-[345px] xl:w-[496px] py-16 xl:py-10 px-5 xl:px-24 transition-all duration-500 ease-in-out transform',
-          isOpen
-            ? 'opacity-100 scale-100 translate-y-0'
-            : 'opacity-0 scale-95 -translate-y-4',
-          className
+          twMerge(
+            'relative bg-alabaster rounded-3xl xl:rounded-2xl w-[345px] xl:w-[496px] py-16 xl:py-10 px-5 xl:px-24 transition-all duration-500 ease-in-out transform',
+            isOpen
+              ? 'opacity-100 scale-100 translate-y-0'
+              : 'opacity-0 scale-95 -translate-y-4',
+            className
+          )
         )}
         onClick={e => e.stopPropagation()}
       >

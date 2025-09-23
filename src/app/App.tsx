@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
+import PrivateRoute from '@/features/auth/components/PrivateRoute';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -20,6 +21,8 @@ const FaqCategoryPage = lazy(() => import("@/features/faq/pages/FaqCategoryPage"
 const FaqQuestionPage = lazy(() => import("@/features/faq/pages/FaqQuestionPage"));
 
 
+const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
+
 function App() {
   return (
     <>
@@ -29,14 +32,14 @@ function App() {
           <Route path="/specialists" element={<SearchSpecialistsPage />} />
           <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
           <Route path="/specialists/:id/booking" element={<BookingPage />} />
-          {/* <Route
+          <Route
             path="/account"
             element={
               <PrivateRoute>
                 <AccountPage />
               </PrivateRoute>
             }
-          /> */}
+          />
           <Route
             path="/review/specialists/:id"
             element={<ReviewServicePage />}

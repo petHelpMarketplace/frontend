@@ -5,7 +5,7 @@ const mockProfileData: SpecialistMock = {
   id: 'spc12345',
   name: 'Ігор Литвин',
   avatar: '/images/specy/ihor-lytvyn-2.jpg',
-  joinDate: '03.09.2022', 
+  joinDate: '03.09.2022',
   icon: 'icon-verified',
   iconDog: 'icon-spec-dog',
   iconCat: 'icon-cat',
@@ -40,8 +40,8 @@ const mockProfileData: SpecialistMock = {
       id: 'dog-srv3',
       type: 'dog',
       title: 'Грумінг',
-      duration: 'грн/тушка',
-      price: 350,
+      duration: 'грн/тварина',
+      price: 500,
       currency: '₴',
     },
     {
@@ -72,8 +72,8 @@ const mockProfileData: SpecialistMock = {
       id: 'cat-srv3',
       type: 'cat',
       title: 'Грумінг',
-      duration: 'грн/тушка',
-      price: 250,
+      duration: 'грн/тварина',
+      price: 450,
       currency: '₴',
     },
     {
@@ -114,7 +114,7 @@ const mockProfileData: SpecialistMock = {
     '/images/loveAnimal/3.jpg',
     '/images/loveAnimal/4.jpg',
     '/images/loveAnimal/1.jpg',
-  ], 
+  ],
 };
 
 export default mockProfileData;

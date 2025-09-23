@@ -23,7 +23,6 @@ const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const onMenuToggle = () => setMenuOpen(open => !open);
-
   const openLogin = (closeMenu?: () => void) => {
     closeMenu?.(); // If closeMenu is provided (from mobile menu), call it. Otherwise, do nothing.
     setOpenLoginModal(true); // Always open the login modal.
@@ -36,7 +35,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="relative z-20 flex  mx-auto h-[46px] max-w-[345px] mt-[10px] xl:max-w-[1232px] xl:h-[68px] xl:font-base xl:mt-2">
+      <header className="relative z-20 flex mx-auto h-[46px] max-w-[345px] mt-[10px] xl:max-w-[1232px] xl:h-[68px] xl:font-base xl:mt-2">
         {!isHomePage && <GradientHeaderWrapper />}
         <div className="relative z-30 bg-alabaster flex px-4 items-center justify-between rounded-[20px] shadow-box container xl:rounded-2xl xl:px-24">
           {/* Left block: Language, Nav*/}
