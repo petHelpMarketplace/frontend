@@ -27,7 +27,7 @@ export default function FaqPage() {
       className="w-full xl:px-[120px] xl:pt-17 xl:pb-18 mx-auto xl:max-w-[1280px]"
     >
       <div className="mx-auto px-0">
-        <BackButton to="/" className="mb-11.5" />
+        <BackButton  className="mb-11.5" />
         <h1 id="faq-title" className="sr-only">
           FAQ
         </h1>

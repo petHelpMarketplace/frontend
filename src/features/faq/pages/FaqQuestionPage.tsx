@@ -92,7 +92,7 @@ export default function FaqQuestionPage() {
   // основний рендер
   return (
     <div className="mx-auto w-full xl:max-w-[1280px] xl:px-[120px] xl:pt-17 xl:pb-18">
-      <BackButton to={`/faq/${cat}`} replace className="mb-11.5" />
+      <BackButton  className="mb-11.5" />
       <div className="grid grid-cols-[328px_1fr] gap-11.5">
         <FaqCategoryCard
           variant="split"

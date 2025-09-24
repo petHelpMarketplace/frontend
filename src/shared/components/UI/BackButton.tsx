@@ -1,37 +1,29 @@
-import { useNavigate, type To } from 'react-router-dom';
-import { twMerge } from 'tailwind-merge';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 type BackButtonProps = {
   label?: string;
   className?: string;
-  to?: To;        
-  replace?: boolean; 
 };
 
-const BackButton = ({
+const BackButton: React.FC<BackButtonProps> = ({
   label = 'Назад',
   className,
-    to,
-  replace = false,
-}: BackButtonProps) => {
-   const navigate = useNavigate();
-
-  const backBtnClass = twMerge(
-    'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs outline-none focus-visible:ring-2 focus-visible:ring-fire',
+}) => {
+  const backBtnClass = clsx(
+    'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs',
     className
   );
 
- 
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    if (to) navigate(to, { replace });
-    else if (typeof window !== 'undefined' && window.history.length > 1) navigate(-1);
-    else navigate('/faq'); 
+    navigate(-1); // Returns to the previous page
   };
 
   return (
     <button type="button" onClick={handleClick} className={backBtnClass}>
-      <svg className="w-2 h-4 fill-fire">
+      <svg className="fill-fire h-4 w-2">
         <use href="/icons.svg#icon-arrow-left" />
       </svg>
       {label}
