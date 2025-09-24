@@ -9,10 +9,10 @@ const Footer = () => {
   return (
     <footer
       role="contentinfo"
-      className="w-full mx-auto text-alabaster bg-footer-gradient rounded-t-[60px] p-10 max-w-[375px] xl:px-[120px] xl:pt-[29px] xl:pb-[25px] xl:max-w-[1280px] mt-[137px] xl:mt-0"
+      className="w-full mx-auto text-alabaster bg-footer-gradient rounded-t-[60px] p-10 max-w-[375px] xl:px-[120px] xl:py-7 xl:max-w-[1280px]"
     >
       {/* Логотип */}
-      <div className="flex justify-center mb-[77px] xl:mb-[39px]">
+      <div className="flex justify-center mb-19.5 xl:mb-10">
         <Logo
           iconSize="w-[60px] h-[40px]"
           iconFill="fill-alabaster"

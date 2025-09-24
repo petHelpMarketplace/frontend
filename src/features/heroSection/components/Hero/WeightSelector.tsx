@@ -1,7 +1,7 @@
 import { dogsWeight } from '@/shared/constants/dogsWeight';
 const WeightSelector = () => {
   return (
-    <div className="grid grid-cols-2 gap-x-[37px] gap-y-5 mb-[53px] xl:mb-0 xl:flex xl:gap-[29px] xl:justify-between">
+    <div className="grid grid-cols-2 gap-x-[37px] gap-y-5 mb-6 xl:mb-0 xl:flex xl:gap-[29px] xl:justify-between">
       {dogsWeight.map(w => (
         <button
           type="button"
