@@ -17,7 +17,7 @@ const PublicOfferParticle = () => {
               </h2>
             </div>
             {description && (
-              <p className="mb-2 text-sm xl:text-base leading-[136%] indent-6">
+              <p className="mb-2 text-sm xl:text-base leading-[136%]">
                 {description}
               </p>
             )}
@@ -33,10 +33,10 @@ const PublicOfferParticle = () => {
                       </div>
 
                       {item.subList && (
-                        <ul className="pl-7">
-                          {item.subList.map(subList => {
+                        <ul className="pl-6">
+                          {item.subList.map((subList, subIndex) => {
                             return (
-                              <li className="flex gap-1">
+                              <li key={subIndex} className="flex gap-1">
                                 <span>&#183;</span>
                                 <span>{subList}</span>
                               </li>
