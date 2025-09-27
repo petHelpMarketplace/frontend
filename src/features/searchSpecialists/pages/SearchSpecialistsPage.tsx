@@ -1,62 +1,121 @@
-import { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  useLocation,
+  useNavigationType,
+  useSearchParams,
+} from 'react-router-dom';
 import Pagination from '@/features/searchSpecialists/components/Pagination';
 import SpecialistsList from '@/features/searchSpecialists/components/SpecialistsList';
 import { mockSpecialists } from '@/data/mockSpecialists';
 import BackButton from '@/features/searchSpecialists/components/BackButton';
 import StateDisplay from '@/features/searchSpecialists/components/StateDisplay';
 import SpecialistCardSkeleton from '@/features/searchSpecialists/components/SpecialistCardSkeleton';
-const SearchSpecialistsPage = () => {
-  // Дістаємо district з query params
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const selectedDistrict = params.get('district') || '';
-  const specialistsPerPage = 16;
 
+const specialistsPerPage = 16;
+
+const SearchSpecialistsPage = () => {
+  const location = useLocation();
+  const navType = useNavigationType(); // 'POP' | 'PUSH' | 'REPLACE'
+  const [searchParams] = useSearchParams();
+
+  // ---- filters from URL ----
+  const selectedDistrict = searchParams.get('district') || '';
+
+  // ---- derive data ----
+  const filteredSpecialists = useMemo(
+    () =>
+      selectedDistrict
+        ? mockSpecialists.filter(s => s.district === selectedDistrict)
+        : mockSpecialists,
+    [selectedDistrict]
+  );
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredSpecialists.length / specialistsPerPage)
+  );
+
+  // ---- page comes ONLY from URL ----
+  const currentPage = (() => {
+    const raw = Number(searchParams.get('page')) || 1;
+    return Math.min(Math.max(raw, 1), totalPages);
+  })();
+
+  const specialistsToShow = useMemo(
+    () =>
+      filteredSpecialists.slice(
+        (currentPage - 1) * specialistsPerPage,
+        currentPage * specialistsPerPage
+      ),
+    [filteredSpecialists, currentPage]
+  );
+
+  // ---- UI state ----
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [skeletonCount, setSkeletonCount] = useState(16);
-  const [isFirstRender, setIsFirstRender] = useState(true);
-  const listRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredSpecialists = selectedDistrict
-    ? mockSpecialists.filter(s => s.district === selectedDistrict)
-    : mockSpecialists;
-  const totalPages = Math.ceil(filteredSpecialists.length / specialistsPerPage);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    if (page !== 1) setPage(1);
-  }, [selectedDistrict]);
-
-  const specialistsToShow = filteredSpecialists.slice(
-    (page - 1) * specialistsPerPage,
-    page * specialistsPerPage
+  // ---- scroll restore key (враховує фільтри і сторінку) ----
+  const scrollKey = useMemo(
+    () => `scroll:/specialists${location.search || ''}`,
+    [location.search]
   );
+
+  // ---- responsive skeletons ----
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      if (width < 768) setSkeletonCount(2);
-      else if (width < 1280) setSkeletonCount(4);
-      else setSkeletonCount(4);
-    }
+    const apply = () => setSkeletonCount(window.innerWidth < 768 ? 2 : 4);
+    apply();
+    window.addEventListener('resize', apply);
+    return () => window.removeEventListener('resize', apply);
   }, []);
+
+  // ---- scroll behavior ----
   useEffect(() => {
-    setLoading(true);
-    setHasError(false);
+    const raw = sessionStorage.getItem(scrollKey);
 
-    if (!isFirstRender) {
-      listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (navType === 'POP') {
+      // повернення по історії — пробуємо відновити точну позицію
+      if (raw) {
+        sessionStorage.removeItem(scrollKey);
+        try {
+          const saved = JSON.parse(raw) as { y?: number };
+          const y = Number(saved?.y) || 0;
+          requestAnimationFrame(() =>
+            window.scrollTo({ top: y, left: 0, behavior: 'auto' })
+          );
+        } catch {
+          const y = Number(raw) || 0;
+          requestAnimationFrame(() =>
+            window.scrollTo({ top: y, left: 0, behavior: 'auto' })
+          );
+        }
+      } else {
+        // не зберігали — просто зверху
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }
+    } else {
+      // будь-який не-POP вхід — зверху
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      if (raw) sessionStorage.removeItem(scrollKey);
     }
-    setIsFirstRender(false);
+  }, [scrollKey, navType]);
 
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500);
+  // зберігаємо позицію при виході зі сторінки списку
+  useEffect(() => {
+    return () => {
+      sessionStorage.setItem(scrollKey, JSON.stringify({ y: window.scrollY }));
+    };
+  }, [scrollKey]);
 
-    return () => clearTimeout(timer);
-  }, [page]);
+  // ---- loading imitation ----
+  useEffect(() => {
+    setHasError(false);
+    setLoading(true);
+    const t = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(t);
+  }, [currentPage, selectedDistrict]);
 
+  // ---- render helpers ----
   const renderSkeletons = () => (
     <div className="grid grid-cols-1 gap-y-5 mb-[30px] xl:grid-cols-2 xl:gap-x-[40px] xl:gap-y-[40px] xl:mb-[58px]">
       {Array.from({ length: skeletonCount }).map((_, i) => (
@@ -66,16 +125,11 @@ const SearchSpecialistsPage = () => {
   );
 
   let content;
-
-  if (hasError) {
-    content = <StateDisplay type="error" />;
-  } else if (loading) {
-    content = renderSkeletons();
-  } else if (specialistsToShow.length === 0) {
+  if (hasError) content = <StateDisplay type="error" />;
+  else if (loading) content = renderSkeletons();
+  else if (specialistsToShow.length === 0)
     content = <StateDisplay type="empty" />;
-  } else {
-    content = <SpecialistsList specialists={specialistsToShow} />;
-  }
+  else content = <SpecialistsList specialists={specialistsToShow} />;
 
   return (
     <div className="w-full max-w-[375px] xl:max-w-[1280px] mx-auto px-[15px] pt-[39px] xl:px-30 xl:pt-[69px]">
@@ -91,7 +145,7 @@ const SearchSpecialistsPage = () => {
           </span>
         </h1>
       )}
-      <div ref={listRef}>{content}</div>
+      <div>{content}</div>
       {!loading && !hasError && specialistsToShow.length > 0 && (
         <Pagination totalPages={totalPages} />
       )}
