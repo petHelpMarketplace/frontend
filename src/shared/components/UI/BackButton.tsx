@@ -22,13 +22,17 @@ const BackButton: React.FC<BackButtonProps> = ({
 const location = useLocation();
 const from = (location.state as { from?: string } | null)?.from;
   const handleClick = () => {
-    if (from) {
-      // прийшли зі списку з правильним ?page=...
+    const hasHistory =
+      typeof window !== 'undefined' && window.history.state?.idx > 0;
+    if (hasHistory) {
       navigate(-1);
-    } else {
-      // відкрили сторінку напряму або історії немає
-      navigate(fallback);
+      return;
     }
+    if (from) {
+      navigate(from);
+      return;
+    }
+    navigate(fallback);
   };
 
   return (

@@ -18,7 +18,7 @@ export default function ScrollManager() {
   }, []);
 
   useEffect(() => {
-    const key = `${pathname}${search}|${navType}`;
+    const key = `${pathname}${search}${hash}|${navType}`;
     if (lastKeyRef.current === key) return;
     lastKeyRef.current = key;
 
