@@ -9,11 +9,10 @@ const SpecialistProfilePage = () => {
   const regionRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    // Завжди з початку сторінки профілю
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto'  });
     // A11y: фокус на заголовок (після рендера)
     requestAnimationFrame(() => regionRef.current?.focus());
   }, []);
+  
   return (
     <div className="mx-auto px-[120px] pt-17 pb-30 max-w-[1280px]">
       <div 

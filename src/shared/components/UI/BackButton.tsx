@@ -11,7 +11,7 @@ type BackButtonProps = {
 const BackButton: React.FC<BackButtonProps> = ({
   label = 'Назад',
   className,
-  fallback = '/specialists?page=1',
+  fallback = '/',
 }) => {
   const backBtnClass = clsx(
     'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs',
