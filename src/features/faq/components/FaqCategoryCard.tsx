@@ -10,7 +10,7 @@ export const S = {
     "flex-none shrink-0 box-border w-[328px] min-h-[638px] rounded-2xl shadow-faq py-8 px-6.5",
   header: "flex items-end gap-3.5 mb-10.5",
   icon: "w-7 h-8 fill-fire",
-  title: "font-semibold text-xl/[135%] text-fire translate-y-[1px]",
+  title: "font-semibold text-xl/[135%] text-fire translate-y-[1px] focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2",
   list: "gap-11.5 flex flex-col",
   item: "leading-[135%] text-black hover:text-fire",
   empty: "leading-[135%] text-black",
@@ -53,7 +53,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   // ========= ВАРІАНТ "split": пігулка заголовка + окрема картка зі списком =========
   if (variant === "split") {
     return (
-      <aside
+      <article
         className={twMerge('w-[328px]', className)}
         aria-labelledby={`faq-${slug}-title`}
         {...rest}
@@ -66,14 +66,9 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
                 {icon}
               </span>
             )}
-            <h3 className={S.title} id={`faq-${slug}-title`}>
-              <Link
-                to={`/faq/${slug}`}
-                className="focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2"
-              >
+            <h2 className={S.title} id={`faq-${slug}-title`}>              
                 {title}
-              </Link>
-            </h3>
+            </h2>
           </header>
         </div>
 
@@ -106,7 +101,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
             <p className={S.empty}>{emptyText}</p>
           )}
         </section>
-      </aside>
+      </article>
     );
   }
 
@@ -123,14 +118,9 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
             {icon}
           </span>
         )}
-        <h3 className={S.title} id={`faq-${slug}-title`}>
-          <Link
-            to={`/faq/${slug}`}
-            className="focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2"
-          >
-            {title}
-          </Link>
-        </h3>
+        <h2 className={S.title} id={`faq-${slug}-title`}>              
+                {title}
+            </h2>
       </header>
 
       {items.length ? (

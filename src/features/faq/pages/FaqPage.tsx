@@ -29,7 +29,7 @@ export default function FaqPage() {
       <div className="mx-auto px-0">
         <BackButton  className="mb-11.5" />
         <h1 id="faq-title" className="sr-only">
-          FAQ
+         Запитання та відповіді
         </h1>
         <div className="flex justify-center mx-auto xl:max-w-[1042px] xl:gap-x-7">
           {CATEGORY_SLUGS.map(cat => (
