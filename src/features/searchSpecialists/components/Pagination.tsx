@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 type Props = {
   totalPages: number;
@@ -7,39 +7,46 @@ type Props = {
 const DOTS = '...';
 
 const Pagination = ({ totalPages }: Props) => {
+  const {pathname, search } = useLocation();
   const [searchParams] = useSearchParams();
+  const total = totalPages || 1;
   const currentPage = Math.max(
     1,
-    Math.min(Number(searchParams.get('page')) || 1, totalPages)
+    Math.min(Number(searchParams.get('page')) || 1, total)
   );
 
-  if (totalPages <= 1) return null;
+  if (total <= 1) return null;
+
+  const toPage = (p: number) => {
+    const next = new URLSearchParams(search); // зберігаємо ВСІ існуючі query (district, інші фільтри)
+    next.set('page', String(p));
+    return { pathname, search: `?${next.toString()}` };
+  };
+
 
   const generatePageRange = () => {
     const pages: (number | string)[] = [];
-    if (totalPages <= 7) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) pages.push(i);
       return pages;
     }
     if (currentPage <= 4) {
       for (let i = 1; i <= 5; i++) pages.push(i);
-      pages.push(DOTS, totalPages);
+      pages.push(DOTS, total);
       return pages;
     }
-    if (currentPage >= totalPages - 3) {
+    if (currentPage >= total - 3) {
       pages.push(1, DOTS);
-      for (let i = totalPages - 4; i <= totalPages; i++) pages.push(i);
+      for (let i = total - 4; i <= total; i++) pages.push(i);
       return pages;
     }
     pages.push(1, DOTS);
     for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
-    pages.push(DOTS, totalPages);
+    pages.push(DOTS, total);
     return pages;
   };
 
-  // const handleClick = (page: number | string) => {
-  //   if (page !== DOTS && page !== currentPage) onChange(Number(page));
-  // };
+
 
   return (
     <nav
@@ -48,18 +55,27 @@ const Pagination = ({ totalPages }: Props) => {
       aria-label="Пагінація"
       aria-live="polite"
     >
-      {/* ← */}
-      <a
-        href={`?page=${currentPage - 1}`}
-        aria-label="Попередня сторінка"
-        className={`w-[22px] h-[22px] xl:w-[27px] xl:h-[27px] flex items-center justify-center rounded transition-opacity fill-fire ${
-          currentPage === 1 ? ' opacity-50 pointer-events-none' : ''
-        }`}
-      >
-        <svg className="w-[10px] h-[19px]">
-          <use href="/icons.svg#icon-arrow-left" />
-        </svg>
-      </a>
+      {/* ← Prev */}
+      {currentPage === 1 ? (
+        <span
+          aria-disabled="true"
+          className="w-[22px] h-[22px] xl:w-[27px] xl:h-[27px] flex items-center justify-center rounded opacity-50 pointer-events-none fill-fire"
+        >
+          <svg className="w-[10px] h-[19px]">
+            <use href="/icons.svg#icon-arrow-left" />
+          </svg>
+        </span>
+      ) : (
+        <Link
+          to={toPage(currentPage - 1)} 
+          aria-label="Попередня сторінка"
+          className="w-[22px] h-[22px] xl:w-[27px] xl:h-[27px] flex items-center justify-center rounded transition-opacity fill-fire"
+        >
+          <svg className="w-[10px] h-[19px]">
+            <use href="/icons.svg#icon-arrow-left" />
+          </svg>
+        </Link>
+      )}
 
       {/* Цифри */}
       <ul className="flex items-center gap-2">
@@ -72,44 +88,61 @@ const Pagination = ({ totalPages }: Props) => {
               >
                 {DOTS}
               </span>
-            ) : (
-              <a
-                href={`?page=${page}`}
-                aria-label={`Перейти на сторінку ${page}`}
-                aria-current={Number(page) === currentPage ? 'page' : undefined}
-                className={`
-                min-w-[28px] h-[28px] xl:min-w-[30px] xl:h-[30px]
-                flex items-center justify-center rounded
-                text-center text-fire leading-none 
-                text-lg xl:text-[22px] transition-all duration-150
-                border border-transparent hover:border-fire 
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-fire
-                ${
-                  Number(page) === currentPage
-                    ? 'font-bold scale-125'
-                    : 'font-semibold'
-                }
-              `}
+            ) : Number(page) === currentPage ? (
+              <span
+                aria-current="page"
+                className="
+                  min-w-[28px] h-[28px] xl:min-w-[30px] xl:h-[30px]
+                  flex items-center justify-center rounded
+                  text-center text-fire leading-none 
+                  text-lg xl:text-[22px] font-bold scale-125
+                  border border-transparent
+                "
               >
                 {page}
-              </a>
+              </span>
+            ) : (
+              <Link
+                to={toPage(Number(page))} 
+                aria-label={`Перейти на сторінку ${page}`}
+                className="
+                  min-w-[28px] h-[28px] xl:min-w-[30px] xl:h-[30px]
+                  flex items-center justify-center rounded
+                  text-center text-fire leading-none 
+                  text-lg xl:text-[22px] font-semibold
+                  transition-all duration-150
+                  border border-transparent hover:border-fire 
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-fire
+                "
+              >
+                {page}
+              </Link>
             )}
           </li>
         ))}
       </ul>
 
-      {/* → */}
-      <a
-        href={`?page=${currentPage + 1}`}
-        aria-label="Наступна сторінка"
-        className={`w-[22px] h-[22px] xl:w-[27px] xl:h-[27px] flex items-center justify-center rounded transition-opacity fill-fire ${
-          currentPage === totalPages ? 'opacity-50 pointer-events-none ' : ''
-        }`}
-      >
-        <svg className="w-[10px] h-[19px]">
-          <use href="/icons.svg#icon-arrow-right" />
-        </svg>
-      </a>
+      {/* → Next */}
+      {currentPage === total ? (
+        <span
+          aria-disabled="true"
+          className="w-[22px] h-[22px] xl:w-[27px] xl:h-[27px] flex items-center justify-center rounded opacity-50 pointer-events-none fill-fire"
+        >
+          <svg className="w-[10px] h-[19px]">
+            <use href="/icons.svg#icon-arrow-right" />
+          </svg>
+        </span>
+      ) : (
+        <Link
+          to={toPage(currentPage + 1)} 
+          aria-label="Наступна сторінка"
+          className="w-[22px] h-[22px] xl:w-[27px] xl:h-[27px] flex items-center justify-center rounded transition-opacity fill-fire"
+        >
+          <svg className="w-[10px] h-[19px]">
+            <use href="/icons.svg#icon-arrow-right" />
+          </svg>
+        </Link>
+      )}
     </nav>
   );
 };

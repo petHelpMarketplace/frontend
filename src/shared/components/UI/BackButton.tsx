@@ -1,14 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 type BackButtonProps = {
   label?: string;
   className?: string;
+  /** куди вести, якщо немає history або state.from */
+  fallback?: string;
 };
 
 const BackButton: React.FC<BackButtonProps> = ({
   label = 'Назад',
   className,
+  fallback = '/',
 }) => {
   const backBtnClass = clsx(
     'font-semibold text-fire flex gap-3 items-center transition-[text-shadow] duration-300 ease-in-out hover:text-shadow-xs',
@@ -16,9 +19,20 @@ const BackButton: React.FC<BackButtonProps> = ({
   );
 
   const navigate = useNavigate();
-
+const location = useLocation();
+const from = (location.state as { from?: string } | null)?.from;
   const handleClick = () => {
-    navigate(-1); // Returns to the previous page
+    const hasHistory =
+      typeof window !== 'undefined' && window.history.state?.idx > 0;
+    if (hasHistory) {
+      navigate(-1);
+      return;
+    }
+    if (from) {
+      navigate(from);
+      return;
+    }
+    navigate(fallback);
   };
 
   return (
