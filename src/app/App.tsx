@@ -5,7 +5,6 @@ import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
 import PublicOfferPage from '@/features/publicOffer/pages/PublicOfferPage';
-import ScrollToTop from '@/shared/components/ScrollToTop';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -24,7 +23,6 @@ const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 function App() {
   return (
     <>
-      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
