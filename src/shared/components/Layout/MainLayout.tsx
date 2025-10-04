@@ -5,12 +5,15 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from '@/shared/components/ErrorFallback';
 import { Toaster } from 'react-hot-toast';
+import ScrollManager from '@/shared/components/ScrollManager';
+
 
 const MainLayout = () => {
   return (
     <>
       <Header />
       <main>
+        <ScrollManager />
         {/* TODO: Remove console.log and improve error handling in production */}
         <ErrorBoundary
           FallbackComponent={ErrorFallback}
