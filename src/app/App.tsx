@@ -16,12 +16,14 @@ const BookingPage = lazy(() => import('@/features/booking/pages/BookingPage'));
 const ReviewServicePage = lazy(
   () => import('@/features/review/pages/ReviewServicePage')
 );
+const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 const FaqPage = lazy(() => import('@/features/faq/pages/FaqPage'));
 const FaqQuestionPage = lazy(
   () => import('@/features/faq/pages/FaqQuestionPage')
 );
-
-const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
+const PublicOfferPage = lazy(
+  () => import('@/features/publicOffer/pages/PublicOfferPage')
+);
 
 function App() {
   return (
@@ -43,6 +45,7 @@ function App() {
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
+        <Route path="/public-offer" element={<PublicOfferPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

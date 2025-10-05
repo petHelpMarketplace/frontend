@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom';
 const NotFoundPage = () => {
   return (
     <section className="m-auto text-center xl:max-w-7xl xl:px-30 xl:pt-[69px] xl:pb-[51px]">
-      {' '}
-      <BackButton />{' '}
+      <BackButton />
       <div className="relative m-auto mb-[34px] w-fit">
-        {' '}
         <img
           width="602"
           height="409"
@@ -14,16 +12,14 @@ const NotFoundPage = () => {
           srcSet="/error-404-1x.webp 1x, /error-404-2x.webp 2x"
           alt="Error 404 image"
           className="m-auto"
-        />{' '}
+        />
         <p className="absolute bottom-0 left-1/2 w-full -translate-x-1/2 font-semibold xl:text-xl">
-          {' '}
-          Схоже, ми не можемо знайти сторінку, яку Ви шукаєте{' '}
-        </p>{' '}
-      </div>{' '}
+          Схоже, ми не можемо знайти сторінку, яку Ви шукаєте
+        </p>
+      </div>
       <Link to={'/'} className="btn btn-2lg inline-block p-5">
-        {' '}
-        На головну сторінку{' '}
-      </Link>{' '}
+        На головну сторінку
+      </Link>
     </section>
   );
 };
