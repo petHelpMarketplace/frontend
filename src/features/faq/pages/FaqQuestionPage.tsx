@@ -1,5 +1,5 @@
 // src/features/faq/pages/FaqQuestionPage.tsx
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useMemo } from 'react';
 import type { CategorySlug } from '@/features/faq/types';
 import { FAQ_ITEMS } from '@/features/faq/content/faqContentCard';
@@ -13,6 +13,7 @@ import {
 import { sanitizeHtml } from '@/features/faq/purify';
 
 export default function FaqQuestionPage() {
+  const routerLocation = useLocation();
   const { category: rawCat, id: rawId } = useParams<{
     category: string;
     id: string;
@@ -84,7 +85,7 @@ export default function FaqQuestionPage() {
 
   // редірект на окремий 404-роут
   if (!cat || !Number.isInteger(id) || !item) {
-   const { pathname, search, hash } = location;
+   const { pathname, search, hash } = routerLocation;
    return (
      <Navigate
        to="/not-found"
