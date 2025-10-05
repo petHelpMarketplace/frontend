@@ -6,16 +6,16 @@ import {
   RegisterRequest,
   RegisterResponse,
 } from '@/features/auth/types/types';
-import { AxiosError } from 'axios';
+import { getErrorMessage } from '@/shared/utils/getErrorMessage';
 
 //TODO This will be changed once the CORS policy issue is resolved on the backend.
 const setAuthHeader = (access_token: string) => {
   petsHelpApi.defaults.headers.common.Authorization = `Bearer ${access_token}`;
 };
 
-// const clearAuthHeader = () => {
-//   petsHelpApi.defaults.headers.common.Authorization = '';
-// };
+const clearAuthHeader = () => {
+  petsHelpApi.defaults.headers.common.Authorization = '';
+};
 
 export const registerUser = createAsyncThunk<
   RegisterResponse,
@@ -30,11 +30,7 @@ export const registerUser = createAsyncThunk<
 
     return response.data;
   } catch (e: unknown) {
-    const error = e as AxiosError<{ message: string }>;
-    const message =
-      error.response?.data?.message || error.message || 'Unknown error';
-
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
   }
 });
 
@@ -52,10 +48,18 @@ export const loginUser = createAsyncThunk<
     setAuthHeader(response.data.access_token);
     return response.data;
   } catch (e: unknown) {
-    const error = e as AxiosError<{ message: string }>;
-    const message =
-      error.response?.data?.message || error.message || 'Unknown error';
-
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
   }
 });
+
+export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
+  'auth/logout',
+  async (_, thunkAPI) => {
+    try {
+      await petsHelpApi.post('specialist/logout');
+      clearAuthHeader();
+    } catch (e: unknown) {
+      return thunkAPI.rejectWithValue(getErrorMessage(e));
+    }
+  }
+);

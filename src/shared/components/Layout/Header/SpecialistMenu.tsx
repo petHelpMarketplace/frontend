@@ -1,13 +1,14 @@
-import { logout } from '@/features/auth/model/slice';
-import { useDispatch } from 'react-redux';
+// import { logout } from '@/features/auth/model/slice';
+import { logoutUser } from '@/features/auth/model/operations';
+import { useAppDispatch } from '@/shared/hooks';
 import { useNavigate } from 'react-router-dom';
 
 const SpecialistMenu = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
     // Перехід на головну сторінку або інша логіка:
     navigate('/');
   };
