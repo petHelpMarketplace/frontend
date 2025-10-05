@@ -1,5 +1,5 @@
 import { Specialist } from '@/features/searchSpecialists/types/specialist';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '@/shared/components/UI/Button';
 import Bio from '@/features/searchSpecialists/components/Bio';
 import { useState } from 'react';
@@ -10,6 +10,8 @@ type Props = {
 
 const SpecialistCard = ({ specialist }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = `${location.pathname}${location.search}`; 
   const {
     id,
     name,
@@ -154,7 +156,7 @@ const SpecialistCard = ({ specialist }: Props) => {
         <Button
           label="Відкрити профіль"
           type="button"
-          onClick={() => navigate(`/specialists/${id}`)}
+          onClick={() => navigate(`/specialists/${id}`, {state: {from}})}
           className="hidden xl:block max-w-[304px] max-h-[40px] w-full mt-auto  xl:min-w-[200px] xl:h-[40px] whitespace-nowrap text-sm xl:text-base font-normal text-alabaster text-center rounded-2xl bg-tenn hover:shadow-shark active:shadow-inset-shark focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-tenn overflow-hidden text-ellipsis"
           aria-label={`Відкрити профіль ${name} ${family_name}`}
         />
@@ -163,7 +165,7 @@ const SpecialistCard = ({ specialist }: Props) => {
       <Button
         label="Відкрити профіль"
         type="button"
-        onClick={() => navigate(`/specialists/${id}`)}
+        onClick={() => navigate(`/specialists/${id}`, {state: {from}})}
         className="xl:hidden [grid-area:btn] max-w-[304px] w-full min-h-[35px] mt-auto xl:min-w-[200px] h-[40px] whitespace-nowrap text-sm xl:text-base font-normal text-alabaster text-center rounded-2xl bg-tenn hover:shadow-shark active:shadow-inset-shark focus:outline-none focus:ring-0 focus:ring-offset-0 focus:ring-tenn  overflow-hidden text-ellipsis"
         aria-label={`Відкрити профіль ${name} ${family_name}`}
       />
