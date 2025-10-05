@@ -18,9 +18,7 @@ export const footerSections: FooterSection[] = [
   },
   {
     title: 'Як це працює',
-    links: [
-      { text: 'Як замовити послугу?', to: '#' },
-    ],
+    links: [{ text: 'Як замовити послугу?', to: '#' }],
   },
   {
     title: 'Допомога',
@@ -28,7 +26,7 @@ export const footerSections: FooterSection[] = [
       { text: 'Питання та відповіді', to: '#' },
       { text: 'Правила конфіденційності', to: '#' },
       { text: 'Служба підтримки', to: '#' },
-      { text: 'Публічна оферта', to: '#' },
+      { text: 'Публічна оферта', to: '/public-offer' },
     ],
   },
   {
