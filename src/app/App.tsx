@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
+import PublicOfferPage from '@/features/publicOffer/pages/PublicOfferPage';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -43,6 +44,7 @@ function App() {
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
+        <Route path="/public-offer" element={<PublicOfferPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

@@ -48,7 +48,6 @@ export default function DistrictSelector({
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setIsOpen(false);
-      buttonRef.current?.focus();
     }
   }, []);
 

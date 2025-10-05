@@ -4,7 +4,7 @@ type HeroImageProps = {
 const HeroImage = ({ className = '' }: HeroImageProps) => {
   return (
     <div
-      className={`hidden xl:block absolute right-[51px] top-[49px] overflow-visible w-full max-w-[524px] max-h-[738px] ${className}`}
+      className={`hidden xl:block absolute right-[51px] top-[58px] w-full max-w-[524px] max-h-[738px] ${className}`}
     >
       <img
         src="/images/hero-mops-1x.png"

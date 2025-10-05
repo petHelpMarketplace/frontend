@@ -9,13 +9,11 @@ const HeroSection = () => {
   const selectedAnimal = useAppSelector(selectAnimal);
 
   const heightClass =
-    selectedAnimal === 'cat'
-      ? 'h-[662px] xl:max-h-180'
-      : 'h-[858px] xl:max-h-180';
+    selectedAnimal === 'cat' ? 'h-[666px] xl:h-180' : 'h-[794px] xl:h-180';
 
   return (
     <section
-      className={`relative w-full max-w-[375px] xl:max-w-[1280px] mx-auto rounded-b-[40px] -mt-[56px] xl:-mt-20 px-[15px] pt-0 xl:py-12 xl:px-30 xl:mb-40 bg-hero-gradient ${heightClass}`}
+      className={`relative w-full max-w-[375px] xl:max-w-[1280px] mx-auto rounded-b-[40px] -mt-[56px] xl:-mt-20 px-[15px] pt-0 xl:py-12 xl:px-30 bg-hero-gradient ${heightClass}`}
     >
       <div className="flex xl:flex-row items-start xl:items-center">
         <HeroTitle />
