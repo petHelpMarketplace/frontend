@@ -22,7 +22,7 @@ const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 
 function App() {
   return (
-    <>
+
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
@@ -45,7 +45,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </>
+    
   );
 }
 
