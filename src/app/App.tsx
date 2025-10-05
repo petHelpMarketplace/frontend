@@ -16,41 +16,36 @@ const BookingPage = lazy(() => import('@/features/booking/pages/BookingPage'));
 const ReviewServicePage = lazy(
   () => import('@/features/review/pages/ReviewServicePage')
 );
-const FaqPage = lazy(() => import("@/features/faq/pages/FaqPage"));
-const FaqQuestionPage = lazy(() => import("@/features/faq/pages/FaqQuestionPage"));
-
+const FaqPage = lazy(() => import('@/features/faq/pages/FaqPage'));
+const FaqQuestionPage = lazy(
+  () => import('@/features/faq/pages/FaqQuestionPage')
+);
 
 const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 
 function App() {
   return (
-    <>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/specialists" element={<SearchSpecialistsPage />} />
-          <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
-          <Route path="/specialists/:id/booking" element={<BookingPage />} />
-          <Route
-            path="/account"
-            element={
-              <PrivateRoute>
-                <AccountPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/review/specialists/:id"
-            element={<ReviewServicePage />}
-          />
-               {/* FAQ */}
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/specialists" element={<SearchSpecialistsPage />} />
+        <Route path="/specialists/:id" element={<SpecialistProfilePage />} />
+        <Route path="/specialists/:id/booking" element={<BookingPage />} />
+        <Route
+          path="/account"
+          element={
+            <PrivateRoute>
+              <AccountPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/review/specialists/:id" element={<ReviewServicePage />} />
+        {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
-         
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </>
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
 

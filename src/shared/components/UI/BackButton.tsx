@@ -29,10 +29,10 @@ const from = (location.state as { from?: string } | null)?.from;
       return;
     }
     if (from) {
-      navigate(from);
+      navigate(from, {replace: true});
       return;
     }
-    navigate(fallback);
+    navigate(fallback, {replace: true});
   };
 
   return (

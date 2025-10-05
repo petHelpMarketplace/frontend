@@ -1,33 +1,33 @@
-import { memo, useMemo, type ReactNode } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { twMerge } from "tailwind-merge";
-import type { CategorySlug, FaqItem } from "@/features/faq/types";
+import { memo, useMemo, type ReactNode } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { twMerge } from 'tailwind-merge';
+import type { CategorySlug, FaqItem } from '@/features/faq/types';
 
-type Variant = "card" | "split";
+type Variant = 'card' | 'split';
 
 export const S = {
-  card:
-    "flex-none shrink-0 box-border w-[328px] min-h-[638px] rounded-2xl shadow-faq py-8 px-6.5",
-  header: "flex items-end gap-3.5 mb-10.5",
-  icon: "w-7 h-8 fill-fire",
-  title: "font-semibold text-xl/[135%] text-fire translate-y-[1px] focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2",
-  list: "gap-11.5 flex flex-col",
-  item: "leading-[135%] text-black hover:text-fire",
-  empty: "leading-[135%] text-black",
+  card: 'flex-none shrink-0 box-border w-[328px] min-h-[638px] rounded-2xl shadow-faq py-8 px-6.5',
+  header: 'flex items-end gap-3.5 mb-10.5',
+  icon: 'w-7 h-8 fill-fire',
+  title:
+    'font-semibold text-xl/[135%] text-fire translate-y-[1px] focus-visible:ring-fire rounded transition-colors duration-300 ease-in-out outline-none focus-visible:ring-2',
+  list: 'gap-11.5 flex flex-col',
+  item: 'leading-[135%] text-black hover:text-fire',
+  empty: 'leading-[135%] text-black',
 } as const;
 
 export type FaqCategoryCardProps = {
   title: string;
   slug: CategorySlug;
-  questions: Pick<FaqItem, "id" | "question">[];
+  questions: Pick<FaqItem, 'id' | 'question'>[];
   previewCount?: number;
   icon?: ReactNode;
   emptyText?: string;
   className?: string;
-  variant?: Variant;       
-  activeId?: number;        
-  headerClassName?: string;  
-  listClassName?: string;   
+  variant?: Variant;
+  activeId?: number;
+  headerClassName?: string;
+  listClassName?: string;
   cardClassName?: string;
 } & React.HTMLAttributes<HTMLElement>;
 
@@ -37,9 +37,9 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   questions,
   previewCount = 8,
   icon,
-  emptyText = "Наразі в цій категорії немає запитань.",
+  emptyText = 'Наразі в цій категорії немає запитань.',
   className,
-  variant = "card",
+  variant = 'card',
   headerClassName,
   listClassName,
   cardClassName,
@@ -51,7 +51,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
   );
 
   // ========= ВАРІАНТ "split": пігулка заголовка + окрема картка зі списком =========
-  if (variant === "split") {
+  if (variant === 'split') {
     return (
       <article
         className={twMerge('w-[328px]', className)}
@@ -66,8 +66,8 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
                 {icon}
               </span>
             )}
-            <h2 className={S.title} id={`faq-${slug}-title`}>              
-                {title}
+            <h2 className={S.title} id={`faq-${slug}-title`}>
+              {title}
             </h2>
           </header>
         </div>
@@ -81,7 +81,7 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
             <ul className={twMerge(S.list, listClassName)}>
               {items.map(q => (
                 <li key={q.id}>
-                  <NavLink         
+                  <NavLink
                     to={`/faq/${slug}/${q.id}`}
                     className={({ isActive }) =>
                       twMerge(
@@ -118,9 +118,9 @@ const FaqCategoryCard = memo(function FaqCategoryCard({
             {icon}
           </span>
         )}
-        <h2 className={S.title} id={`faq-${slug}-title`}>              
-                {title}
-            </h2>
+        <h2 className={S.title} id={`faq-${slug}-title`}>
+          {title}
+        </h2>
       </header>
 
       {items.length ? (
