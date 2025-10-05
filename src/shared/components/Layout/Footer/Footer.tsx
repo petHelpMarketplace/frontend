@@ -1,11 +1,61 @@
+
+
 import { footerSections } from '@/shared/components/Layout/Footer/footerData';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Accordion from '@/shared/components/Layout/Footer/Accordion';
 import Logo from '@/shared/components/UI/Logo';
+import { isExternal, toInternalPath, isUnsafeProtocol } from "@/shared/components/Layout/Footer/links";
 
 const Footer = () => {
-  const [openAcordion, setOpenAccordion] = useState<string | null>(null);
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+
+  const renderFooterLink = (
+    { text, to, external }: { text: string; to: string; external?: boolean },
+    tabIndex?: number
+  ) => {
+    const lower = to.trim().toLowerCase();
+    const isMailOrTel = lower.startsWith("mailto:") || lower.startsWith("tel:");
+
+    // 1) небезпечні протоколи — інертний елемент
+    if (isUnsafeProtocol(to)) {
+      return (
+        <span className="text-alabaster text-sm font-normal block leading-[inherit] opacity-80" aria-disabled="true">
+          {text}
+        </span>
+      );
+    }
+
+    const forceExternal = external ?? isExternal(to);
+
+    // 2) зовнішні — <a>, внутрішні — <Link>
+    if (forceExternal) {
+      const target = isMailOrTel ? undefined : "_blank";
+      const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+      return (
+        <a
+          href={to}
+          target={target}
+          rel={rel}
+          className="text-alabaster text-sm font-normal block leading-[inherit]"
+          tabIndex={tabIndex}
+        >
+          {text}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        to={toInternalPath(to)}
+        className="text-alabaster text-sm font-normal block leading-[inherit]"
+        tabIndex={tabIndex}
+      >
+        {text}
+      </Link>
+    );
+  };
+
   return (
     <footer
       role="contentinfo"
@@ -28,21 +78,15 @@ const Footer = () => {
           <Accordion
             key={title}
             title={title}
-            isOpen={openAcordion === title}
+            isOpen={openAccordion === title}
             onToggle={() =>
               setOpenAccordion(prev => (prev === title ? null : title))
             }
           >
             <ul className="flex flex-col text-sm gap-3.5 mt-5">
-              {links.map(({ text, to }) => (
-                <li key={`${to}-${text}`}>
-                  <Link
-                    to={to}
-                    className="text-alabaster text-sm font-normal block leading-[120%]"
-                    tabIndex={openAcordion === title ? 0 : -1}
-                  >
-                    {text}
-                  </Link>
+              {links.map((link) => (
+                <li key={`${link.to}-${link.text}`}>
+                  {renderFooterLink(link, openAccordion === title ? 0 : -1)}
                 </li>
               ))}
             </ul>
@@ -56,12 +100,8 @@ const Footer = () => {
           <div key={title}>
             <h3 className="font-semibold text-xl mb-[10px]">{title}</h3>
             <ul className="leading-[2.5]">
-              {links.map(({ text, to }) => (
-                <li key={`${to}-${text}`}>
-                  <Link to={to} className="text-alabaster">
-                    {text}
-                  </Link>
-                </li>
+             {links.map((link) => (
+                <li key={`${link.to}-${link.text}`}>{renderFooterLink(link)}</li>
               ))}
             </ul>
           </div>
@@ -75,6 +115,6 @@ const Footer = () => {
       </p>
     </footer>
   );
-};
+}; 
 
 export default Footer;
