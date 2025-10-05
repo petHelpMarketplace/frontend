@@ -19,19 +19,17 @@ const BackButton: React.FC<BackButtonProps> = ({
   );
 
   const navigate = useNavigate();
-const location = useLocation();
+  const location = useLocation();
+  
 const from = (location.state as { from?: string } | null)?.from;
   const handleClick = () => {
     const hasHistory =
       typeof window !== 'undefined' && window.history.state?.idx > 0;
-    if (hasHistory) {
+    if (hasHistory || from) {
       navigate(-1);
       return;
     }
-    if (from) {
-      navigate(from, {replace: true});
-      return;
-    }
+  
     navigate(fallback, {replace: true});
   };
 

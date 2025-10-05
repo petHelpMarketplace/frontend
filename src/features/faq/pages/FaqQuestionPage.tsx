@@ -89,6 +89,7 @@ export default function FaqQuestionPage() {
    return (
      <Navigate
        to="/not-found"
+       replace
        state={{ from: { pathname, search, hash } }} 
      />
    );
