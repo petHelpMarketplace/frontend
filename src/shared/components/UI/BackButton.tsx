@@ -19,25 +19,23 @@ const BackButton: React.FC<BackButtonProps> = ({
   );
 
   const navigate = useNavigate();
-const location = useLocation();
+  const location = useLocation();
+  
 const from = (location.state as { from?: string } | null)?.from;
   const handleClick = () => {
     const hasHistory =
       typeof window !== 'undefined' && window.history.state?.idx > 0;
-    if (hasHistory) {
+    if (hasHistory || from) {
       navigate(-1);
       return;
     }
-    if (from) {
-      navigate(from);
-      return;
-    }
-    navigate(fallback);
+  
+    navigate(fallback, {replace: true});
   };
 
   return (
     <button type="button" onClick={handleClick} className={backBtnClass}>
-      <svg className="w-2 h-4 fill-fire">
+      <svg className="fill-fire h-4 w-2">
         <use href="/icons.svg#icon-arrow-left" />
       </svg>
       {label}
