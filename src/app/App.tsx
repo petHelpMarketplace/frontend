@@ -42,6 +42,9 @@ function App() {
           }
         />
         <Route path="/review/specialists/:id" element={<ReviewServicePage />} />
+        {/* FAQ */}
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
         <Route path="/public-offer" element={<PublicOfferPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
