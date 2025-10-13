@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
-import { loginUser } from '@/features/auth/model/operations';
+import { loginSpec } from '@/features/auth/model/operations';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import toast from 'react-hot-toast';
@@ -29,7 +29,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
-      await dispatch(loginUser(data)).unwrap();
+      await dispatch(loginSpec(data)).unwrap();
       // toast.success('Login successful!');
       reset();
       onClose();

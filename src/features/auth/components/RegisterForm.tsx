@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
-import { registerUser } from '@/features/auth/model/operations';
+import { registerSpec } from '@/features/auth/model/operations';
 import { resetRegisterState } from '@/features/auth/model/slice';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
@@ -48,7 +48,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     };
 
     try {
-      await dispatch(registerUser(requestBody)).unwrap();
+      await dispatch(registerSpec(requestBody)).unwrap();
       toast.success('Registration successful!');
       setTimeout(() => {
         onOpenLogin();

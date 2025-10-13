@@ -1,17 +1,28 @@
 import { ReactNode } from 'react';
 
-export interface User {
-  id?: string;
-  name: string;
-  email: string;
-}
+
+export type SpecProfileResponse = {
+  id: number | null;
+  name: string | null;
+  family_name: string | null;
+  email: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  description: string | null;
+  experience: number | null;
+  is_active: boolean;
+  is_verified: boolean;
+  phone: string | null;
+  position: string | null;
+};
 
 export interface AuthState {
-  id: string | null;
+  id: number | null;
   name: string | null;
   email: string | null;
+  // specProfile: SpecProfileResponse;
   accessToken: string | null;
-  refreshToken: string | null;
+  // refreshToken: string | null;
   loading: boolean;
   error: string | null;
   success: boolean;
@@ -28,7 +39,7 @@ export interface RegisterRequest {
 }
 
 export interface RegisterResponse {
-  id: string;
+  id: number;
   message: string;
 }
 
@@ -39,7 +50,7 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   access_token: string;
-  refresh_token: string;
+  // refresh_token: string;
 }
 
 export type LoginFormProps = {
@@ -49,3 +60,8 @@ export type LoginFormProps = {
 export type PrivateRouteProps = {
   children: ReactNode;
 };
+
+export interface RefreshResponse {
+  access_token: string;
+  // refresh_token: string;
+}

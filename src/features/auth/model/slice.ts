@@ -1,8 +1,10 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
-  loginUser,
-  logoutUser,
-  registerUser,
+  loginSpec,
+  logoutSpec,
+  refreshAccessToken,
+  // refreshSpec,
+  registerSpec,
 } from '@/features/auth/model/operations';
 import { AuthState } from '@/features/auth/types/types';
 
@@ -10,8 +12,22 @@ const initialState: AuthState = {
   id: null,
   name: null,
   email: null,
+  // specProfile: {
+  //   id: null,
+  //   name: null,
+  //   family_name: null,
+  //   email: null,
+  //   avatar_url: null,
+  //   bio: null,
+  //   description: null,
+  //   experience: null,
+  //   is_active: false,
+  //   is_verified: false,
+  //   phone: null,
+  //   position: null,
+  // },
   accessToken: null,
-  refreshToken: null,
+  // refreshToken: null,
   loading: false,
   success: false,
   error: null,
@@ -30,43 +46,61 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(registerUser.pending, state => {
+      .addCase(registerSpec.pending, state => {
         state.loading = true;
         state.success = false;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerSpec.fulfilled, (state, action) => {
         state.id = action.payload.id;
+        // state.specProfile = {
+        //   ...state.specProfile,
+        //   id: Number(action.payload.id),
+        // };
+
         state.success = true;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(registerSpec.rejected, (state, action) => {
         state.success = false;
         state.error = action.payload ?? 'Registration failed';
       })
-      .addCase(loginUser.pending, state => {
+      .addCase(loginSpec.pending, state => {
         state.loading = true;
         state.isLoggedIn = false;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginSpec.fulfilled, (state, action) => {
         state.accessToken = action.payload.access_token;
-        state.refreshToken = action.payload.refresh_token;
+        // state.refreshToken = action.payload.refresh_token;
+
         state.isLoggedIn = true;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginSpec.rejected, (state, action) => {
         state.success = false;
         state.error = action.payload ?? 'Login failed';
       })
-      .addCase(logoutUser.pending, state => {
+      .addCase(refreshAccessToken.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshAccessToken.fulfilled, (state, action) => {
+        // state.specProfile = action.payload;
+        state.accessToken = action.payload.access_token;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshAccessToken.rejected, state => {
+        state.isRefreshing = false;
+      })
+      .addCase(logoutSpec.pending, state => {
         state.loading = true;
       })
-      .addCase(logoutUser.fulfilled, () => initialState)
+      .addCase(logoutSpec.fulfilled, () => initialState)
       .addMatcher(
         isAnyOf(
-          registerUser.fulfilled,
-          registerUser.rejected,
-          loginUser.fulfilled,
-          loginUser.rejected,
-          logoutUser.fulfilled,
-          logoutUser.rejected
+          registerSpec.fulfilled,
+          registerSpec.rejected,
+          loginSpec.fulfilled,
+          loginSpec.rejected,
+          logoutSpec.fulfilled,
+          logoutSpec.rejected
         ),
         state => {
           state.loading = false;

@@ -14,20 +14,20 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const persistConfig = {
-  key: 'root',
+const authPersistConfig = {
+  key: 'auth',
   version: 1,
   storage,
-  whitelist: ['isLoggedIn'],
+  whitelist: ['accessToken', 'isLoggedIn'],
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
     hero: heroReducer,
     account: accountReducer,
-    auth: persistedReducer,
+    auth: persistedAuthReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

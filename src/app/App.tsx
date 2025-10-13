@@ -1,10 +1,13 @@
 import '@/app/App.css';
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
 import PublicOfferPage from '@/features/publicOffer/pages/PublicOfferPage';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
+import { selectIsRefreshing } from '@/features/auth/model/selectors';
+import { refreshAccessToken } from '@/features/auth/model/operations';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -21,7 +24,20 @@ const ReviewServicePage = lazy(
 const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
 
 function App() {
-  return (
+  const dispatch = useAppDispatch();
+  const isRefreshing = useAppSelector(selectIsRefreshing);
+
+  useEffect(() => {
+    console.log('dispatching refreshSpec');
+    dispatch(refreshAccessToken());
+  }, [dispatch]);
+
+  const accessToken = useAppSelector(state => state.auth.accessToken);
+  useEffect(() => {
+    console.log('[App] Redux accessToken after mount:', accessToken);
+  }, [accessToken]);
+
+  return isRefreshing ? null : (
     <>
       <Routes>
         <Route path="/" element={<MainLayout />}>

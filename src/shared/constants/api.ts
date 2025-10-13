@@ -8,5 +8,5 @@ export const petsHelpApi = axios.create({
   },
   timeout: 10000,
   //TODO This will be fixed once the CORS policy issue is resolved on the backend.
-  // withCredentials: true,
+  withCredentials: true,
 });

@@ -1,5 +1,5 @@
 // import { logout } from '@/features/auth/model/slice';
-import { logoutUser } from '@/features/auth/model/operations';
+import { logoutSpec } from '@/features/auth/model/operations';
 import { useAppDispatch } from '@/shared/hooks';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ const SpecialistMenu = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(logoutSpec());
     // Перехід на головну сторінку або інша логіка:
     navigate('/');
   };
