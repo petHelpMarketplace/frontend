@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import heroReducer from '@/features/heroSection/hooks/heroSlice';
 import { authReducer } from '@/features/auth/model/slice';
 import accountReducer from '@/features/account/model/settingsSlice';
+import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
   persistReducer,
@@ -12,7 +13,11 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+
+import {
+  injectStore,
+  setupAuthInterceptor,
+} from '@/features/auth/api/authInterceptor';
 
 const authPersistConfig = {
   key: 'auth',
@@ -40,5 +45,6 @@ export const store = configureStore({
 // Типи для використання у всьому проєкті:
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
+injectStore(store);
+setupAuthInterceptor();
 export const persistor = persistStore(store);

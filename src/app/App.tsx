@@ -4,9 +4,12 @@ import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks';
-import { selectIsRefreshing } from '@/features/auth/model/selectors';
-import { refreshAccessToken } from '@/features/auth/model/operations';
+import { useAppSelector } from '@/shared/hooks';
+import {
+  selectAccessToken,
+  selectIsRefreshing,
+} from '@/features/auth/model/selectors';
+import { setAuthHeader } from '@/features/auth/lib/authHeader';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -29,17 +32,13 @@ const PublicOfferPage = lazy(
 );
 
 function App() {
-  const dispatch = useAppDispatch();
   const isRefreshing = useAppSelector(selectIsRefreshing);
+  const accessToken = useAppSelector(selectAccessToken);
 
   useEffect(() => {
-    console.log('dispatching refreshSpec');
-    dispatch(refreshAccessToken());
-  }, [dispatch]);
-
-  const accessToken = useAppSelector(state => state.auth.accessToken);
-  useEffect(() => {
-    console.log('[App] Redux accessToken after mount:', accessToken);
+    if (accessToken) {
+      setAuthHeader(accessToken);
+    }
   }, [accessToken]);
 
   return isRefreshing ? null : (
