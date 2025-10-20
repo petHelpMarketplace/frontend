@@ -5,5 +5,5 @@ export const setAuthHeader = (access_token: string) => {
 };
 
 export const clearAuthHeader = () => {
-  petsHelpApi.defaults.headers.common.Authorization = '';
+  delete petsHelpApi.defaults.headers.common.Authorization;
 };

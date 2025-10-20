@@ -9,7 +9,7 @@ import {
   selectAccessToken,
   selectIsRefreshing,
 } from '@/features/auth/model/selectors';
-import { setAuthHeader } from '@/features/auth/lib/authHeader';
+import { clearAuthHeader, setAuthHeader } from '@/features/auth/lib/authHeader';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -38,6 +38,8 @@ function App() {
   useEffect(() => {
     if (accessToken) {
       setAuthHeader(accessToken);
+    } else {
+      clearAuthHeader();
     }
   }, [accessToken]);
 

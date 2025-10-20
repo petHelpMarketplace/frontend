@@ -76,6 +76,8 @@ const authSlice = createSlice({
       .addCase(loginSpec.rejected, (state, action) => {
         state.success = false;
         state.error = action.payload ?? 'Login failed';
+        state.isLoggedIn = false;
+        state.accessToken = null;
       })
       .addCase(refreshAccessToken.pending, state => {
         state.isRefreshing = true;
@@ -88,11 +90,14 @@ const authSlice = createSlice({
       })
       .addCase(refreshAccessToken.rejected, state => {
         state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.accessToken = null;
       })
       .addCase(logoutSpec.pending, state => {
         state.loading = true;
       })
       .addCase(logoutSpec.fulfilled, () => initialState)
+      .addCase(logoutSpec.rejected, () => initialState)
       .addMatcher(
         isAnyOf(
           registerSpec.fulfilled,
