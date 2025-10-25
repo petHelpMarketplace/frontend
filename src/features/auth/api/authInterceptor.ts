@@ -24,7 +24,13 @@ export const setupAuthInterceptor = () => {
       };
 
       // Якщо помилка 401 (токен недійсний) і ми ще не пробували оновити
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      const url = originalRequest.url ?? '';
+      const isRefresh = url.includes('/token/refresh');
+      if (
+        error.response?.status === 401 &&
+        !originalRequest._retry &&
+        !isRefresh
+      ) {
         originalRequest._retry = true; // Встановлюємо прапорець, щоб уникнути циклів
 
         try {
@@ -34,8 +40,6 @@ export const setupAuthInterceptor = () => {
           // Якщо оновлення успішне
           if (refreshAccessToken.fulfilled.match(result)) {
             const newAccessToken = result.payload.access_token;
-
-            // originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
             (originalRequest.headers ??= {}).Authorization =
               `Bearer ${newAccessToken}`;
             setAuthHeader(newAccessToken); // Оновлюємо токен в заголовках axios
