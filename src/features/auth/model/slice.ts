@@ -3,7 +3,6 @@ import {
   loginSpec,
   logoutSpec,
   refreshAccessToken,
-  // refreshSpec,
   registerSpec,
 } from '@/features/auth/model/operations';
 import { AuthState } from '@/features/auth/types/types';
@@ -12,22 +11,7 @@ const initialState: AuthState = {
   id: null,
   name: null,
   email: null,
-  // specProfile: {
-  //   id: null,
-  //   name: null,
-  //   family_name: null,
-  //   email: null,
-  //   avatar_url: null,
-  //   bio: null,
-  //   description: null,
-  //   experience: null,
-  //   is_active: false,
-  //   is_verified: false,
-  //   phone: null,
-  //   position: null,
-  // },
   accessToken: null,
-  // refreshToken: null,
   loading: false,
   success: false,
   error: null,
@@ -38,29 +22,22 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    resetRegisterState(state) {
-      state.loading = false;
-      state.success = false;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       .addCase(registerSpec.pending, state => {
         state.loading = true;
         state.success = false;
+        state.error = null;
       })
       .addCase(registerSpec.fulfilled, (state, action) => {
         state.id = action.payload.id;
-        // state.specProfile = {
-        //   ...state.specProfile,
-        //   id: Number(action.payload.id),
-        // };
-
         state.success = true;
+        state.loading = false;
       })
       .addCase(registerSpec.rejected, (state, action) => {
         state.success = false;
+        state.loading = false;
         state.error = action.payload ?? 'Registration failed';
       })
       .addCase(loginSpec.pending, state => {
@@ -69,8 +46,6 @@ const authSlice = createSlice({
       })
       .addCase(loginSpec.fulfilled, (state, action) => {
         state.accessToken = action.payload.access_token;
-        // state.refreshToken = action.payload.refresh_token;
-
         state.isLoggedIn = true;
       })
       .addCase(loginSpec.rejected, (state, action) => {
@@ -83,7 +58,6 @@ const authSlice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
-        // state.specProfile = action.payload;
         state.accessToken = action.payload.access_token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
@@ -97,7 +71,10 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(logoutSpec.fulfilled, () => initialState)
-      .addCase(logoutSpec.rejected, () => initialState)
+      .addCase(logoutSpec.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ?? 'Logout failed';
+      })
       .addMatcher(
         isAnyOf(
           registerSpec.fulfilled,
@@ -111,11 +88,7 @@ const authSlice = createSlice({
           state.loading = false;
         }
       );
-    //   .addMatcher(isAnyOf(register.rejected, login.rejected, logout.rejected), state => {
-    //     state.isLoggedIn = false;
-    //   });
   },
 });
 
-export const { resetRegisterState } = authSlice.actions;
 export const authReducer = authSlice.reducer;

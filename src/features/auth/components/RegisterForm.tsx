@@ -12,7 +12,6 @@ import { useState, useEffect } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import { registerSpec } from '@/features/auth/model/operations';
-import { resetRegisterState } from '@/features/auth/model/slice';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
@@ -35,8 +34,8 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
 
   // Скидання стану форми при відкритті компонента
   useEffect(() => {
-    dispatch(resetRegisterState());
-  }, [dispatch]);
+    reset();
+  }, []);
 
   const onSubmit = async (data: RegisterSchemaType) => {
     const requestBody = {
@@ -52,7 +51,6 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
       toast.success('Registration successful!');
       setTimeout(() => {
         onOpenLogin();
-        dispatch(resetRegisterState());
         reset();
       }, 1500);
     } catch (error) {
@@ -65,9 +63,10 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     if (success) return 'input-base border-tenn focus:border-tenn';
     return 'input-base';
   };
+
   return (
     <div className="flex flex-col gap-4 xl:gap-4.5">
-      <h3 className="text-fire uppercase text-center">РЕЄСТРАЦІЯ</h3>
+      <h3 className="text-fire text-center uppercase">РЕЄСТРАЦІЯ</h3>
 
       <Button
         label="Увійти з Google"
@@ -75,12 +74,12 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-7 h-7">
+          <svg className="h-7 w-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }
       />
-      <p className="text-[11px] text-mineShaft text-center">
+      <p className="text-mineShaft text-center text-[11px]">
         або заповніть форму
       </p>
 
@@ -94,6 +93,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="text"
             placeholder="Ім'я"
+            autoComplete="name"
             className={getInputClass(
               !!errors.name,
               !!(!errors.name && dirtyFields.name)
@@ -103,7 +103,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.name && <ErrorIcon />}
           {!errors.name && dirtyFields.name && <SuccessIcon />}
           {errors.name && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.name.message}
             </p>
           )}
@@ -137,7 +137,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.phone && <ErrorIcon />}
           {!errors.phone && dirtyFields.phone && <SuccessIcon />}
           {errors.phone && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.phone.message}
             </p>
           )}
@@ -148,6 +148,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="email"
             placeholder="Email"
+            autoComplete="email"
             className={getInputClass(
               !!errors.email,
               !!(!errors.email && dirtyFields.email)
@@ -157,7 +158,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.email && <ErrorIcon />}
           {!errors.email && dirtyFields.email && <SuccessIcon />}
           {errors.email && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.email.message}
             </p>
           )}
@@ -178,7 +179,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.password && <ErrorIcon />}
           {!errors.password && dirtyFields.password && <SuccessIcon />}
           {errors.password && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.password.message}
             </p>
           )}
@@ -189,6 +190,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="password"
             placeholder="Повторити пароль"
+            autoComplete="new-password"
             className={getInputClass(
               !!errors.password_confirmation,
               !!(
@@ -203,13 +205,13 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
             dirtyFields.password_confirmation && <SuccessIcon />}
 
           {errors.password_confirmation && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.password_confirmation.message}
             </p>
           )}
         </div>
 
-        <p className="text-[10px] font-semibold text-center text-cod-gray">
+        <p className="text-cod-gray text-center text-[10px] font-semibold">
           Вже маєте обліковий запис?{' '}
           <Link to={'/login'} className="text-fire">
             Увійти
@@ -218,11 +220,11 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         <Button label="Зареєструватися" type="submit" disabled={loading} />
       </form>
 
-      <p className="text-[10px] text-mineShaft text-center">
+      <p className="text-mineShaft text-center text-[10px]">
         Реєструючись, ви погоджуєтесь з{' '}
         <Link
           to={'/terms-and-conditions'}
-          className="font-semibold underline [text-decoration-skip-ink:none] text-fire"
+          className="text-fire font-semibold underline [text-decoration-skip-ink:none]"
         >
           правилами
         </Link>{' '}

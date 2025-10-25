@@ -6,6 +6,7 @@ import { AxiosHeaders } from 'axios';
 
 type AppStore = typeof store;
 let reduxStore: AppStore | undefined;
+let refreshPromise: Promise<unknown> | null = null;
 
 export const injectStore = (_store: typeof store) => {
   reduxStore = _store;
@@ -20,7 +21,10 @@ export const setupAuthInterceptor = () => {
       if (!reduxStore) return Promise.reject(error);
 
       // Зберігаємо оригінальний запит і позначку повтору
-      const originalRequest = (error.config ?? {}) as typeof error.config & {
+      if (!error.config) {
+        return Promise.reject(error);
+      }
+      const originalRequest = error.config as typeof error.config & {
         _retry?: boolean;
       };
 
@@ -35,8 +39,15 @@ export const setupAuthInterceptor = () => {
         originalRequest._retry = true; // Встановлюємо прапорець, щоб уникнути циклів
 
         try {
-          // Питаємо бекенд на новий access token через refresh токен у cookie
-          const result = await reduxStore.dispatch(refreshAccessToken());
+          // Якщо ріфреш почався - дочекатися; інакше почати новий
+          if (!refreshPromise) {
+            refreshPromise = reduxStore
+              .dispatch(refreshAccessToken())
+              .finally(() => {
+                refreshPromise = null;
+              });
+          }
+          const result = await refreshPromise;
 
           // Якщо оновлення успішне
           if (refreshAccessToken.fulfilled.match(result)) {

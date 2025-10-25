@@ -1,6 +1,6 @@
-// import { logout } from '@/features/auth/model/slice';
 import { logoutSpec } from '@/features/auth/model/operations';
 import { useAppDispatch } from '@/shared/hooks';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const SpecialistMenu = () => {
@@ -8,9 +8,22 @@ const SpecialistMenu = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await dispatch(logoutSpec());
-    // Перехід на головну сторінку або інша логіка:
-    navigate('/');
+    try {
+      const resultAction = await dispatch(logoutSpec());
+
+      if (logoutSpec.fulfilled.match(resultAction)) {
+        toast.success('Ви успішно вийшли з акаунту'); // успіх
+        navigate('/');
+      } else {
+        toast.error(
+          resultAction.payload ??
+            'Не вдалося вийти з акаунту, спробуйте пізніше'
+        ); // помилка з бекенду
+      }
+    } catch (err) {
+      toast.error('Не вдалося вийти з акаунту через помилку мережі'); // інші помилки
+      console.error(err);
+    }
   };
 
   return (
