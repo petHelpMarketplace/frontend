@@ -2,6 +2,7 @@ import { store } from '@/app/store';
 import { petsHelpApi } from '@/shared/api/petsHelpApi';
 import { setAuthHeader } from '../lib/authHeader';
 import { logoutSpec, refreshAccessToken } from '../model/operations';
+import { AxiosHeaders } from 'axios';
 
 type AppStore = typeof store;
 let reduxStore: AppStore | undefined;
@@ -40,8 +41,17 @@ export const setupAuthInterceptor = () => {
           // Якщо оновлення успішне
           if (refreshAccessToken.fulfilled.match(result)) {
             const newAccessToken = result.payload.access_token;
-            (originalRequest.headers ??= {}).Authorization =
-              `Bearer ${newAccessToken}`;
+            if (originalRequest.headers instanceof AxiosHeaders) {
+              originalRequest.headers.set(
+                'Authorization',
+                `Bearer ${newAccessToken}`
+              );
+            } else {
+              originalRequest.headers = {
+                ...(originalRequest.headers ?? {}),
+                Authorization: `Bearer ${newAccessToken}`,
+              };
+            }
             setAuthHeader(newAccessToken); // Оновлюємо токен в заголовках axios
 
             // Повторюємо оригінальний запит з новим токеном
