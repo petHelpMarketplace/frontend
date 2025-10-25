@@ -65,11 +65,13 @@ export const logoutSpec = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logout',
   async (_, thunkAPI) => {
     try {
-      await petsHelpApi.post('/specialist/logout');
-
-      clearAuthHeader();
+      await petsHelpApi.post('/specialist/logout', undefined, {
+        signal: thunkAPI.signal,
+      });
     } catch (e: unknown) {
       return thunkAPI.rejectWithValue(getErrorMessage(e));
+    } finally {
+      clearAuthHeader();
     }
   }
 );

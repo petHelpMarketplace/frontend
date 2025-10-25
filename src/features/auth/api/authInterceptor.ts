@@ -3,47 +3,61 @@ import { petsHelpApi } from '@/shared/api/petsHelpApi';
 import { setAuthHeader } from '../lib/authHeader';
 import { logoutSpec, refreshAccessToken } from '../model/operations';
 
-let reduxStore: typeof store;
+type AppStore = typeof store;
+let reduxStore: AppStore | undefined;
 
 export const injectStore = (_store: typeof store) => {
   reduxStore = _store;
 };
 
-export const setupAuthInterceptor = () => {};
-// Додаємо інтерсептор до відповіді API
-petsHelpApi.interceptors.response.use(
-  response => response, // Якщо відповідь успішна — повертаємо її без змін
+export const setupAuthInterceptor = () => {
+  // Додаємо інтерсептор до відповіді API
+  petsHelpApi.interceptors.response.use(
+    response => response, // Якщо відповідь успішна — повертаємо її без змін
 
-  async error => {
-    const originalRequest = error.config; // Зберігаємо оригінальний запит
+    async error => {
+      if (!reduxStore) return Promise.reject(error);
 
-    // Якщо помилка 401 (токен недійсний) і ми ще не пробували оновити
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Встановлюємо прапорець, щоб уникнути циклів
+      // Зберігаємо оригінальний запит і позначку повтору
+      const originalRequest = (error.config ?? {}) as typeof error.config & {
+        _retry?: boolean;
+      };
 
-      try {
-        // Питаємо бекенд на новий access token через refresh токен у cookie
-        const result = await reduxStore.dispatch(refreshAccessToken());
+      // Якщо помилка 401 (токен недійсний) і ми ще не пробували оновити
+      if (error.response?.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true; // Встановлюємо прапорець, щоб уникнути циклів
 
-        // Якщо оновлення успішне
-        if (refreshAccessToken.fulfilled.match(result)) {
-          const newAccessToken = result.payload.access_token;
+        try {
+          // Питаємо бекенд на новий access token через refresh токен у cookie
+          const result = await reduxStore.dispatch(refreshAccessToken());
 
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          setAuthHeader(newAccessToken); // Оновлюємо токен в заголовках axios
+          // Якщо оновлення успішне
+          if (refreshAccessToken.fulfilled.match(result)) {
+            const newAccessToken = result.payload.access_token;
 
-          // Повторюємо оригінальний запит з новим токеном
-          return petsHelpApi(originalRequest);
+            // originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            (originalRequest.headers ??= {}).Authorization =
+              `Bearer ${newAccessToken}`;
+            setAuthHeader(newAccessToken); // Оновлюємо токен в заголовках axios
+
+            // Повторюємо оригінальний запит з новим токеном
+            return petsHelpApi(originalRequest);
+          }
+          // refresh rejected: локальний логаут і редірект
+          await reduxStore.dispatch(logoutSpec());
+          window.location.href = '/';
+          return Promise.reject(error);
+        } catch (err) {
+          // #TODO Тут можна додати logout, редірект на login і т.п.
+          console.error('Token refresh failed:', err);
+          await reduxStore.dispatch(logoutSpec());
+          window.location.href = '/';
+          return Promise.reject(error);
         }
-      } catch (err) {
-        // #TODO Тут можна додати logout, редірект на login і т.п.
-        console.error('Token refresh failed:', err);
-        reduxStore.dispatch(logoutSpec());
-        window.location.href = '/';
       }
-    }
 
-    // Якщо не 401 або токен не оновився — просто повертаємо помилку
-    return Promise.reject(error);
-  }
-);
+      // Якщо не 401 — просто повертаємо помилку
+      return Promise.reject(error);
+    }
+  );
+};
