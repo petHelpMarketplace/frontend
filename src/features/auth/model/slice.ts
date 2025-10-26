@@ -1,5 +1,10 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { loginUser, registerUser } from '@/features/auth/model/operations';
+import {
+  loginSpec,
+  logoutSpec,
+  refreshAccessToken,
+  registerSpec,
+} from '@/features/auth/model/operations';
 import { AuthState } from '@/features/auth/types/types';
 
 const initialState: AuthState = {
@@ -7,7 +12,6 @@ const initialState: AuthState = {
   name: null,
   email: null,
   accessToken: null,
-  refreshToken: null,
   loading: false,
   success: false,
   error: null,
@@ -18,60 +22,73 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    resetRegisterState(state) {
-      state.loading = false;
-      state.success = false;
-    },
-    logout: state => {
-      state.isLoggedIn = false;
-      state.accessToken = null;
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(registerUser.pending, state => {
+      .addCase(registerSpec.pending, state => {
         state.loading = true;
         state.success = false;
+        state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerSpec.fulfilled, (state, action) => {
         state.id = action.payload.id;
         state.success = true;
+        state.loading = false;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(registerSpec.rejected, (state, action) => {
         state.success = false;
+        state.loading = false;
         state.error = action.payload ?? 'Registration failed';
       })
-      .addCase(loginUser.pending, state => {
+      .addCase(loginSpec.pending, state => {
         state.loading = true;
         state.isLoggedIn = false;
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(loginSpec.fulfilled, (state, action) => {
         state.accessToken = action.payload.access_token;
-        state.refreshToken = action.payload.refresh_token;
         state.isLoggedIn = true;
       })
-      .addCase(loginUser.rejected, (state, action) => {
+      .addCase(loginSpec.rejected, (state, action) => {
         state.success = false;
-        state.isLoggedIn = false;
         state.error = action.payload ?? 'Login failed';
+        state.isLoggedIn = false;
+        state.accessToken = null;
+      })
+      .addCase(refreshAccessToken.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshAccessToken.fulfilled, (state, action) => {
+        state.accessToken = action.payload.access_token;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshAccessToken.rejected, state => {
+        state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.accessToken = null;
+      })
+      .addCase(logoutSpec.pending, state => {
+        state.loading = true;
+      })
+      .addCase(logoutSpec.fulfilled, () => initialState)
+      .addCase(logoutSpec.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ?? 'Logout failed';
       })
       .addMatcher(
         isAnyOf(
-          registerUser.fulfilled,
-          registerUser.rejected,
-          loginUser.fulfilled,
-          loginUser.rejected
+          registerSpec.fulfilled,
+          registerSpec.rejected,
+          loginSpec.fulfilled,
+          loginSpec.rejected,
+          logoutSpec.fulfilled,
+          logoutSpec.rejected
         ),
         state => {
           state.loading = false;
         }
       );
-    //   .addMatcher(isAnyOf(register.rejected, login.rejected, logout.rejected), state => {
-    //     state.isLoggedIn = false;
-    //   });
   },
 });
 
-export const { resetRegisterState, logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

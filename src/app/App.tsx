@@ -1,9 +1,15 @@
 import '@/app/App.css';
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
+import { useAppSelector } from '@/shared/hooks';
+import {
+  selectAccessToken,
+  selectIsRefreshing,
+} from '@/features/auth/model/selectors';
+import { clearAuthHeader, setAuthHeader } from '@/features/auth/lib/authHeader';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -26,7 +32,18 @@ const PublicOfferPage = lazy(
 );
 
 function App() {
-  return (
+  const isRefreshing = useAppSelector(selectIsRefreshing);
+  const accessToken = useAppSelector(selectAccessToken);
+
+  useEffect(() => {
+    if (accessToken) {
+      setAuthHeader(accessToken);
+    } else {
+      clearAuthHeader();
+    }
+  }, [accessToken]);
+
+  return isRefreshing ? null : (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />

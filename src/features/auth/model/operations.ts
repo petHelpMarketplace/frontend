@@ -1,23 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { petsHelpApi } from '@/shared/constants/api';
+import { petsHelpApi } from '@/shared/api/petsHelpApi';
 import {
   LoginRequest,
   LoginResponse,
+  RefreshResponse,
   RegisterRequest,
   RegisterResponse,
 } from '@/features/auth/types/types';
-import { AxiosError } from 'axios';
+import { getErrorMessage } from '@/shared/utils/getErrorMessage';
+import { RootState } from '@/app/store';
+import { clearAuthHeader, setAuthHeader } from '../lib/authHeader';
 
-//TODO This will be changed once the CORS policy issue is resolved on the backend.
-const setAuthHeader = (access_token: string) => {
-  petsHelpApi.defaults.headers.common.Authorization = `Bearer ${access_token}`;
-};
-
-// const clearAuthHeader = () => {
-//   petsHelpApi.defaults.headers.common.Authorization = '';
-// };
-
-export const registerUser = createAsyncThunk<
+export const registerSpec = createAsyncThunk<
   RegisterResponse,
   RegisterRequest,
   { rejectValue: string }
@@ -30,15 +24,11 @@ export const registerUser = createAsyncThunk<
 
     return response.data;
   } catch (e: unknown) {
-    const error = e as AxiosError<{ message: string }>;
-    const message =
-      error.response?.data?.message || error.message || 'Unknown error';
-
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
   }
 });
 
-export const loginUser = createAsyncThunk<
+export const loginSpec = createAsyncThunk<
   LoginResponse,
   LoginRequest,
   { rejectValue: string }
@@ -50,12 +40,38 @@ export const loginUser = createAsyncThunk<
     );
 
     setAuthHeader(response.data.access_token);
+
     return response.data;
   } catch (e: unknown) {
-    const error = e as AxiosError<{ message: string }>;
-    const message =
-      error.response?.data?.message || error.message || 'Unknown error';
-
-    return thunkAPI.rejectWithValue(message);
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
   }
 });
+
+export const refreshAccessToken = createAsyncThunk<
+  RefreshResponse,
+  void,
+  { state: RootState; rejectValue: string }
+>('auth/refreshAccessToken', async (_, thunkAPI) => {
+  try {
+    const response = await petsHelpApi.post<RefreshResponse>('/token/refresh');
+
+    return response.data;
+  } catch (e) {
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
+  }
+});
+
+export const logoutSpec = createAsyncThunk<void, void, { rejectValue: string }>(
+  'auth/logout',
+  async (_, thunkAPI) => {
+    try {
+      await petsHelpApi.post('/specialist/logout', undefined, {
+        signal: thunkAPI.signal,
+      });
+    } catch (e: unknown) {
+      return thunkAPI.rejectWithValue(getErrorMessage(e));
+    } finally {
+      clearAuthHeader();
+    }
+  }
+);

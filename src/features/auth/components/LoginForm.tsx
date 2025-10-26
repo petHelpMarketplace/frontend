@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
-import { loginUser } from '@/features/auth/model/operations';
+import { loginSpec } from '@/features/auth/model/operations';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import toast from 'react-hot-toast';
@@ -29,7 +29,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
 
   const onSubmit = async (data: LoginSchemaType) => {
     try {
-      await dispatch(loginUser(data)).unwrap();
+      await dispatch(loginSpec(data)).unwrap();
       // toast.success('Login successful!');
       reset();
       onClose();
@@ -48,7 +48,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-fire uppercase text-center">УВІЙТИ</h3>
+      <h3 className="text-fire text-center uppercase">УВІЙТИ</h3>
 
       <Button
         label="Увійти з Google"
@@ -56,13 +56,13 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-7 h-7">
+          <svg className="h-7 w-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }
       />
 
-      <p className="text-[11px] text-mineShaft text-center">
+      <p className="text-mineShaft text-center text-[11px]">
         або заповніть форму
       </p>
 
@@ -75,6 +75,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
           <input
             type="text"
             placeholder="Email"
+            autoComplete="email"
             className={getInputClass(
               !!errors.email,
               !!(!errors.email && dirtyFields.email)
@@ -84,7 +85,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
           {errors.email && <ErrorIcon />}
           {!errors.email && dirtyFields.email && <SuccessIcon />}
           {errors.email && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.email.message}
             </p>
           )}
@@ -94,6 +95,7 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
           <input
             type="password"
             placeholder="Пароль"
+            autoComplete="current-password"
             className={getInputClass(
               !!errors.password,
               !!(!errors.password && dirtyFields.password)
@@ -103,14 +105,14 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
           {errors.password && <ErrorIcon />}
           {!errors.password && dirtyFields.password && <SuccessIcon />}
           {errors.password && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.password.message}
             </p>
           )}
         </div>
         <Link
           to={'#'}
-          className="text-[10px] text-fire font-semibold text-center"
+          className="text-fire text-center text-[10px] font-semibold"
         >
           Забули пароль?
         </Link>
@@ -118,11 +120,11 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
         <Button label="Увійти" type="submit" />
       </form>
 
-      <p className="text-[10px] text-mineShaft text-center">
+      <p className="text-mineShaft text-center text-[10px]">
         Увійшовши, ви погоджуєтесь з{' '}
         <Link
           to={'#'}
-          className="font-semibold lowercase underline [text-decoration-skip-ink:none] text-fire"
+          className="text-fire font-semibold lowercase underline [text-decoration-skip-ink:none]"
         >
           правилами
         </Link>{' '}

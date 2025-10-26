@@ -8,11 +8,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
-import { registerUser } from '@/features/auth/model/operations';
-import { resetRegisterState } from '@/features/auth/model/slice';
+import { registerSpec } from '@/features/auth/model/operations';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
@@ -21,6 +20,8 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector(selectAuthLoading);
   const [hasInput, setHasInput] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const {
     register,
@@ -35,8 +36,32 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
 
   // Скидання стану форми при відкритті компонента
   useEffect(() => {
-    dispatch(resetRegisterState());
-  }, [dispatch]);
+    reset();
+
+    // Очищення таймауту при розмонтуванні компонента
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [reset]);
+
+  /*Ініціюємо плавне згасання вікна реєстрації, а потім викликаємо onOpenLogin.
+   */
+  const handleLoginClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsClosing(true);
+
+    // Встановлюємо таймаут, щоб дочекатися завершення CSS-переходу
+    timeoutRef.current = setTimeout(() => {
+      // Після завершення анімації перемикаємо на форму логіну
+      onOpenLogin();
+      // Очищуємо форму реєстрації
+      reset();
+      // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
+      setIsClosing(false);
+    }, 300);
+  };
 
   const onSubmit = async (data: RegisterSchemaType) => {
     const requestBody = {
@@ -48,13 +73,15 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     };
 
     try {
-      await dispatch(registerUser(requestBody)).unwrap();
+      await dispatch(registerSpec(requestBody)).unwrap();
       toast.success('Registration successful!');
+      // Якщо успішна реєстрація, робимо плавний перехід на логін
+      setIsClosing(true);
       setTimeout(() => {
         onOpenLogin();
-        dispatch(resetRegisterState());
         reset();
-      }, 1500);
+        setIsClosing(false);
+      }, 1500); // Затримка 1.5s після успіху, щоб користувач побачив тост
     } catch (error) {
       const msg = typeof error === 'string' ? error : 'Registration failed';
       toast.error(msg);
@@ -65,22 +92,27 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     if (success) return 'input-base border-tenn focus:border-tenn';
     return 'input-base';
   };
+
   return (
-    <div className="flex flex-col gap-4 xl:gap-4.5">
-      <h3 className="text-fire uppercase text-center">РЕЄСТРАЦІЯ</h3>
+    <div
+      className={`flex flex-col gap-4 transition-opacity duration-300 ease-in-out xl:gap-4.5 ${
+        isClosing ? 'pointer-events-none opacity-0' : 'opacity-100'
+      }`}
+    >
+      <h3 className="text-fire text-center uppercase">РЕЄСТРАЦІЯ</h3>
 
       <Button
         label="Увійти з Google"
-        type="submit"
+        type="button"
         disabled
         className="btn-icon btn-google-disabled"
         icon={
-          <svg className="w-7 h-7">
+          <svg className="h-7 w-7">
             <use href="/icons.svg#icon-google" />
           </svg>
         }
       />
-      <p className="text-[11px] text-mineShaft text-center">
+      <p className="text-mineShaft text-center text-[11px]">
         або заповніть форму
       </p>
 
@@ -94,6 +126,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="text"
             placeholder="Ім'я"
+            autoComplete="name"
             className={getInputClass(
               !!errors.name,
               !!(!errors.name && dirtyFields.name)
@@ -103,7 +136,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.name && <ErrorIcon />}
           {!errors.name && dirtyFields.name && <SuccessIcon />}
           {errors.name && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.name.message}
             </p>
           )}
@@ -137,7 +170,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.phone && <ErrorIcon />}
           {!errors.phone && dirtyFields.phone && <SuccessIcon />}
           {errors.phone && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.phone.message}
             </p>
           )}
@@ -148,6 +181,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="email"
             placeholder="Email"
+            autoComplete="email"
             className={getInputClass(
               !!errors.email,
               !!(!errors.email && dirtyFields.email)
@@ -157,7 +191,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.email && <ErrorIcon />}
           {!errors.email && dirtyFields.email && <SuccessIcon />}
           {errors.email && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.email.message}
             </p>
           )}
@@ -178,7 +212,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           {errors.password && <ErrorIcon />}
           {!errors.password && dirtyFields.password && <SuccessIcon />}
           {errors.password && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.password.message}
             </p>
           )}
@@ -189,6 +223,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
           <input
             type="password"
             placeholder="Повторити пароль"
+            autoComplete="new-password"
             className={getInputClass(
               !!errors.password_confirmation,
               !!(
@@ -203,26 +238,35 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
             dirtyFields.password_confirmation && <SuccessIcon />}
 
           {errors.password_confirmation && (
-            <p className="absolute text-red-tenn text-[8px] pl-5 mt-0.5">
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
               {errors.password_confirmation.message}
             </p>
           )}
         </div>
 
-        <p className="text-[10px] font-semibold text-center text-cod-gray">
+        <p className="text-cod-gray text-center text-[10px] font-semibold">
           Вже маєте обліковий запис?{' '}
-          <Link to={'/login'} className="text-fire">
+          <button
+            type="button"
+            className="text-fire"
+            onClick={handleLoginClick}
+            disabled={loading || isClosing} // Блокуємо, якщо йде реєстрація або закриття вікна
+          >
             Увійти
-          </Link>
+          </button>
         </p>
-        <Button label="Зареєструватися" type="submit" disabled={loading} />
+        <Button
+          label="Зареєструватися"
+          type="submit"
+          disabled={loading || isClosing}
+        />
       </form>
 
-      <p className="text-[10px] text-mineShaft text-center">
+      <p className="text-mineShaft text-center text-[10px]">
         Реєструючись, ви погоджуєтесь з{' '}
         <Link
           to={'/terms-and-conditions'}
-          className="font-semibold underline [text-decoration-skip-ink:none] text-fire"
+          className="text-fire font-semibold underline [text-decoration-skip-ink:none]"
         >
           правилами
         </Link>{' '}
