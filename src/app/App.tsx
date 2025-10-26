@@ -1,6 +1,6 @@
 import '@/app/App.css';
 import { lazy, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFound/NotFoundPage';
 import MainLayout from '@/shared/components/Layout/MainLayout';
 import PrivateRoute from '@/features/auth/components/PrivateRoute';
@@ -23,6 +23,19 @@ const ReviewServicePage = lazy(
   () => import('@/features/review/pages/ReviewServicePage')
 );
 const AccountPage = lazy(() => import('@/features/account/pages/AccountPage'));
+const AccountPersonalDataForm = lazy(
+  () =>
+    import('@/features/account/components/personalData/AccountPersonalDataForm')
+);
+const AccountServicesForm = lazy(
+  () => import('@/features/account/components/services/AccountServicesForm')
+);
+const PortfolioGallery = lazy(
+  () => import('@/features/account/components/portfolio/PortfolioGallery')
+);
+const AccountSettingsForm = lazy(
+  () => import('@/features/account/components/settings/AccountSettingsForm')
+);
 const FaqPage = lazy(() => import('@/features/faq/pages/FaqPage'));
 const FaqQuestionPage = lazy(
   () => import('@/features/faq/pages/FaqQuestionPage')
@@ -57,7 +70,13 @@ function App() {
               <AccountPage />
             </PrivateRoute>
           }
-        />
+        >
+          <Route index element={<Navigate to="personal" replace />} />
+          <Route path="personal" element={<AccountPersonalDataForm />} />
+          <Route path="services" element={<AccountServicesForm />} />
+          <Route path="portfolio" element={<PortfolioGallery />} />
+          <Route path="settings" element={<AccountSettingsForm />} />
+        </Route>
         <Route path="/review/specialists/:id" element={<ReviewServicePage />} />
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
