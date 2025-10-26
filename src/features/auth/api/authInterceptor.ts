@@ -30,7 +30,7 @@ export const setupAuthInterceptor = () => {
 
       // Якщо помилка 401 (токен недійсний) і ми ще не пробували оновити
       const url = originalRequest.url ?? '';
-      const isRefresh = url.includes('/token/refresh');
+      const isRefresh = /\/token\/refresh(\?|$)/.test(url); ///\/token\/refresh/ шукає буквально цей шлях. (\?|$) означає - або після цього йде знак питання (?), або кінець рядка.
       if (
         error.response?.status === 401 &&
         !originalRequest._retry &&
