@@ -71,8 +71,8 @@ function App() {
             </PrivateRoute>
           }
         >
-          <Route index element={<Navigate to="personal" replace />} />
-          <Route path="personal" element={<AccountPersonalDataForm />} />
+          <Route index element={<Navigate to="info" replace />} />
+          <Route path="info" element={<AccountPersonalDataForm />} />
           <Route path="services" element={<AccountServicesForm />} />
           <Route path="portfolio" element={<PortfolioGallery />} />
           <Route path="settings" element={<AccountSettingsForm />} />

@@ -6,7 +6,7 @@ import Spinner from '@/shared/components/UI/Spinner/Spinner';
 
 export default function AccountPage() {
   return (
-    <section className="mx-auto flex max-w-[375px] flex-col xl:max-w-7xl xl:px-30 xl:pt-17 xl:pb-16">
+    <section className="section-wrap">
       {/* <button
         type="button"
         id="save-btn"
