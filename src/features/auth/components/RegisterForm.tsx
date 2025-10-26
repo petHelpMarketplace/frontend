@@ -16,10 +16,14 @@ import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
 
+// Визначаємо тривалість анімації (в мс), щоб синхронізувати з CSS
+const TRANSITION_DURATION = 300;
+
 const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector(selectAuthLoading);
   const [hasInput, setHasInput] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const {
     register,
@@ -35,7 +39,24 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   // Скидання стану форми при відкритті компонента
   useEffect(() => {
     reset();
-  }, []);
+  }, [reset]);
+
+  /*Ініціюємо плавне згасання вікна реєстрації, а потім викликаємо onOpenLogin.
+   */
+  const handleLoginClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsClosing(true);
+
+    // Встановлюємо таймаут, щоб дочекатися завершення CSS-переходу
+    setTimeout(() => {
+      // Після завершення анімації перемикаємо на форму логіну
+      onOpenLogin();
+      // Очищуємо форму реєстрації
+      reset();
+      // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
+      setIsClosing(false);
+    }, TRANSITION_DURATION);
+  };
 
   const onSubmit = async (data: RegisterSchemaType) => {
     const requestBody = {
@@ -49,10 +70,13 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     try {
       await dispatch(registerSpec(requestBody)).unwrap();
       toast.success('Registration successful!');
+      // Якщо успішна реєстрація, робимо плавний перехід на логін
+      setIsClosing(true);
       setTimeout(() => {
         onOpenLogin();
         reset();
-      }, 1500);
+        setIsClosing(false);
+      }, 1500); // Затримка 1.5s після успіху, щоб користувач побачив тост
     } catch (error) {
       const msg = typeof error === 'string' ? error : 'Registration failed';
       toast.error(msg);
@@ -65,12 +89,16 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 xl:gap-4.5">
+    <div
+      className={`flex flex-col gap-4 transition-opacity xl:gap-4.5 duration-${TRANSITION_DURATION} ease-in-out ${
+        isClosing ? 'pointer-events-none opacity-0' : 'opacity-100'
+      }`}
+    >
       <h3 className="text-fire text-center uppercase">РЕЄСТРАЦІЯ</h3>
 
       <Button
         label="Увійти з Google"
-        type="submit"
+        type="button"
         disabled
         className="btn-icon btn-google-disabled"
         icon={
@@ -213,11 +241,20 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
 
         <p className="text-cod-gray text-center text-[10px] font-semibold">
           Вже маєте обліковий запис?{' '}
-          <Link to={'/login'} className="text-fire">
+          <button
+            type="button"
+            className="text-fire"
+            onClick={handleLoginClick}
+            disabled={loading} // Блокуємо, якщо йде реєстрація
+          >
             Увійти
-          </Link>
+          </button>
         </p>
-        <Button label="Зареєструватися" type="submit" disabled={loading} />
+        <Button
+          label="Зареєструватися"
+          type="submit"
+          disabled={loading || isClosing}
+        />
       </form>
 
       <p className="text-mineShaft text-center text-[10px]">
