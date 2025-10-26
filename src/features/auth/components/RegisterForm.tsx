@@ -8,7 +8,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import { registerSpec } from '@/features/auth/model/operations';
@@ -16,14 +16,12 @@ import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
 
-// Визначаємо тривалість анімації (в мс), щоб синхронізувати з CSS
-const TRANSITION_DURATION = 300;
-
 const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector(selectAuthLoading);
   const [hasInput, setHasInput] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const {
     register,
@@ -39,6 +37,13 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   // Скидання стану форми при відкритті компонента
   useEffect(() => {
     reset();
+
+    // Очищення таймауту при розмонтуванні компонента
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, [reset]);
 
   /*Ініціюємо плавне згасання вікна реєстрації, а потім викликаємо onOpenLogin.
@@ -48,14 +53,14 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     setIsClosing(true);
 
     // Встановлюємо таймаут, щоб дочекатися завершення CSS-переходу
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       // Після завершення анімації перемикаємо на форму логіну
       onOpenLogin();
       // Очищуємо форму реєстрації
       reset();
       // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
       setIsClosing(false);
-    }, TRANSITION_DURATION);
+    }, 300);
   };
 
   const onSubmit = async (data: RegisterSchemaType) => {
@@ -90,7 +95,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
 
   return (
     <div
-      className={`flex flex-col gap-4 transition-opacity xl:gap-4.5 duration-${TRANSITION_DURATION} ease-in-out ${
+      className={`flex flex-col gap-4 transition-opacity duration-300 ease-in-out xl:gap-4.5 ${
         isClosing ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
@@ -245,7 +250,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
             type="button"
             className="text-fire"
             onClick={handleLoginClick}
-            disabled={loading} // Блокуємо, якщо йде реєстрація
+            disabled={loading || isClosing} // Блокуємо, якщо йде реєстрація або закриття вікна
           >
             Увійти
           </button>
