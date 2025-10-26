@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { tabs } from '../tabs';
 import BackButton from '@/shared/components/UI/BackButton';
 import { NavLink, Outlet } from 'react-router-dom';
+import Spinner from '@/shared/components/UI/Spinner/Spinner';
 
 export default function AccountPage() {
   return (
@@ -45,7 +46,7 @@ export default function AccountPage() {
       </div>
 
       {/* Контент активної вкладки */}
-      <Suspense fallback={<h3>Loading data...</h3>}>
+      <Suspense fallback={<Spinner fallbackHeight="40vh" />}>
         <Outlet />
       </Suspense>
     </section>
