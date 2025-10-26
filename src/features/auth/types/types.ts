@@ -1,28 +1,10 @@
 import { ReactNode } from 'react';
 
-
-export type SpecProfileResponse = {
-  id: number | null;
-  name: string | null;
-  family_name: string | null;
-  email: string | null;
-  avatar_url: string | null;
-  bio: string | null;
-  description: string | null;
-  experience: number | null;
-  is_active: boolean;
-  is_verified: boolean;
-  phone: string | null;
-  position: string | null;
-};
-
 export interface AuthState {
   id: number | null;
   name: string | null;
   email: string | null;
-  // specProfile: SpecProfileResponse;
   accessToken: string | null;
-  // refreshToken: string | null;
   loading: boolean;
   error: string | null;
   success: boolean;
@@ -50,7 +32,6 @@ export interface LoginRequest {
 
 export interface LoginResponse {
   access_token: string;
-  // refresh_token: string;
 }
 
 export type LoginFormProps = {
@@ -63,5 +44,4 @@ export type PrivateRouteProps = {
 
 export interface RefreshResponse {
   access_token: string;
-  // refresh_token: string;
 }
