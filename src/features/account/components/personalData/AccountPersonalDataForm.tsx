@@ -1,16 +1,16 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  accountInfoSchema,
-  AccountInfoSchemaType,
-} from '@/features/account/validation/accountSchema.ts';
+  specInfoSchema,
+  SpecInfoSchemaType,
+} from '@/features/account/validation/specInfoSchema';
 import PhotoBlock from './PhotoBlock';
 import DetailsBlock from './DetailsBlock';
 import PersonalInfoBlock from './PersonalInfoBlock';
 
 export default function AccountPersonalDataForm() {
-  const methods = useForm<AccountInfoSchemaType>({
-    resolver: zodResolver(accountInfoSchema),
+  const methods = useForm<SpecInfoSchemaType>({
+    resolver: zodResolver(specInfoSchema),
     mode: 'onChange',
     // defaultValues: {
     //   firstName: '',
@@ -23,7 +23,7 @@ export default function AccountPersonalDataForm() {
     // },
   });
 
-  const onSubmit = (data: AccountInfoSchemaType) => {
+  const onSubmit = (data: SpecInfoSchemaType) => {
     console.log('Збережені дані:', data);
   };
 

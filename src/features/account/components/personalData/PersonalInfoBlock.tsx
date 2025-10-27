@@ -64,16 +64,18 @@ export default function PersonalInfoBlock() {
       {/* Район */}
       <div>
         <label
-          htmlFor="district"
-          className="text-tenn mb-1 block pl-4 text-sm font-semibold"
-        ></label>
+          id="district-label"
+          className="text-tenn sr-only mb-1 block pl-4 text-sm font-semibold"
+        >
+          Обрати район
+        </label>
         <div className="xl:relative xl:flex">
           {/* Custom dropdown  */}
           <div className="relative xl:w-[472px]" ref={dropdownRef}>
-            <h2 className="sr-only">Обрати район</h2>
             <button
               type="button"
               tabIndex={0}
+              aria-labelledby="district-label"
               onKeyDown={e => {
                 if (e.key === 'ArrowDown') {
                   e.preventDefault();
