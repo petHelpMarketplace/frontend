@@ -7,10 +7,7 @@ const fileSizeLimit = 10 * 1024 * 1024; // 10MB
 export const fileAvatarSchema = z
   .instanceof(File)
   .refine(
-    file =>
-      ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'].includes(
-        file.type
-      ),
+    file => ['image/png', 'image/jpeg', 'image/webp'].includes(file.type),
     {
       message:
         'Неправильний формат файлу. Оберіть зображення у форматі JPG, JPEG, WEBP або PNG.',
