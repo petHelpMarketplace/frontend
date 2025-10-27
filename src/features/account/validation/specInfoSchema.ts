@@ -1,4 +1,4 @@
-// import { nameField, phoneField } from '@/shared/validations/fields';
+import { nameField, phoneField } from '@/shared/validations/fields';
 import { z } from 'zod';
 
 const fileSizeLimit = 10 * 1024 * 1024; // 10MB
@@ -28,9 +28,22 @@ export const avatarSchema = z
 
 export const specInfoSchema = z.object({
   avatar: avatarSchema,
-  // name: nameField,
-  // family_name: nameField,
-  // phone: phoneField,
+  bio: z
+    .string()
+    .min(2, 'Має містити мінімум 2 символи')
+    .max(500, 'Не може перевищувати 500 символів'),
+  name: nameField,
+  family_name: nameField.optional(),
+  phone: phoneField,
+  district: z.string(),
+  experience: z
+    .number({
+      required_error: 'Вкажіть кількість років досвіду',
+      invalid_type_error: 'Поле має бути числом',
+    })
+    .min(0, 'Мінімальне значення - 0')
+    .max(50, 'Максимальне значення - 50 років')
+    .step(0.5),
 });
 
 export type SpecInfoSchemaType = z.infer<typeof specInfoSchema>;

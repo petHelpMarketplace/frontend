@@ -7,8 +7,8 @@ export interface SpecInfoResponse {
   bio: string | null;
   description: string | null;
   experience: number | null;
-  is_active: boolean;
-  is_verified: boolean;
+  is_active: boolean | null;
+  is_verified: boolean | null;
   phone: string | null;
   portfolio_urls: string[] | null;
   position: string | null;

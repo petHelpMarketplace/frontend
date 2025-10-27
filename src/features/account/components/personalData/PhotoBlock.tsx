@@ -8,6 +8,7 @@ import {
 } from '../../model/selectors';
 import { postSpecAvatar } from '../../model/operations';
 import toast from 'react-hot-toast';
+import Spinner from '@/shared/components/UI/Spinner/Spinner';
 
 export default function PhotoBlock() {
   const dispatch = useAppDispatch();
@@ -67,8 +68,13 @@ export default function PhotoBlock() {
   return (
     <div className="relative flex flex-col items-center">
       <div
-        className={`border-fire/40 relative flex flex-col items-center justify-center overflow-hidden border-2 xl:h-[364px] xl:w-[272px] xl:rounded-[16px] ${hasPhoto ? 'brightness-70' : ''}`}
+        className={`border-fire/40 relative flex flex-col items-center justify-center overflow-hidden border-2 xl:h-[364px] xl:w-[272px] xl:rounded-[16px] ${hasPhoto ? 'brightness-70' : ''} ${loading ? 'opacity-50' : ''}`}
       >
+        {loading && (
+          <div className="bg-opacity-50 absolute inset-0 z-10 flex items-center justify-center bg-black">
+            <Spinner />
+          </div>
+        )}
         <label
           htmlFor="avatar"
           title={ariaLabel}

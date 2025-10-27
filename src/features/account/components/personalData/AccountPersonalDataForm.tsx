@@ -12,15 +12,15 @@ export default function AccountPersonalDataForm() {
   const methods = useForm<SpecInfoSchemaType>({
     resolver: zodResolver(specInfoSchema),
     mode: 'onChange',
-    // defaultValues: {
-    //   firstName: '',
-    //   lastName: '',
-    //   phone: '',
-    //   district: '',
-    //   experience: '',
-    //   about: '',
-    //   photo: null,
-    // },
+    defaultValues: {
+      // firstName: '',
+      // lastName: '',
+      // phone: '',
+      // district: '',
+      // experience: 0,
+      // bio: '',
+      avatar: null,
+    },
   });
 
   const onSubmit = (data: SpecInfoSchemaType) => {

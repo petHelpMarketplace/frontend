@@ -30,6 +30,7 @@ const authPersistConfig = {
 const specInfoPersistConfig = {
   key: 'specInfo',
   storage,
+  whitelist: ['specInfo'],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
