@@ -52,14 +52,14 @@ const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
       // await dispatch(registerSpec(requestBody)).unwrap();
       console.log(requestBody);
 
-      toast.success('Ми надіслали вам інструкції на Вашу електронну пошту');
-      // Якщо успішна реєстрація, робимо плавний перехід на логін
+      toast.success('Ми надіслали інструкції на Вашу електронну пошту');
+      // Якщо успішний запит, робимо плавний перехід на логін
       setIsClosing(true);
       setTimeout(() => {
         onOpenLogin();
         reset();
         setIsClosing(false);
-      }, 1500); // Затримка 1.5s після успіху, щоб користувач побачив тост
+      }, 300);
     } catch (error) {
       const msg = typeof error === 'string' ? error : 'Registration failed';
       toast.error(msg);
