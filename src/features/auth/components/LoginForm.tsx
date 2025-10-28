@@ -9,13 +9,19 @@ import { Link } from 'react-router-dom';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import { loginSpec } from '@/features/auth/model/operations';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import toast from 'react-hot-toast';
 import { LoginFormProps } from '@/features/auth/types/types';
+import { useRef, useState } from 'react';
+import { getInputClass } from '@/features/auth/lib/getInputClass';
+import { selectAuthLoading } from '@/features/auth/model/selectors';
 
-const LoginForm = ({ onClose }: LoginFormProps) => {
+const LoginForm = ({ onClose, onOpenPwdRecovery }: LoginFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
+  const [isClosing, setIsClosing] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const loading = useSelector(selectAuthLoading);
 
   const {
     register,
@@ -40,14 +46,27 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
     }
   };
 
-  const getInputClass = (error: boolean, success: boolean) => {
-    if (error) return 'input-base border-red-tenn focus:border-red-tenn';
-    if (success) return 'input-base border-tenn focus:border-tenn';
-    return 'input-base';
+  const handlePwdResetClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsClosing(true);
+
+    // Встановлюємо таймаут, щоб дочекатися завершення CSS-переходу
+    timeoutRef.current = setTimeout(() => {
+      // Після завершення анімації перемикаємо на форму логіну
+      onOpenPwdRecovery();
+      // Очищуємо форму реєстрації
+      reset();
+      // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
+      setIsClosing(false);
+    }, 300);
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div
+      className={`flex flex-col gap-4 transition-opacity duration-300 ease-in-out xl:gap-4.5 ${
+        isClosing ? 'pointer-events-none opacity-0' : 'opacity-100'
+      }`}
+    >
       <h3 className="text-fire text-center uppercase">УВІЙТИ</h3>
 
       <Button
@@ -110,12 +129,14 @@ const LoginForm = ({ onClose }: LoginFormProps) => {
             </p>
           )}
         </div>
-        <Link
-          to={'#'}
-          className="text-fire text-center text-[10px] font-semibold"
+        <button
+          type="button"
+          className="text-fire text-[10px] font-semibold"
+          onClick={handlePwdResetClick}
+          disabled={loading || isClosing} // Блокуємо, якщо йде логін або закриття вікна
         >
           Забули пароль?
-        </Link>
+        </button>
 
         <Button label="Увійти" type="submit" />
       </form>

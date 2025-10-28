@@ -15,6 +15,7 @@ import { registerSpec } from '@/features/auth/model/operations';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
 import { toast } from 'react-hot-toast';
+import { getInputClass } from '../lib/getInputClass';
 
 const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -86,11 +87,6 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
       const msg = typeof error === 'string' ? error : 'Registration failed';
       toast.error(msg);
     }
-  };
-  const getInputClass = (error: boolean, success: boolean) => {
-    if (error) return 'input-base border-red-tenn focus:border-red-tenn';
-    if (success) return 'input-base border-tenn focus:border-tenn';
-    return 'input-base';
   };
 
   return (
