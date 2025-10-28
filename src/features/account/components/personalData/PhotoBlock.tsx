@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { Controller, useFormContext } from 'react-hook-form';
 import {
-  selectError,
+  // selectError,
   selectLoading,
   selectSpecInfo,
 } from '../../model/selectors';
@@ -13,14 +13,8 @@ import Spinner from '@/shared/components/UI/Spinner/Spinner';
 export default function PhotoBlock() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoading);
-  const error = useAppSelector(selectError);
+  // const error = useAppSelector(selectError);
   const specInfo = useAppSelector(selectSpecInfo);
-
-  useEffect(() => {
-    if (error) {
-      toast.error('Завантаження не вдалося. Будь ласка, спробуйте ще раз.');
-    }
-  }, [error]);
 
   const {
     control,
@@ -34,13 +28,19 @@ export default function PhotoBlock() {
   ) => {
     if (!file) return;
 
-    const result = await dispatch(postSpecAvatar({ file }));
+    const uploadPromise = dispatch(postSpecAvatar({ file }))
+      .unwrap()
+      .then(result => {
+        const url = result.url;
+        onChange(url);
+        return url; // успішний результат для toast.promise
+      });
 
-    if (postSpecAvatar.fulfilled.match(result)) {
-      const url = result.payload.url;
-      onChange(url); // оновлюємо поле форми URL з бекенду
-      toast.success('Фото успішно завантажено!');
-    }
+    toast.promise(uploadPromise, {
+      loading: 'Фото завантажується...',
+      success: 'Фото успішно завантажено!',
+      error: 'Завантаження не вдалося. Будь ласка, спробуйте ще раз.',
+    });
   };
 
   useEffect(() => {
@@ -138,12 +138,6 @@ export default function PhotoBlock() {
           Видалити фото
         </button>
       )}
-
-      {/* {errors.avatar?.message && (
-        <p className="text-red-tenn mt-1 pl-6.5 text-[8px] xl:pl-4 xl:text-[10px]">
-          {String(errors.avatar.message)}
-        </p>
-      )} */}
     </div>
   );
 }
