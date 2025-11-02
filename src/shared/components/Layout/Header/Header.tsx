@@ -10,7 +10,7 @@ import LoginForm from '@/features/auth/components/LoginForm';
 import RegisterForm from '@/features/auth/components/RegisterForm';
 import MobileMenu from '@/shared/components/Layout/Header/MobileMenu';
 import Modal from '@/shared/components/UI/Modal';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@/shared/hooks';
 import { selectIsLoggedIn } from '@/features/auth/model/selectors';
 import SpecialistMenu from './SpecialistMenu';
 import PwdRecoveryForm from '@/features/auth/components/PwdRecoveryForm';
@@ -21,7 +21,7 @@ const Header = () => {
   const isHomePage = location.pathname === '/';
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [activeModal, setActiveModal] = useState<ModalType>(null);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   const openModal = (type: ModalType) => setActiveModal(type);
   const closeModal = () => setActiveModal(null);
@@ -55,14 +55,15 @@ const Header = () => {
           </div>
           <div className="hidden xl:flex xl:items-center">
             {/* Desktop: We don't pass a closeMenu callback here, as there's no mobile menu to close */}
-            {!isLoggedIn && (
+            {isLoggedIn ? (
+              <SpecialistMenu />
+            ) : (
               <UserActions
                 onLogin={() => openModal('login')}
                 onRegister={() => openModal('register')}
                 className="hidden xl:flex xl:gap-2"
               />
             )}
-            {isLoggedIn && <SpecialistMenu />}
           </div>
         </div>
       </header>
@@ -70,8 +71,14 @@ const Header = () => {
       <MobileMenu
         isOpen={isMenuOpen}
         onClose={() => setMenuOpen(false)}
-        onLogin={() => openModal('login')}
-        onRegister={() => openModal('register')}
+        onLogin={() => {
+          setMenuOpen(false);
+          openModal('login');
+        }}
+        onRegister={() => {
+          setMenuOpen(false);
+          openModal('register');
+        }}
       />
 
       {/* Modals */}

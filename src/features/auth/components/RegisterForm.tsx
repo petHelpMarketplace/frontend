@@ -14,7 +14,7 @@ import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import { registerSpec } from '@/features/auth/model/operations';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
-import { toast } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { getInputClass } from '../lib/getInputClass';
 
 const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
@@ -84,7 +84,10 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         setIsClosing(false);
       }, 1500); // Затримка 1.5s після успіху, щоб користувач побачив тост
     } catch (error) {
-      const msg = typeof error === 'string' ? error : 'Registration failed';
+      const msg =
+        typeof error === 'string'
+          ? error
+          : 'Не вдалося зареєструватися. Спробуйте ще раз пізніше.';
       toast.error(msg);
     }
   };

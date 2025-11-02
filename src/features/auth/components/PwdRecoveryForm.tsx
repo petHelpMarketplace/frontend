@@ -1,7 +1,7 @@
 import Button from '@/shared/components/UI/Button';
 import ErrorIcon from '@/features/auth/components/ErrorIcon';
 import SuccessIcon from '@/features/auth/components/SuccessIcon';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getInputClass } from '@/features/auth/lib/getInputClass';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,12 +36,20 @@ const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
     timeoutRef.current = setTimeout(() => {
       // Після завершення анімації перемикаємо на форму логіну
       onOpenLogin();
-      // Очищуємо форму реєстрації
       reset();
       // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
       setIsClosing(false);
     }, 300);
   };
+
+  // Очищення таймауту при демонтажі компонента для запобігання витокам пам'яті
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const onSubmit = async (data: PwdRecoverySchemaType) => {
     const requestBody = {
@@ -63,7 +71,10 @@ const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         setIsClosing(false);
       }, 300);
     } catch (error) {
-      const msg = typeof error === 'string' ? error : 'Registration failed';
+      const msg =
+        typeof error === 'string'
+          ? error
+          : 'Сталася помилка. Спробуйте ще раз пізніше.';
       toast.error(msg);
     }
   };
