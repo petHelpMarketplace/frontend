@@ -52,7 +52,9 @@ const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
       // await dispatch(registerSpec(requestBody)).unwrap();
       console.log(requestBody);
 
-      toast.success('Ми надіслали інструкції на Вашу електронну пошту');
+      toast.success(
+        'Якщо такий користувач існує, ми надіслали лист із інструкціями для відновлення пароля. Перевірте пошту, а також папку “Спам”.'
+      );
       // Якщо успішний запит, робимо плавний перехід на логін
       setIsClosing(true);
       setTimeout(() => {
@@ -72,12 +74,16 @@ const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         isClosing ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
+      <h3 className="text-fire text-center uppercase">Забули пароль?</h3>
+      <p className="text-mineShaft text-justify text-sm">
+        Вкажіть свою електронну пошту – ми надішлемо інструкції для відновлення
+        доступу до облікового запису.
+      </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4.5"
         noValidate
       >
-        <h3 className="text-fire text-center uppercase">ВІДНОВЛЕННЯ ПАРОЛЮ</h3>
         <div className="relative">
           <input
             type="text"
