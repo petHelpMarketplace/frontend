@@ -1,4 +1,4 @@
-export type TabKey = 'personal' | 'services' | 'portfolio' | 'settings';
+export type TabKey = 'info' | 'services' | 'portfolio' | 'settings';
 
 export interface TabConfig {
   label: string;
@@ -7,7 +7,7 @@ export interface TabConfig {
 }
 
 export const tabs: TabConfig[] = [
-  { label: 'Персональні дані', icon: 'icon-acc-data', key: 'personal' },
+  { label: 'Персональні дані', icon: 'icon-acc-data', key: 'info' },
   { label: 'Категорія послуг', icon: 'icon-acc-services', key: 'services' },
   { label: 'Портфоліо', icon: 'icon-acc-portfolio', key: 'portfolio' },
   { label: 'Налаштування', icon: 'icon-acc-settings', key: 'settings' },

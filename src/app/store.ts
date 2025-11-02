@@ -18,6 +18,7 @@ import {
   injectStore,
   setupAuthInterceptor,
 } from '@/features/auth/api/authInterceptor';
+import { specInfoReducer } from '@/features/account/model/slice';
 
 const authPersistConfig = {
   key: 'auth',
@@ -26,13 +27,24 @@ const authPersistConfig = {
   whitelist: ['accessToken', 'isLoggedIn'],
 };
 
+const specInfoPersistConfig = {
+  key: 'specInfo',
+  storage,
+  whitelist: ['specInfo'],
+};
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedSpecInfoReducer = persistReducer(
+  specInfoPersistConfig,
+  specInfoReducer
+);
 
 export const store = configureStore({
   reducer: {
     hero: heroReducer,
     account: accountReducer,
     auth: persistedAuthReducer,
+    specInfo: persistedSpecInfoReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
