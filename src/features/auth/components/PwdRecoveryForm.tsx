@@ -1,0 +1,133 @@
+import Button from '@/shared/components/UI/Button';
+import ErrorIcon from '@/features/auth/components/ErrorIcon';
+import SuccessIcon from '@/features/auth/components/SuccessIcon';
+import { useEffect, useRef, useState } from 'react';
+import { getInputClass } from '@/features/auth/lib/getInputClass';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import toast from 'react-hot-toast';
+import { selectAuthLoading } from '@/features/auth/model/selectors';
+import { useSelector } from 'react-redux';
+import {
+  pwdRecoverySchema,
+  PwdRecoverySchemaType,
+} from '@/features/auth/validations/pwdRecoverySchema';
+
+const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
+  const [isClosing, setIsClosing] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const loading = useSelector(selectAuthLoading);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, dirtyFields },
+  } = useForm<PwdRecoverySchemaType>({
+    resolver: zodResolver(pwdRecoverySchema),
+    mode: 'onChange',
+  });
+
+  const handleLoginClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsClosing(true);
+
+    // Встановлюємо таймаут, щоб дочекатися завершення CSS-переходу
+    timeoutRef.current = setTimeout(() => {
+      // Після завершення анімації перемикаємо на форму логіну
+      onOpenLogin();
+      reset();
+      // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
+      setIsClosing(false);
+    }, 300);
+  };
+
+  // Очищення таймауту при демонтажі компонента для запобігання витокам пам'яті
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const onSubmit = async (data: PwdRecoverySchemaType) => {
+    const requestBody = {
+      email: data.email.toLowerCase(),
+    };
+
+    try {
+      // await dispatch(registerSpec(requestBody)).unwrap();
+      console.log(requestBody);
+
+      toast.success(
+        'Якщо такий користувач існує, ми надіслали лист із інструкціями для відновлення пароля. Перевірте пошту, а також папку “Спам”.'
+      );
+      // Якщо успішний запит, робимо плавний перехід на логін
+      setIsClosing(true);
+      setTimeout(() => {
+        onOpenLogin();
+        reset();
+        setIsClosing(false);
+      }, 300);
+    } catch (error) {
+      const msg =
+        typeof error === 'string'
+          ? error
+          : 'Сталася помилка. Спробуйте ще раз пізніше.';
+      toast.error(msg);
+    }
+  };
+
+  return (
+    <div
+      className={`flex flex-col gap-4 transition-opacity duration-300 ease-in-out xl:gap-4.5 ${
+        isClosing ? 'pointer-events-none opacity-0' : 'opacity-100'
+      }`}
+    >
+      <h3 className="text-fire text-center uppercase">Забули пароль?</h3>
+      <p className="text-mineShaft text-justify text-sm">
+        Вкажіть свою електронну пошту – ми надішлемо інструкції для відновлення
+        доступу до облікового запису.
+      </p>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4.5"
+        noValidate
+      >
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Email"
+            autoComplete="email"
+            className={getInputClass(
+              !!errors.email,
+              !!(!errors.email && dirtyFields.email)
+            )}
+            {...register('email')}
+          />
+          {errors.email && <ErrorIcon />}
+          {!errors.email && dirtyFields.email && <SuccessIcon />}
+          {errors.email && (
+            <p className="text-red-tenn absolute mt-0.5 pl-5 text-[8px]">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+
+        <Button label="Відновити пароль" type="submit" />
+
+        <button
+          type="button"
+          className="text-fire text-[10px] font-semibold"
+          onClick={handleLoginClick}
+          disabled={loading || isClosing} // Блокуємо, якщо йде запит або закриття вікна
+        >
+          Згадали пароль?
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default PwdRecoveryForm;

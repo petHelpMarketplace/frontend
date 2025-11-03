@@ -14,14 +14,15 @@ import SuccessIcon from '@/features/auth/components/SuccessIcon';
 import { registerSpec } from '@/features/auth/model/operations';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 import type { AppDispatch } from '@/app/store';
-import { toast } from 'react-hot-toast';
+import toast from 'react-hot-toast';
+import { getInputClass } from '../lib/getInputClass';
 
 const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const dispatch = useDispatch<AppDispatch>();
   const loading = useSelector(selectAuthLoading);
   const [hasInput, setHasInput] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     register,
@@ -83,14 +84,12 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
         setIsClosing(false);
       }, 1500); // Затримка 1.5s після успіху, щоб користувач побачив тост
     } catch (error) {
-      const msg = typeof error === 'string' ? error : 'Registration failed';
+      const msg =
+        typeof error === 'string'
+          ? error
+          : 'Не вдалося зареєструватися. Спробуйте ще раз пізніше.';
       toast.error(msg);
     }
-  };
-  const getInputClass = (error: boolean, success: boolean) => {
-    if (error) return 'input-base border-red-tenn focus:border-red-tenn';
-    if (success) return 'input-base border-tenn focus:border-tenn';
-    return 'input-base';
   };
 
   return (

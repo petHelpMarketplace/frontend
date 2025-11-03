@@ -36,6 +36,7 @@ export interface LoginResponse {
 
 export type LoginFormProps = {
   onClose: () => void;
+  onOpenPwdRecovery: () => void;
 };
 
 export type PrivateRouteProps = {
@@ -45,3 +46,5 @@ export type PrivateRouteProps = {
 export interface RefreshResponse {
   access_token: string;
 }
+
+export type ModalType = 'login' | 'register' | 'pwdRecovery' | null;

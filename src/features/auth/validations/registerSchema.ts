@@ -1,6 +1,5 @@
 import {
   emailField,
-  // family_nameField,
   nameField,
   passwordField,
   phoneField,
@@ -10,7 +9,6 @@ import { z } from 'zod';
 export const registerSchema = z
   .object({
     name: nameField,
-    // family_name: family_nameField,
     phone: phoneField,
     email: emailField,
     password: passwordField,
