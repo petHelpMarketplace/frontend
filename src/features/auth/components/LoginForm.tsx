@@ -52,11 +52,9 @@ const LoginForm = ({ onClose, onOpenPwdRecovery }: LoginFormProps) => {
 
     // Встановлюємо таймаут, щоб дочекатися завершення CSS-переходу
     timeoutRef.current = setTimeout(() => {
-      // Після завершення анімації перемикаємо на форму логіну
       onOpenPwdRecovery();
-      // Очищуємо форму реєстрації
       reset();
-      // Скидаємо стан isClosing для майбутнього використання, якщо компонент не буде одразу розмонтований
+      // Скидаємо стан isClosing для майбутнього використання
       setIsClosing(false);
     }, 300);
   };
