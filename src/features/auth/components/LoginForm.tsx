@@ -13,14 +13,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/app/store';
 import toast from 'react-hot-toast';
 import { LoginFormProps } from '@/features/auth/types/types';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getInputClass } from '@/features/auth/lib/getInputClass';
 import { selectAuthLoading } from '@/features/auth/model/selectors';
 
 const LoginForm = ({ onClose, onOpenPwdRecovery }: LoginFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [isClosing, setIsClosing] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loading = useSelector(selectAuthLoading);
 
   const {
@@ -61,6 +61,12 @@ const LoginForm = ({ onClose, onOpenPwdRecovery }: LoginFormProps) => {
     }, 300);
   };
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <div
       className={`flex flex-col gap-4 transition-opacity duration-300 ease-in-out xl:gap-4.5 ${
@@ -71,7 +77,7 @@ const LoginForm = ({ onClose, onOpenPwdRecovery }: LoginFormProps) => {
 
       <Button
         label="Увійти з Google"
-        type="submit"
+        type="button"
         disabled
         className="btn-icon btn-google-disabled"
         icon={

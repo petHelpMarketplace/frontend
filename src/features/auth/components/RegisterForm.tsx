@@ -22,7 +22,7 @@ const RegisterForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const loading = useSelector(selectAuthLoading);
   const [hasInput, setHasInput] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
     register,

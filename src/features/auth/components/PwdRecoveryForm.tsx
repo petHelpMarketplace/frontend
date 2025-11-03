@@ -11,11 +11,11 @@ import { useSelector } from 'react-redux';
 import {
   pwdRecoverySchema,
   PwdRecoverySchemaType,
-} from '@/features/auth/validations/pwdRecovery.Schema';
+} from '@/features/auth/validations/pwdRecoverySchema';
 
 const PwdRecoveryForm = ({ onOpenLogin }: { onOpenLogin: () => void }) => {
   const [isClosing, setIsClosing] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loading = useSelector(selectAuthLoading);
 
   const {
