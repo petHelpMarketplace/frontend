@@ -12,20 +12,21 @@ const AnimalSelector = () => {
   };
 
   return (
-    <div className="flex justify-center bg-alabaster w-full xl:w-1/2 xl:h-[48px] ">
+    <div className="bg-alabaster flex w-full justify-center xl:h-[48px] xl:w-1/2">
       {(['dog', 'cat'] as const).map(animal => (
         <button
           key={animal}
+          id={`hero-filter-animal-${animal}`}
           onClick={() => handleSelect(animal)}
           tabIndex={0}
-          className={`px-4 flex-1 h-[47px] xl:h-[48px] xl:w-1/2 py-[13px] font-semibold transition hover:shadow-shark focus:shadow-shark focus:outline-none active:shadow-inset-shark border-[2px] border-tenn ${
+          className={`hover:shadow-shark focus:shadow-shark active:shadow-inset-shark border-tenn h-[47px] flex-1 border-[2px] px-4 py-[13px] font-semibold transition focus:outline-none xl:h-[48px] xl:w-1/2 ${
             selectedAnimal === animal
               ? `bg-tenn text-alabaster ${
                   animal === 'dog'
                     ? 'rounded-l-[15px] xl:rounded-l-[16px]'
                     : 'rounded-r-[15px] xl:rounded-r-[16px]'
                 }`
-              : `text-fire border-[2px] border-tenn ${
+              : `text-fire border-tenn border-[2px] ${
                   animal === 'dog' ? 'rounded-l-[15px]' : 'rounded-r-[15px]'
                 }`
           }`}

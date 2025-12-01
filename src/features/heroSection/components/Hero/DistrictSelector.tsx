@@ -139,23 +139,24 @@ export default function DistrictSelector({
 
   return (
     <div
-      className="relative w-full xl:w-1/2 rounded-[15px] xl:rounded-2xl"
+      className="relative w-full rounded-[15px] xl:w-1/2 xl:rounded-2xl"
       ref={dropdownRef}
     >
       {/* Toggle button */}
       <button
+        id="hero-filter-district"
         ref={buttonRef}
         type="button"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="district-list"
-        className="w-full flex items-center border-[2px] border-tenn justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark rounded-[15px] xl:rounded-2xl"
+        className="border-tenn hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark flex h-[47px] w-full items-center justify-between rounded-[15px] border-[2px] py-[13px] pr-3.5 pl-[22px] text-[15px] focus:outline-none xl:h-[48px] xl:rounded-2xl xl:py-3 xl:pr-8 xl:pl-12 xl:text-base"
         onClick={() => setIsOpen(prev => !prev)}
       >
         {selectedLabel}
         <svg
           className={clsx(
-            'w-4 h-4 transition-transform duration-200 text-tenn',
+            'text-tenn h-4 w-4 transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
           fill="none"
@@ -176,7 +177,7 @@ export default function DistrictSelector({
         <ul
           id="district-list"
           ref={listRef}
-          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 text-shark bg-alabaster rounded-[15px] hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark"
+          className="border-tenn text-shark bg-alabaster hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark absolute left-0 z-50 mt-[9px] flex w-full flex-col gap-2 rounded-[15px] border-[2px] py-[13px] focus:outline-none xl:py-5"
           role="listbox"
           aria-label="Оберіть район"
           tabIndex={0}
@@ -190,10 +191,10 @@ export default function DistrictSelector({
               aria-selected={selected === area.value}
               tabIndex={0}
               className={clsx(
-                'w-full h-[34px] flex items-center transition cursor-pointer focus:outline-none pl-[22px] xl:pl-11',
+                'flex h-[34px] w-full cursor-pointer items-center pl-[22px] transition focus:outline-none xl:pl-11',
                 selected === area.value
-                  ? 'bg-tenn text-white pointer-events-none'
-                  : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn  focus:text-alabaster'
+                  ? 'bg-tenn pointer-events-none text-white'
+                  : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn focus:text-alabaster'
               )}
               onClick={() => handleSelect(area.value)}
               data-value={area.value}
