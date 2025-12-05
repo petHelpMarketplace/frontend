@@ -2,17 +2,18 @@ import { useAppSelector } from '@/shared/hooks/index';
 import { selectAnimal } from '@/features/heroSection/hooks/heroSelectors';
 
 const dogservices = [
-  { label: 'Вигул', icon: 'icon-dog-on-the-leash' },
-  { label: 'Перетримка', icon: 'icon-dog-house' },
-  { label: 'Догляд вдома', icon: 'icon-sitting-dog' },
-  { label: 'Грумінг', icon: 'icon-scissors' },
-];
+  { id: 'walking', label: 'Вигул', icon: 'icon-dog-on-the-leash' },
+  { id: 'boarding', label: 'Перетримка', icon: 'icon-dog-house' },
+  { id: 'home-care', label: 'Догляд вдома', icon: 'icon-sitting-dog' },
+  { id: 'grooming', label: 'Грумінг', icon: 'icon-scissors' },
+] as const;
+
 const catservices = [
-  { label: 'Вакцинація', icon: 'icon-vet' },
-  { label: 'Перетримка', icon: 'icon-cat-house-vec' },
-  { label: 'Догляд вдома', icon: 'icon-cat' },
-  { label: 'Грумінг', icon: 'icon-scissors' },
-];
+  { id: 'vaccination', label: 'Вакцинація', icon: 'icon-vet' },
+  { id: 'boarding', label: 'Перетримка', icon: 'icon-cat-house-vec' },
+  { id: 'home-care', label: 'Догляд вдома', icon: 'icon-cat' },
+  { id: 'grooming', label: 'Грумінг', icon: 'icon-scissors' },
+] as const;
 
 const ServiceTypeSelector = () => {
   const selected = useAppSelector(selectAnimal);
@@ -23,22 +24,18 @@ const ServiceTypeSelector = () => {
       className={`grid grid-cols-2 gap-x-[10px] gap-y-3.5 ${mbClass} xl:grid-cols-4 xl:gap-7`}
     >
       {services.map(service => {
-        const serviceId =
-          'hero-filter-service-' +
-          service.label.toLowerCase().replace(/\s+/g, '-');
         return (
           <button
-            key={service.label}
-            id={serviceId}
+            type="button"
+            key={service.id}
+            id={`hero-filter-service-${service.id}`}
             // className="flex flex-col items-center justify-center gap-2 py-3 px-13 rounded-[16px] border-tenn border-[2px] hover:bg-tenn hover:text-alabaster hover:border-none hover:shadow-shark active:shadow-inset-shark group"
             className="border-tenn hover:bg-tenn hover:text-alabaster hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark group flex flex-col items-center justify-center rounded-[14px] border-[2px] py-4.5 text-[15px] leading-[120%] focus:outline-none xl:gap-2 xl:rounded-2xl xl:px-13 xl:py-4"
           >
             <svg
+              aria-hidden="true"
               className="fill-tenn group-hover:fill-alabaster hidden h-[52px] w-[55px] shrink-0 xl:block"
-              role="img"
-              aria-label={service.label}
             >
-              <title>{service.label}</title>
               <use href={`/icons.svg#${service.icon}`} />
             </svg>
             <span>{service.label}</span>
