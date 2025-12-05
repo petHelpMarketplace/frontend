@@ -29,7 +29,6 @@ const ServiceTypeSelector = () => {
             type="button"
             key={service.id}
             id={`hero-filter-service-${service.id}`}
-            // className="flex flex-col items-center justify-center gap-2 py-3 px-13 rounded-[16px] border-tenn border-[2px] hover:bg-tenn hover:text-alabaster hover:border-none hover:shadow-shark active:shadow-inset-shark group"
             className="border-tenn hover:bg-tenn hover:text-alabaster hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark group flex flex-col items-center justify-center rounded-[14px] border-[2px] py-4.5 text-[15px] leading-[120%] focus:outline-none xl:gap-2 xl:rounded-2xl xl:px-13 xl:py-4"
           >
             <svg
