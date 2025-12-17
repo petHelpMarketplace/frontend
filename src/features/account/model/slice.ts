@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SpecInfoState } from '../types/types';
-import { postSpecAvatar } from './operations';
+import { getSpecInfo, postSpecAvatar } from './operations';
+import { logoutSpec } from '@/features/auth/model/operations';
 
 const initialState: SpecInfoState = {
   specInfo: {
-    id: null,
-    name: null,
+    name: '',
     family_name: null,
-    email: null,
+    email: '',
     avatar_url: null,
     bio: null,
     description: null,
@@ -15,7 +15,7 @@ const initialState: SpecInfoState = {
     is_active: false,
     is_verified: false,
     phone: null,
-    portfolio_urls: null,
+    portfolio_urls: [],
     position: null,
   },
   loading: false,
@@ -27,6 +27,19 @@ const specInfoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
+    builder.addCase(getSpecInfo.pending, state => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getSpecInfo.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.specInfo = action.payload;
+    });
+    builder.addCase(getSpecInfo.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload ?? 'Failed to get specialist personal info';
+    });
     builder.addCase(postSpecAvatar.pending, state => {
       state.loading = true;
       state.error = null;
@@ -36,10 +49,12 @@ const specInfoSlice = createSlice({
       state.error = null;
       state.specInfo.avatar_url = action.payload.url;
     });
-    builder.addCase(postSpecAvatar.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload ?? 'Failed to upload avatar';
-    });
+    builder
+      .addCase(postSpecAvatar.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload ?? 'Failed to upload avatar';
+      })
+      .addCase(logoutSpec.fulfilled, () => initialState);
   },
 });
 

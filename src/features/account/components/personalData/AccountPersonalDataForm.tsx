@@ -7,20 +7,27 @@ import {
 import PhotoBlock from './PhotoBlock';
 import DetailsBlock from './DetailsBlock';
 import PersonalInfoBlock from './PersonalInfoBlock';
+import { useAppSelector } from '@/shared/hooks';
+import { selectSpecInfo } from '../../model/selectors';
 
 export default function AccountPersonalDataForm() {
+  const specialist = useAppSelector(selectSpecInfo);
+
   const methods = useForm<SpecInfoSchemaType>({
     resolver: zodResolver(specInfoSchema),
     mode: 'onChange',
-    defaultValues: {
-      // firstName: '',
-      // lastName: '',
-      // phone: '',
-      // district: '',
-      // experience: 0,
-      // bio: '',
-      avatar: null,
-    },
+    values: specialist
+      ? {
+          name: specialist.name || '',
+          family_name: specialist.family_name || '',
+          phone: specialist.phone || '',
+          // district: specialist.district || '',
+          district: '',
+          experience: specialist.experience || 0,
+          bio: specialist.bio || '',
+          avatar: specialist.avatar_url || null,
+        }
+      : undefined,
   });
 
   const onSubmit = (data: SpecInfoSchemaType) => {
@@ -29,7 +36,7 @@ export default function AccountPersonalDataForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} noValidate>
         <div className="mb-22 flex gap-13">
           <PhotoBlock />
           <DetailsBlock />

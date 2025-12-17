@@ -1,10 +1,18 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { tabs } from '../tabs';
 import BackButton from '@/shared/components/UI/BackButton';
 import { NavLink, Outlet } from 'react-router-dom';
 import Spinner from '@/shared/components/UI/Spinner/Spinner';
+import { useAppDispatch } from '@/shared/hooks';
+import { getSpecInfo } from '../model/operations';
 
 export default function AccountPage() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getSpecInfo());
+  }, [dispatch]);
+
   return (
     <section className="section-wrap">
       {/* <button

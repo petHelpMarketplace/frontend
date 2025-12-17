@@ -30,17 +30,22 @@ export const specInfoSchema = z.object({
     .min(2, 'Має містити мінімум 2 символи')
     .max(500, 'Не може перевищувати 500 символів'),
   name: nameField,
-  family_name: nameField.optional(),
+  family_name: z
+    .union([
+      z.literal(''), // Дозволяємо порожній рядок
+      nameField, // АБО валідуємо як стандартне ім'я, якщо щось введено
+    ])
+    .optional(),
   phone: phoneField,
-  district: z.string(),
-  experience: z
+  district: z.string().optional(),
+  experience: z.coerce
     .number({
       required_error: 'Вкажіть кількість років досвіду',
       invalid_type_error: 'Поле має бути числом',
     })
     .min(0, 'Мінімальне значення - 0')
     .max(50, 'Максимальне значення - 50 років')
-    .step(0.5),
+    .step(0.5, 'Крок має бути 0.5 (наприклад, 1.5)'),
 });
 
 export type SpecInfoSchemaType = z.infer<typeof specInfoSchema>;

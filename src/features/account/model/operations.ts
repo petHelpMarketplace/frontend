@@ -1,8 +1,33 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AvatarRequest, AvatarResponse } from '../types/types';
+import {
+  AvatarRequest,
+  AvatarResponse,
+  SpecInfoResponse,
+} from '../types/types';
 import { petsHelpApi } from '@/shared/api/petsHelpApi';
 import { getErrorMessage } from '@/shared/utils/getErrorMessage';
 import { RootState } from '@/app/store';
+import { setAuthHeader } from '@/features/auth/lib/authHeader';
+
+export const getSpecInfo = createAsyncThunk<
+  SpecInfoResponse,
+  void,
+  { state: RootState; rejectValue: string }
+>('getSpecInfo', async (_, thunkAPI) => {
+  try {
+    const savedRToken = thunkAPI.getState().auth.accessToken;
+    if (!savedRToken) {
+      return thunkAPI.rejectWithValue(getErrorMessage('Token is not exist'));
+    }
+    setAuthHeader(savedRToken);
+    const response = await petsHelpApi.get('/specialist/me');
+    console.log(response.data);
+
+    return response.data;
+  } catch (e: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
+  }
+});
 
 export const postSpecAvatar = createAsyncThunk<
   AvatarResponse,

@@ -14,7 +14,7 @@ export default function PhotoBlock() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoading);
   // const error = useAppSelector(selectError);
-  const specInfo = useAppSelector(selectSpecInfo);
+  const specialist = useAppSelector(selectSpecInfo);
 
   const {
     control,
@@ -55,7 +55,7 @@ export default function PhotoBlock() {
   //   onChange(null);
   // };
 
-  const avatarUrl = specInfo.avatar_url || null;
+  const avatarUrl = specialist.avatar_url || null;
   const hasPhoto = Boolean(avatarUrl);
   const ariaLabel = hasPhoto ? 'Редагувати фото' : 'Додати фото';
   const iconHref = hasPhoto
