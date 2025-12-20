@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AvatarRequest,
   AvatarResponse,
+  PatchProfileRequest,
   SpecInfoResponse,
 } from '../types/types';
 import { petsHelpApi } from '@/shared/api/petsHelpApi';
@@ -21,9 +22,29 @@ export const getSpecInfo = createAsyncThunk<
     }
     setAuthHeader(savedRToken);
     const response = await petsHelpApi.get('/specialist/me');
-    console.log(response.data);
+    // console.log(response.data);
 
     return response.data;
+  } catch (e: unknown) {
+    return thunkAPI.rejectWithValue(getErrorMessage(e));
+  }
+});
+
+export const patchSpecProfile = createAsyncThunk<
+  SpecInfoResponse,
+  PatchProfileRequest,
+  { state: RootState; rejectValue: string }
+>('patchSpecProfile', async (dataToSend, thunkAPI) => {
+  try {
+    const savedRToken = thunkAPI.getState().auth.accessToken;
+    if (!savedRToken) {
+      return thunkAPI.rejectWithValue(getErrorMessage('Token is not exist'));
+    }
+    setAuthHeader(savedRToken);
+    const response = await petsHelpApi.patch('/specialist/profile', dataToSend);
+    // console.log('patch', response.data.data);
+
+    return response.data.data;
   } catch (e: unknown) {
     return thunkAPI.rejectWithValue(getErrorMessage(e));
   }

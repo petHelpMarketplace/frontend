@@ -17,7 +17,7 @@ export default function DetailsBlock() {
         </label>
         <textarea
           id="bio"
-          rows={6}
+          rows={11}
           className="input-base flex h-12 w-full flex-1 resize-none px-7 py-6"
           placeholder="Приклад: Привіт! Я Ігор, з дитинства обожнюю тварин, особливо собак. Маю досвід у вигулі та догляді ..."
           {...register('bio')}

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SpecInfoState } from '../types/types';
-import { getSpecInfo, postSpecAvatar } from './operations';
+import { getSpecInfo, patchSpecProfile, postSpecAvatar } from './operations';
 import { logoutSpec } from '@/features/auth/model/operations';
 
 const initialState: SpecInfoState = {
@@ -39,6 +39,19 @@ const specInfoSlice = createSlice({
     builder.addCase(getSpecInfo.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload ?? 'Failed to get specialist personal info';
+    });
+    builder.addCase(patchSpecProfile.pending, state => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(patchSpecProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.specInfo = { ...state.specInfo, ...action.payload };
+    });
+    builder.addCase(patchSpecProfile.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload ?? 'Failed to update profile';
     });
     builder.addCase(postSpecAvatar.pending, state => {
       state.loading = true;

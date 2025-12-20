@@ -7,11 +7,14 @@ import {
 import PhotoBlock from './PhotoBlock';
 import DetailsBlock from './DetailsBlock';
 import PersonalInfoBlock from './PersonalInfoBlock';
-import { useAppSelector } from '@/shared/hooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks';
 import { selectSpecInfo } from '../../model/selectors';
+import { patchSpecProfile } from '../../model/operations';
+import toast from 'react-hot-toast';
 
 export default function AccountPersonalDataForm() {
   const specialist = useAppSelector(selectSpecInfo);
+  const dispatch = useAppDispatch();
 
   const methods = useForm<SpecInfoSchemaType>({
     resolver: zodResolver(specInfoSchema),
@@ -20,7 +23,7 @@ export default function AccountPersonalDataForm() {
       ? {
           name: specialist.name || '',
           family_name: specialist.family_name || '',
-          phone: specialist.phone || '',
+          phone: specialist.phone ? specialist.phone.replace('+38', '') : '',
           // district: specialist.district || '',
           district: '',
           experience: specialist.experience || 0,
@@ -30,8 +33,29 @@ export default function AccountPersonalDataForm() {
       : undefined,
   });
 
-  const onSubmit = (data: SpecInfoSchemaType) => {
-    console.log('Збережені дані:', data);
+  const onSubmit = async (data: SpecInfoSchemaType) => {
+    const requestBody = {
+      bio: data.bio.replace(/\s+/g, ' ').trim(),
+      name: data.name.replace(/\s+/g, ' ').trim(),
+      family_name: data.family_name
+        ? data.family_name.replace(/\s+/g, ' ').trim()
+        : '',
+      phone: '+38' + data.phone,
+      experience_years: data.experience,
+    };
+
+    // console.log(requestBody);
+
+    try {
+      await dispatch(patchSpecProfile(requestBody)).unwrap();
+      toast.success('Ваш профіль успішно оновлено!');
+    } catch (error) {
+      const msg =
+        typeof error === 'string'
+          ? error
+          : 'Не вдалося оновити профіль. Спробуйте ще раз пізніше.';
+      toast.error(msg);
+    }
   };
 
   return (

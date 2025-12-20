@@ -1,3 +1,5 @@
+import { SpecInfoSchemaType } from '../validation/specInfoSchema';
+
 export interface SpecInfoResponse {
   name: string;
   family_name: string | null;
@@ -26,3 +28,7 @@ export type AvatarResponse = {
 export type AvatarRequest = {
   file: File;
 };
+
+export interface PatchProfileRequest extends Partial<SpecInfoSchemaType> {
+  experience_years?: number; // додаємо поле, яке очікує бекенд
+}
