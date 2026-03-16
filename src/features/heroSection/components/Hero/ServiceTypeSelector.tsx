@@ -17,8 +17,8 @@ const catservices = [
 
 const ServiceTypeSelector = () => {
   const selected = useAppSelector(selectAnimal);
-  const services = selected === 'dog' ? dogservices : catservices;
-  const mbClass = selected === 'cat' ? 'mb-6 xl:mb-0' : 'mb-[33px] xl:mb-0';
+  const services = selected === 1 ? dogservices : catservices;
+  const mbClass = selected === 2 ? 'mb-6 xl:mb-0' : 'mb-[33px] xl:mb-0';
   return (
     <div
       className={`grid grid-cols-2 gap-x-[10px] gap-y-3.5 ${mbClass} xl:grid-cols-4 xl:gap-7`}
