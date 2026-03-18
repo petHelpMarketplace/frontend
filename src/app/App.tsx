@@ -10,7 +10,6 @@ import {
   selectIsRefreshing,
 } from '@/features/auth/model/selectors';
 import { clearAuthHeader, setAuthHeader } from '@/features/auth/lib/authHeader';
-import ContactUsPage from '@/features/contactUs/pages/ContactUsPage';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -37,6 +36,7 @@ const PortfolioGallery = lazy(
 const AccountSettingsForm = lazy(
   () => import('@/features/account/components/settings/AccountSettingsForm')
 );
+const SupportPage = lazy(() => import('@/features/support/pages/SupportPage'));
 const FaqPage = lazy(() => import('@/features/faq/pages/FaqPage'));
 const FaqQuestionPage = lazy(
   () => import('@/features/faq/pages/FaqQuestionPage')
@@ -81,7 +81,7 @@ function App() {
         <Route path="/review/specialists/:id" element={<ReviewServicePage />} />
 
         {/* Footer */}
-        <Route path="/contacts" element={<ContactUsPage />} />
+        <Route path="/support" element={<SupportPage />} />
 
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />

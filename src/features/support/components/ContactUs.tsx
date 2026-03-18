@@ -1,6 +1,6 @@
 const ContactUs = () => {
   return (
-    <div className="flex flex-col gap-7.5">
+    <div className="flex flex-col items-center gap-7.5 xl:flex-1 xl:items-start">
       <div className="flex flex-col gap-4 xl:gap-7.5">
         <h1 className="text-fire text-xl font-semibold">
           Як з нами звя'затися?
