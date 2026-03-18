@@ -1,23 +1,25 @@
-import { FC, MouseEventHandler, ReactNode } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import clsx from 'clsx';
 
 type ButtonProps = {
   label: string;
-  icon?: ReactNode;
+  iconPath?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  type: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   className?: string;
+  iconClass?: string;
   form?: string;
 };
 
 const Button: FC<ButtonProps> = ({
   label,
-  icon,
+  iconPath,
   onClick,
   type = 'button',
   disabled = false,
   className,
+  iconClass,
   form,
 }) => {
   const buttonClass = clsx(
@@ -36,8 +38,10 @@ const Button: FC<ButtonProps> = ({
       disabled={disabled}
       form={form}
     >
-      {icon && (
-        <span className="absolute left-[16px] flex items-center">{icon}</span>
+      {iconPath && (
+        <svg className={clsx('fill-alabaster h-4 w-4', iconClass)}>
+          <use href={iconPath} />
+        </svg>
       )}
       <span>{label}</span>
     </button>

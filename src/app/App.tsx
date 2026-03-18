@@ -10,6 +10,7 @@ import {
   selectIsRefreshing,
 } from '@/features/auth/model/selectors';
 import { clearAuthHeader, setAuthHeader } from '@/features/auth/lib/authHeader';
+import ContactUsPage from '@/features/contactUs/pages/ContactUsPage';
 
 const HomePage = lazy(() => import('@/pages/Home/HomePage'));
 const SearchSpecialistsPage = lazy(
@@ -78,10 +79,15 @@ function App() {
           <Route path="settings" element={<AccountSettingsForm />} />
         </Route>
         <Route path="/review/specialists/:id" element={<ReviewServicePage />} />
+
+        {/* Footer */}
+        <Route path="/contacts" element={<ContactUsPage />} />
+
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
         <Route path="/public-offer" element={<PublicOfferPage />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
