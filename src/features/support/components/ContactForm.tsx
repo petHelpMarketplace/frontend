@@ -6,15 +6,39 @@ const ContactForm = () => {
       <p className="text-fire self-start leading-[169%] font-semibold">
         Напишіть нам прямо зараз
       </p>
-      <input type="text" className="input-base h-12" placeholder="Ім’я" />
-      <input type="email" className="input-base h-12" placeholder="Email" />
 
-      <p className="text-fire self-start leading-[169%] font-semibold">
+      <label className="sr-only" htmlFor="name">
+        Ім’я
+      </label>
+      <input
+        id="name"
+        type="text"
+        className="input-base h-12"
+        placeholder="Ім’я"
+        autoComplete="name"
+      />
+
+      <label className="sr-only" htmlFor="email">
+        Email
+      </label>
+      <input
+        id="email"
+        type="email"
+        className="input-base h-12"
+        placeholder="Email"
+        autoComplete="email"
+      />
+
+      <label
+        htmlFor="message"
+        className="text-fire self-start leading-[169%] font-semibold"
+      >
         Повідомлення
-      </p>
+      </label>
       <textarea
-        name=""
-        id=""
+        name="message"
+        id="message"
+        resize-none
         placeholder="Напишіть, чим ми можемо Вам допомогти?"
         className="input-base h-[116px] resize-none p-3 xl:px-5 xl:py-3"
       ></textarea>
@@ -24,7 +48,6 @@ const ContactForm = () => {
         type="submit"
         disabled
         className="w-[200px] xl:w-[304px]"
-        resize-none
       />
     </form>
   );
