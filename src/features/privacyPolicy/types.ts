@@ -4,6 +4,7 @@ type PrivacyPolicyDescriptionList = {
 };
 
 export type PrivacyPolicyData = {
+  id: string;
   title: string;
   description?: PrivacyPolicyDescriptionList[];
   orderedLists?: string[];

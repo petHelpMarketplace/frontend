@@ -2,6 +2,7 @@ import { PrivacyPolicyData } from './types';
 
 export const privacyPolicyData: PrivacyPolicyData[] = [
   {
+    id: 'general',
     title: 'Загальні положення',
     orderedLists: [
       'Ця Політика конфіденційності (надалі – «Політика») розроблена у відповідності до діючого законодавства України, в тому числі, але не виключно, Закону України «Про захист персональних даних» від 01 червня 2010 року № 2297-VI щодо Користувачів Порталу PetsHelp і встановлює порядок отримання, збору, накопичення, зберігання, обробки, використання, забезпечення захисту і розкриття персональних даних (надалі – «Дані») Користувачів Сайту.',
@@ -12,6 +13,7 @@ export const privacyPolicyData: PrivacyPolicyData[] = [
     ],
   },
   {
+    id: 'data-collection',
     title: 'Дані які можуть збиратись',
     description: [
       {
@@ -28,6 +30,7 @@ export const privacyPolicyData: PrivacyPolicyData[] = [
     ],
   },
   {
+    id: 'usage',
     title: 'Використання і цілі обробки даних',
     description: [
       {
@@ -46,6 +49,7 @@ export const privacyPolicyData: PrivacyPolicyData[] = [
     ],
   },
   {
+    id: 'access',
     title: 'Умови надання доступу до даних',
     description: [
       {
@@ -70,6 +74,7 @@ export const privacyPolicyData: PrivacyPolicyData[] = [
     ],
   },
   {
+    id: 'modify-delete',
     title: 'Як змінити або видалити дані',
     description: [
       {
@@ -87,6 +92,7 @@ export const privacyPolicyData: PrivacyPolicyData[] = [
     ],
   },
   {
+    id: 'protection',
     title: 'Захист даних',
     description: [
       {
@@ -104,6 +110,7 @@ export const privacyPolicyData: PrivacyPolicyData[] = [
     ],
   },
   {
+    id: 'additional',
     title: 'Додаткові умови',
     description: [
       {
