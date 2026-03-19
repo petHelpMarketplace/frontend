@@ -5,6 +5,7 @@ import {
 } from '@headlessui/react';
 import { useState } from 'react';
 import { privacyPolicyData } from '../data';
+import parseTextWithLinks from '../../../shared/utils/parseTextWithLinks';
 
 const PrivacyAccordion = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -45,13 +46,15 @@ const PrivacyAccordion = () => {
                 <DisclosurePanel className="mt-4.5 text-justify text-sm/[136%] xl:mt-5 xl:text-base">
                   {description?.map((desc, idx) => (
                     <div key={idx} className="mb-1">
-                      <p className="mb-1">{desc.text}</p>
+                      <p className="mb-1">{parseTextWithLinks(desc.text)}</p>
 
-                      <ul className="mb-1 list-disc pl-5 xl:pl-6">
-                        {desc.unorderedLists?.map((item, k) => (
-                          <li key={k}>{item}</li>
-                        ))}
-                      </ul>
+                      {desc.unorderedLists && (
+                        <ul className="mb-1 list-disc pl-5 xl:pl-6">
+                          {desc.unorderedLists.map((item, k) => (
+                            <li key={k}>{parseTextWithLinks(item)}</li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   ))}
 
