@@ -27,25 +27,36 @@ export default function parseTextWithLinks(text: string): React.ReactNode {
 
     // If the part is a URL
     if (/^https?:\/\//.test(part)) {
+      const href = part.replace(/[),.;!?]+$/, '');
+      const trailing = part.slice(href.length);
+
       return (
-        <a
-          key={idx}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-fire underline"
-        >
-          {part}
-        </a>
+        <React.Fragment key={idx}>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-fire"
+          >
+            {href}
+          </a>
+          {trailing}
+        </React.Fragment>
       );
     }
 
     // If the part is an email
     if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(part)) {
+      const emailHref = part.replace(/[),.;!?]+$/, '');
+      const trailing = part.slice(emailHref.length);
+
       return (
-        <a key={idx} href={`mailto:${part}`} className="text-fire underline">
-          {part}
-        </a>
+        <React.Fragment key={idx}>
+          <a href={`mailto:${emailHref}`} className="text-fire">
+            {emailHref}
+          </a>
+          {trailing}
+        </React.Fragment>
       );
     }
 

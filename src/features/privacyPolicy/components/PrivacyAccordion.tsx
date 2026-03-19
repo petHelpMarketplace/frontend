@@ -47,7 +47,6 @@ const PrivacyAccordion = () => {
     const hash = window.location.hash.replace('#', '');
 
     if (!hash) return;
-
     const index = privacyPolicyData.findIndex(item => item.id === hash);
 
     if (index !== -1) {
@@ -124,11 +123,13 @@ const PrivacyAccordion = () => {
                     </div>
                   ))}
 
-                  <ol className="list-decimal space-y-1 pl-5 xl:pl-6">
-                    {orderedLists?.map((item, oIdx) => (
-                      <li key={oIdx}>{item}</li>
-                    ))}
-                  </ol>
+                  {orderedLists && orderedLists.length > 0 && (
+                    <ol className="list-decimal space-y-1 pl-5 xl:pl-6">
+                      {orderedLists.map((item, oIdx) => (
+                        <li key={oIdx}>{parseTextWithLinks(item)}</li>
+                      ))}
+                    </ol>
+                  )}
                 </DisclosurePanel>
               </div>
             </div>
