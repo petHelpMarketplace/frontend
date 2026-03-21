@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 const HeroFilters = () => {
   const selectedAnimal = useAppSelector(selectAnimal);
-  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [selectedDistrict, setSelectedDistrict] = useState<number | null>(null);
 
   return (
     <div

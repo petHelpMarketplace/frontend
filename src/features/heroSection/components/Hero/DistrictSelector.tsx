@@ -3,21 +3,21 @@ import clsx from 'clsx';
 
 // TODO: Заміни константу AREAS на дані з бекенду, коли буде готовий API
 const areas = [
-  { label: 'Голосіївський', value: 'Голосіївський' },
-  { label: 'Дарницький', value: 'Дарницький' },
-  { label: 'Деснянський', value: 'Деснянський' },
-  { label: 'Дніпровський', value: 'Дніпровський' },
-  { label: 'Оболонський', value: 'Оболонський' },
-  { label: 'Печерський', value: 'Печерський' },
-  { label: 'Подільський', value: 'Подільський' },
-  { label: 'Святошинський', value: 'Святошинський' },
-  { label: "Солом'янський", value: "Солом'янський" },
-  { label: 'Шевченківський', value: 'Шевченківський' },
+  { id: 1, label: 'Голосіївський' },
+  { id: 2, label: 'Дарницький' },
+  { id: 3, label: 'Деснянський' },
+  { id: 4, label: 'Дніпровський' },
+  { id: 5, label: 'Оболонський' },
+  { id: 6, label: 'Печерський' },
+  { id: 7, label: 'Подільський' },
+  { id: 8, label: 'Святошинський' },
+  { id: 9, label: "Солом'янський" },
+  { id: 10, label: 'Шевченківський' },
 ];
 
 type DistrictSelectorProps = {
-  selected: string;
-  setSelected: (val: string) => void;
+  selected: number | null;
+  setSelected: (val: number) => void;
 };
 export default function DistrictSelector({
   selected,
@@ -32,8 +32,8 @@ export default function DistrictSelector({
 
   // Option select handler (mouse or keyboard)
   const handleSelect = useCallback(
-    (value: string) => {
-      setSelected(value);
+    (id: number) => {
+      setSelected(id);
       setIsOpen(false);
       // Return focus to the button for accessibility
       buttonRef.current?.focus();
@@ -71,7 +71,7 @@ export default function DistrictSelector({
   // Focus management for first/selected option when opening dropdown
   useEffect(() => {
     if (isOpen && listRef.current) {
-      const selectedIndex = areas.findIndex(area => area.value === selected);
+      const selectedIndex = areas.findIndex(area => area.id === selected);
       const targetIndex = selectedIndex !== -1 ? selectedIndex : 0;
       const options =
         listRef.current.querySelectorAll<HTMLElement>('[role="option"]');
@@ -123,7 +123,7 @@ export default function DistrictSelector({
             document.activeElement.getAttribute('role') === 'option'
           ) {
             const value = document.activeElement.getAttribute('data-value');
-            if (value) handleSelect(value);
+            if (value) handleSelect(Number(value));
           }
           break;
         default:
@@ -135,7 +135,7 @@ export default function DistrictSelector({
   );
 
   const selectedLabel =
-    areas.find(area => area.value === selected)?.label ?? 'Обрати район';
+    areas.find(area => area.id === selected)?.label ?? 'Обрати район';
 
   return (
     <div
@@ -185,19 +185,19 @@ export default function DistrictSelector({
         >
           {areas.map(area => (
             <li
-              key={area.value}
-              id={`area-${area.value}`}
+              key={area.id}
+              id={`area-${area.id}`}
               role="option"
-              aria-selected={selected === area.value}
+              aria-selected={selected === area.id}
               tabIndex={0}
               className={clsx(
                 'flex h-[34px] w-full cursor-pointer items-center pl-[22px] transition focus:outline-none xl:pl-11',
-                selected === area.value
+                selected === area.id
                   ? 'bg-tenn pointer-events-none text-white'
                   : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn focus:text-alabaster'
               )}
-              onClick={() => handleSelect(area.value)}
-              data-value={area.value}
+              onClick={() => handleSelect(area.id)}
+              data-value={area.id}
             >
               <span className="">{area.label}</span>
             </li>
