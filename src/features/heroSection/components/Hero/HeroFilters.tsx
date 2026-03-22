@@ -9,13 +9,13 @@ import { useState } from 'react';
 
 const HeroFilters = () => {
   const selectedAnimal = useAppSelector(selectAnimal);
-  const [selectedDistrict, setSelectedDistrict] = useState<string>('');
+  const [selectedDistrict, setSelectedDistrict] = useState<number | null>(null);
 
   return (
     <div
-      className={`absolute z-20 xl:z-60 bg-alabaster shadow-box rounded-[25px] xl:rounded-2xl py-7 px-4.5 xl:py-5 xl:px-8 xl:w-[1040px] mx-auto xl:max-h-[298px] flex flex-col xl:gap-3.5 xl:mb-0 xl:top-[476px] left-1/2 -translate-x-1/2 `}
+      className={`bg-alabaster shadow-box absolute left-1/2 z-20 mx-auto flex -translate-x-1/2 flex-col rounded-[25px] px-4.5 py-7 xl:top-[476px] xl:z-60 xl:mb-0 xl:max-h-[298px] xl:w-[1040px] xl:gap-3.5 xl:rounded-2xl xl:px-8 xl:py-5`}
     >
-      <div className="flex flex-col xl:flex-row xl:justify-center gap-[13px] xl:gap-8 mb-[38px] xl:mb-0">
+      <div className="mb-[38px] flex flex-col gap-[13px] xl:mb-0 xl:flex-row xl:justify-center xl:gap-8">
         <AnimalSelector />
         <DistrictSelector
           selected={selectedDistrict}
@@ -23,8 +23,8 @@ const HeroFilters = () => {
         />
       </div>
       <ServiceTypeSelector />
-      <div className="flex flex-col xl:flex-row justify-center xl:justify-end xl:gap-10 xl:min-h-[68px] xl:ml-auto">
-        {selectedAnimal === 'dog' && <WeightSelector />}
+      <div className="flex flex-col justify-center xl:ml-auto xl:min-h-[68px] xl:flex-row xl:justify-end xl:gap-10">
+        {selectedAnimal === 1 && <WeightSelector />}
         <SearchButton selected={selectedDistrict} />
       </div>
     </div>

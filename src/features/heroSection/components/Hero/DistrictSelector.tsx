@@ -3,21 +3,21 @@ import clsx from 'clsx';
 
 // TODO: Заміни константу AREAS на дані з бекенду, коли буде готовий API
 const areas = [
-  { label: 'Голосіївський', value: 'Голосіївський' },
-  { label: 'Дарницький', value: 'Дарницький' },
-  { label: 'Деснянський', value: 'Деснянський' },
-  { label: 'Дніпровський', value: 'Дніпровський' },
-  { label: 'Оболонський', value: 'Оболонський' },
-  { label: 'Печерський', value: 'Печерський' },
-  { label: 'Подільський', value: 'Подільський' },
-  { label: 'Святошинський', value: 'Святошинський' },
-  { label: "Солом'янський", value: "Солом'янський" },
-  { label: 'Шевченківський', value: 'Шевченківський' },
+  { id: 1, label: 'Голосіївський' },
+  { id: 2, label: 'Дарницький' },
+  { id: 3, label: 'Деснянський' },
+  { id: 4, label: 'Дніпровський' },
+  { id: 5, label: 'Оболонський' },
+  { id: 6, label: 'Печерський' },
+  { id: 7, label: 'Подільський' },
+  { id: 8, label: 'Святошинський' },
+  { id: 9, label: "Солом'янський" },
+  { id: 10, label: 'Шевченківський' },
 ];
 
 type DistrictSelectorProps = {
-  selected: string;
-  setSelected: (val: string) => void;
+  selected: number | null;
+  setSelected: (val: number) => void;
 };
 export default function DistrictSelector({
   selected,
@@ -32,8 +32,8 @@ export default function DistrictSelector({
 
   // Option select handler (mouse or keyboard)
   const handleSelect = useCallback(
-    (value: string) => {
-      setSelected(value);
+    (id: number) => {
+      setSelected(id);
       setIsOpen(false);
       // Return focus to the button for accessibility
       buttonRef.current?.focus();
@@ -71,7 +71,7 @@ export default function DistrictSelector({
   // Focus management for first/selected option when opening dropdown
   useEffect(() => {
     if (isOpen && listRef.current) {
-      const selectedIndex = areas.findIndex(area => area.value === selected);
+      const selectedIndex = areas.findIndex(area => area.id === selected);
       const targetIndex = selectedIndex !== -1 ? selectedIndex : 0;
       const options =
         listRef.current.querySelectorAll<HTMLElement>('[role="option"]');
@@ -123,7 +123,7 @@ export default function DistrictSelector({
             document.activeElement.getAttribute('role') === 'option'
           ) {
             const value = document.activeElement.getAttribute('data-value');
-            if (value) handleSelect(value);
+            if (value) handleSelect(Number(value));
           }
           break;
         default:
@@ -135,27 +135,28 @@ export default function DistrictSelector({
   );
 
   const selectedLabel =
-    areas.find(area => area.value === selected)?.label ?? 'Обрати район';
+    areas.find(area => area.id === selected)?.label ?? 'Обрати район';
 
   return (
     <div
-      className="relative w-full xl:w-1/2 rounded-[15px] xl:rounded-2xl"
+      className="relative w-full rounded-[15px] xl:w-1/2 xl:rounded-2xl"
       ref={dropdownRef}
     >
       {/* Toggle button */}
       <button
+        id="hero-filter-district"
         ref={buttonRef}
         type="button"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="district-list"
-        className="w-full flex items-center border-[2px] border-tenn justify-between h-[47px] xl:h-[48px] py-[13px] pr-3.5 pl-[22px] text-[15px] xl:text-base xl:py-3 xl:pr-8 xl:pl-12 hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark rounded-[15px] xl:rounded-2xl"
+        className="border-tenn hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark flex h-[47px] w-full items-center justify-between rounded-[15px] border-[2px] py-[13px] pr-3.5 pl-[22px] text-[15px] focus:outline-none xl:h-[48px] xl:rounded-2xl xl:py-3 xl:pr-8 xl:pl-12 xl:text-base"
         onClick={() => setIsOpen(prev => !prev)}
       >
         {selectedLabel}
         <svg
           className={clsx(
-            'w-4 h-4 transition-transform duration-200 text-tenn',
+            'text-tenn h-4 w-4 transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
           fill="none"
@@ -176,7 +177,7 @@ export default function DistrictSelector({
         <ul
           id="district-list"
           ref={listRef}
-          className="absolute z-50 left-0 mt-[9px] w-full flex flex-col gap-2 border-tenn border-[2px] py-[13px] xl:py-5 text-shark bg-alabaster rounded-[15px] hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark"
+          className="border-tenn text-shark bg-alabaster hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark absolute left-0 z-50 mt-[9px] flex w-full flex-col gap-2 rounded-[15px] border-[2px] py-[13px] focus:outline-none xl:py-5"
           role="listbox"
           aria-label="Оберіть район"
           tabIndex={0}
@@ -184,19 +185,19 @@ export default function DistrictSelector({
         >
           {areas.map(area => (
             <li
-              key={area.value}
-              id={`area-${area.value}`}
+              key={area.id}
+              id={`area-${area.id}`}
               role="option"
-              aria-selected={selected === area.value}
+              aria-selected={selected === area.id}
               tabIndex={0}
               className={clsx(
-                'w-full h-[34px] flex items-center transition cursor-pointer focus:outline-none pl-[22px] xl:pl-11',
-                selected === area.value
-                  ? 'bg-tenn text-white pointer-events-none'
-                  : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn  focus:text-alabaster'
+                'flex h-[34px] w-full cursor-pointer items-center pl-[22px] transition focus:outline-none xl:pl-11',
+                selected === area.id
+                  ? 'bg-tenn pointer-events-none text-white'
+                  : 'hover:bg-tenn hover:text-alabaster focus:bg-tenn focus:text-alabaster'
               )}
-              onClick={() => handleSelect(area.value)}
-              data-value={area.value}
+              onClick={() => handleSelect(area.id)}
+              data-value={area.id}
             >
               <span className="">{area.label}</span>
             </li>

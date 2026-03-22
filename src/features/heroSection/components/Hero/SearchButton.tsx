@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type SearchButtonProps = {
-  selected: string;
+  selected: number | null;
 };
 
 const SearchButton = ({ selected }: SearchButtonProps) => {
@@ -23,7 +23,7 @@ const SearchButton = ({ selected }: SearchButtonProps) => {
               : '/specialists'
           )
         }
-        className="flex flex-1 w-full items-center justify-center text-xl xl:text-[22px] btn-2lg xl:px-6 xl:py-4 rounded-[15px] xl:rounded-2xl"
+        className="btn-2lg flex w-full flex-1 items-center justify-center rounded-[15px] text-xl xl:rounded-2xl xl:px-6 xl:py-4 xl:text-[22px]"
       />
       <Modal
         isOpen={openRegisterModal}

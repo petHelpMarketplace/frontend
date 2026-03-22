@@ -1,20 +1,22 @@
 import { dogsWeight } from '@/shared/constants/dogsWeight';
 const WeightSelector = () => {
   return (
-    <div className="grid grid-cols-2 gap-x-[37px] gap-y-5 mb-6 xl:mb-0 xl:flex xl:gap-[29px] xl:justify-between">
-      {dogsWeight.map(w => (
-        <button
-          type="button"
-          key={w.label}
-          aria-pressed="false"
-          className="group xl:flex xl:flex-col text-[15px] h-[37px] xl:h-[68px] xl:text-base leading-[120%] xl:leading-[130%] xl:gap-[2px] xl:px-5 py-[9px] border-tenn border-[2px] w-[136px] rounded-[15px] xl:rounded-2xl hover:bg-tenn hover:text-alabaster hover:shadow-shark focus:shadow-shark focus:outline-none focus-visible:shadow-shark active:shadow-inset-shark"
-        >
-          <span className="hidden xl:block text-tenn group-hover:text-alabaster">
-            {w.label}
-          </span>
-          <span className="text-sm">({w.range})</span>
-        </button>
-      ))}
+    <div className="mb-6 grid grid-cols-2 gap-x-[37px] gap-y-5 xl:mb-0 xl:flex xl:justify-between xl:gap-[29px]">
+      {dogsWeight.map(w => {
+        return (
+          <button
+            type="button"
+            key={w.id}
+            id={`hero-filter-weight-${w.id}`}
+            className="group border-tenn hover:bg-tenn hover:text-alabaster hover:shadow-shark focus:shadow-shark focus-visible:shadow-shark active:shadow-inset-shark h-[37px] w-[136px] rounded-[15px] border-[2px] py-[9px] text-[15px] leading-[120%] focus:outline-none xl:flex xl:h-[68px] xl:flex-col xl:gap-[2px] xl:rounded-2xl xl:px-5 xl:text-base xl:leading-[130%]"
+          >
+            <span className="text-tenn group-hover:text-alabaster hidden xl:block">
+              {w.label}
+            </span>
+            <span className="text-sm">({w.range})</span>
+          </button>
+        );
+      })}
     </div>
   );
 };
