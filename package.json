@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-accordion": "^1.2.12",
     "@reduxjs/toolkit": "^2.6.1",
     "@tippyjs/react": "^4.2.6",
     "axios": "^1.10.0",

@@ -41,6 +41,9 @@ const FaqPage = lazy(() => import('@/features/faq/pages/FaqPage'));
 const FaqQuestionPage = lazy(
   () => import('@/features/faq/pages/FaqQuestionPage')
 );
+const PrivacyPolicyPage = lazy(
+  () => import('@/features/privacyPolicy/pages/PrivacyPolicyPage')
+);
 const PublicOfferPage = lazy(
   () => import('@/features/publicOffer/pages/PublicOfferPage')
 );
@@ -86,6 +89,8 @@ function App() {
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+
         <Route path="/public-offer" element={<PublicOfferPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
