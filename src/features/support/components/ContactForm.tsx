@@ -2,7 +2,11 @@ import Button from '@/shared/components/UI/Button';
 
 const ContactForm = () => {
   return (
-    <form className="shadow-faq flex flex-col items-center gap-5 rounded-2xl px-4 py-8 xl:flex-1 xl:p-8">
+    <form
+      className="shadow-faq flex flex-col items-center gap-5 rounded-2xl px-4 py-8 xl:flex-1 xl:p-8"
+      title="Ми вже готуємо це для Вас"
+      noValidate
+    >
       <p className="text-fire self-start leading-[169%] font-semibold">
         Напишіть нам прямо зараз
       </p>
@@ -11,7 +15,9 @@ const ContactForm = () => {
         Ім’я
       </label>
       <input
+        disabled
         id="name"
+        name="name"
         type="text"
         className="input-base h-12"
         placeholder="Ім’я"
@@ -22,7 +28,9 @@ const ContactForm = () => {
         Email
       </label>
       <input
+        disabled
         id="email"
+        name="email"
         type="email"
         className="input-base h-12"
         placeholder="Email"
@@ -36,12 +44,12 @@ const ContactForm = () => {
         Повідомлення
       </label>
       <textarea
+        disabled
         name="message"
         id="message"
-        resize-none
         placeholder="Напишіть, чим ми можемо Вам допомогти?"
         className="input-base h-[116px] resize-none p-3 xl:px-5 xl:py-3"
-      ></textarea>
+      />
 
       <Button
         label="Відправити"
