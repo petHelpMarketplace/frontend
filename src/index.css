@@ -119,6 +119,7 @@
   html {
     @apply font-sans;
     scrollbar-gutter: stable;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -133,10 +134,10 @@ button:not(:disabled) {
 
 @layer components {
   .section-wrap {
-    @apply w-full mx-auto max-w-[375px] xl:max-w-7xl px-4 xl:px-30 pt-10 xl:pt-17 pb-9 xl:pb-18;
+    @apply mx-auto w-full max-w-[375px] px-4 pt-10 pb-9 xl:max-w-7xl xl:px-30 xl:pt-17 xl:pb-18;
   }
   .btn {
-    @apply bg-tenn text-alabaster rounded-2xl transition-shadow duration-300 ease-in-out px-5 xl:min-w-[200px] h-[40px];
+    @apply bg-tenn text-alabaster h-[40px] rounded-2xl px-5 transition-shadow duration-300 ease-in-out xl:min-w-[200px];
   }
 
   .btn:hover,
@@ -153,7 +154,7 @@ button:not(:disabled) {
   }
 
   .btn-2lg {
-    @apply min-w-[303px] xl:min-w-[304px] min-h-[66px] xl:min-h-[68px] text-[22px] xl:text-xl;
+    @apply min-h-[66px] min-w-[303px] text-[22px] xl:min-h-[68px] xl:min-w-[304px] xl:text-xl;
   }
 
   .btn-disabled {
@@ -169,7 +170,7 @@ button:not(:disabled) {
   }
 
   .btn-google-disabled {
-    @apply text-dust-gray bg-alabaster border-2 border-dust-gray;
+    @apply text-dust-gray bg-alabaster border-dust-gray border-2;
   }
 
   .btn-icon {
@@ -177,15 +178,15 @@ button:not(:disabled) {
   }
 
   .input-base {
-    @apply relative w-full border-2 border-tenn/40 rounded-2xl min-h-10 px-5 focus:outline-none caret-fire placeholder-storm-gray focus:border-tenn text-sm xl:text-base placeholder:text-sm xl:placeholder:text-base;
+    @apply border-tenn/40 caret-fire placeholder-storm-gray focus:border-tenn relative min-h-10 w-full rounded-2xl border-2 px-5 text-sm placeholder:text-sm focus:outline-none xl:text-base xl:placeholder:text-base;
   }
 
   .book-radio-btn {
-    @apply appearance-none relative w-[21px] h-[21px] rounded-full border-2 border-fire checked:bg-alabaster checked:border-fire focus:outline-none cursor-pointer transition-all duration-300 ease-in-out;
+    @apply border-fire checked:bg-alabaster checked:border-fire relative h-[21px] w-[21px] cursor-pointer appearance-none rounded-full border-2 transition-all duration-300 ease-in-out focus:outline-none;
   }
 
   .book-radio-btn:focus-visible {
-    @apply ring-2 ring-offset-2 ring-fire;
+    @apply ring-fire ring-2 ring-offset-2;
   }
 
   .book-radio-btn:checked::before {
@@ -213,7 +214,7 @@ button:not(:disabled) {
   }
 
   .book-checkbox-btn + span {
-    @apply fill-none border-fire;
+    @apply border-fire fill-none;
   }
 
   .book-checkbox-btn:checked + span {
