@@ -137,7 +137,7 @@ button:not(:disabled) {
     @apply mx-auto w-full max-w-[375px] px-4 pt-10 pb-9 xl:max-w-7xl xl:px-30 xl:pt-17 xl:pb-18;
   }
   .btn {
-    @apply bg-tenn text-alabaster h-[40px] rounded-2xl px-5 transition-shadow duration-300 ease-in-out xl:min-w-[200px];
+    @apply bg-tenn text-alabaster flex h-[40px] items-center justify-center rounded-2xl px-5 transition-shadow duration-300 ease-in-out xl:min-w-[200px];
   }
 
   .btn:hover,

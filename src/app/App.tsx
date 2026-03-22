@@ -36,6 +36,7 @@ const PortfolioGallery = lazy(
 const AccountSettingsForm = lazy(
   () => import('@/features/account/components/settings/AccountSettingsForm')
 );
+const SupportPage = lazy(() => import('@/features/support/pages/SupportPage'));
 const FaqPage = lazy(() => import('@/features/faq/pages/FaqPage'));
 const FaqQuestionPage = lazy(
   () => import('@/features/faq/pages/FaqQuestionPage')
@@ -81,12 +82,17 @@ function App() {
           <Route path="settings" element={<AccountSettingsForm />} />
         </Route>
         <Route path="/review/specialists/:id" element={<ReviewServicePage />} />
+
+        {/* Footer */}
+        <Route path="/support" element={<SupportPage />} />
+
         {/* FAQ */}
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/faq/:category/:id" element={<FaqQuestionPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
         <Route path="/public-offer" element={<PublicOfferPage />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
